@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Publications | </title>
+    <link>https://tmoreperez.github.io.com/publication/</link>
+      <atom:link href="https://tmoreperez.github.io.com/publication/index.xml" rel="self" type="application/rss+xml" />
+    <description>Publications</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://tmoreperez.github.io.com/media/icon_hu1075b238d8cd5dc57365db6b2b585e10_96931_512x512_fill_lanczos_center_2.png</url>
+      <title>Publications</title>
+      <link>https://tmoreperez.github.io.com/publication/</link>
+    </image>
+    
+    <item>
+      <title>Weak phylogenetic and climatic signals in plant heat tolerance</title>
+      <link>https://tmoreperez.github.io.com/publication/jbiogeo.2020/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/jbiogeo.2020/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredjpg&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;p&gt;Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/biogeography-and-macroecology/&#34; title=&#34;Biogeography and Macroecology&#34;&gt;Biogeography and Macroecology&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/climate-change/&#34; title=&#34;Climate Change&#34;&gt;Climate Change&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/plant-ecophysiology/&#34; title=&#34;Plant Ecophysiology&#34;&gt;Plant Ecophysiology&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Relevant code:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/code/heat-tolerance/&#34;&gt;Estimating heat tolerances&lt;/a&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/code/pgacer/&#34;&gt;Extracting occurrence and climate data&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Photosynthetic heat tolerances and extreme leaf temperatures</title>
+      <link>https://tmoreperez.github.io.com/publication/functional.ecology.2020/</link>
+      <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/functional.ecology.2020/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredjpg&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;plant-ecophysiologyhahahugoshortcode-s2-hbhb-plant-ecophysiology&#34;&gt;Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/climate-change/&#34; title=&#34;Climate Change&#34;&gt;Climate Change&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/museum-collections/&#34; title=&#34;Museum Collections&#34;&gt;Museum Collections&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/plant-ecophysiology/&#34; title=&#34;Plant Ecophysiology&#34;&gt;Plant Ecophysiology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Herbarium-based measurements reliably estimate three functional traits</title>
+      <link>https://tmoreperez.github.io.com/publication/ajb.2021/</link>
+      <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/ajb.2021/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredjpg&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;museum-collectionshahahugoshortcode-s0-hbhb-museum-collections&#34;&gt;Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/museum-collections/&#34; title=&#34;Museum Collections&#34;&gt;Museum Collections&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Climate-driven changes in the composition of New World plant communities</title>
+      <link>https://tmoreperez.github.io.com/publication/nature.climate.change/</link>
+      <pubDate>Thu, 01 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/nature.climate.change/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredpng&#34;&gt;&lt;img src=&#34;featured.png&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;climate-changehahahugoshortcode-s1-hbhb-climate-change&#34;&gt;Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/biogeography-and-macroecology/&#34; title=&#34;Biogeography and Macroecology&#34;&gt;Biogeography and Macroecology&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/climate-change/&#34; title=&#34;Climate Change&#34;&gt;Climate Change&lt;/a&gt;,&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The thermal tolerances, distributions, and performances of tropical montane tree species</title>
+      <link>https://tmoreperez.github.io.com/publication/frontiers.for.glob.change/</link>
+      <pubDate>Fri, 13 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/frontiers.for.glob.change/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredpng&#34;&gt;&lt;img src=&#34;featured.png&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;plant-ecophysiologyhahahugoshortcode-s2-hbhb-plant-ecophysiology&#34;&gt;Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/biogeography-and-macroecology/&#34; title=&#34;Biogeography and Macroecology&#34;&gt;Biogeography and Macroecology&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/climate-change/&#34; title=&#34;Climate Change&#34;&gt;Climate Change&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/plant-ecophysiology/&#34; title=&#34;Plant Ecophysiology&#34;&gt;Plant Ecophysiology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Gymnosperm species richness patterns along the elevational gradient and its comparison with other plant taxonomic groups in the Himalayas</title>
+      <link>https://tmoreperez.github.io.com/publication/frontiers.biogeog/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/frontiers.biogeog/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredjpg&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;biogeography-and-macroecologyhahahugoshortcode-s0-hbhb-biogeography-and-macroecology&#34;&gt;Related projects: &lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/biogeography-and-macroecology/&#34; title=&#34;Biogeography and Macroecology&#34;&gt;Biogeography and Macroecology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Open Science principles for accelerating trait-based science across the Tree of Life</title>
+      <link>https://tmoreperez.github.io.com/publication/nature.ecology.evolution.2020/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/nature.ecology.evolution.2020/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;featured.png&#34; alt=&#34;Figure 1&#34;&gt;
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Botanic gardens are an untapped resource for studying the functional ecology of tropical plants</title>
+      <link>https://tmoreperez.github.io.com/publication/ptrsb.2019/</link>
+      <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/ptrsb.2019/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredjpg&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;plant-ecophysiologyhahahugoshortcode-s1-hbhb-plant-ecophysiology&#34;&gt;Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/museum-collections/&#34; title=&#34;Museum Collections&#34;&gt;Museum Collections&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/plant-ecophysiology/&#34; title=&#34;Plant Ecophysiology&#34;&gt;Plant Ecophysiology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The changing nature of collaboration in tropical ecology and conservation</title>
+      <link>https://tmoreperez.github.io.com/publication/biotropica.2018/</link>
+      <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/biotropica.2018/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;featured.png&#34; alt=&#34;Figure 1&#34;&gt;
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Increasing humidity threatens tropical rainforests</title>
+      <link>https://tmoreperez.github.io.com/publication/frontier.ee/</link>
+      <pubDate>Tue, 05 Jun 2018 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/frontier.ee/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredpng&#34;&gt;&lt;img src=&#34;featured.png&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;plant-ecophysiologyhahahugoshortcode-s1-hbhb-plant-ecophysiology&#34;&gt;Related projects: &lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/climate-change/&#34; title=&#34;Climate Change&#34;&gt;Climate Change&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/plant-ecophysiology/&#34; title=&#34;Plant Ecophysiology&#34;&gt;Plant Ecophysiology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Most ‘ global &#39; reviews of species &#39; responses to climate change are not truly global</title>
+      <link>https://tmoreperez.github.io.com/publication/diversity.and.distributions.2017/</link>
+      <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/diversity.and.distributions.2017/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredjpg&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;biogeography-and-macroecologyhahahugoshortcode-s0-hbhb-biogeography-and-macroecology&#34;&gt;Related projects: &lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/biogeography-and-macroecology/&#34; title=&#34;Biogeography and Macroecology&#34;&gt;Biogeography and Macroecology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Thermal trouble in the tropics</title>
+      <link>https://tmoreperez.github.io.com/publication/science.2016/</link>
+      <pubDate>Fri, 25 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/science.2016/</guid>
+      <description>&lt;h2 id=&#34;plant-ecophysiologyhahahugoshortcode-s2-hbhb-plant-ecophysiology&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;
+Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/biogeography-and-macroecology/&#34; title=&#34;Biogeography and Macroecology&#34;&gt;Biogeography and Macroecology&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/climate-change/&#34; title=&#34;Climate Change&#34;&gt;Climate Change&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/plant-ecophysiology/&#34; title=&#34;Plant Ecophysiology&#34;&gt;Plant Ecophysiology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

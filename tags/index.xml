@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags | </title>
+    <link>https://tmoreperez.github.io.com/tags/</link>
+      <atom:link href="https://tmoreperez.github.io.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <description>Tags</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language>
+    <image>
+      <url>https://tmoreperez.github.io.com/media/icon_hu1075b238d8cd5dc57365db6b2b585e10_96931_512x512_fill_lanczos_center_2.png</url>
+      <title>Tags</title>
+      <link>https://tmoreperez.github.io.com/tags/</link>
+    </image>
+    
+  </channel>
+</rss>

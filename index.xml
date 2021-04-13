@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title></title>
+    <link>https://tmoreperez.github.io.com/</link>
+      <atom:link href="https://tmoreperez.github.io.com/index.xml" rel="self" type="application/rss+xml" />
+    <description></description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 13 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://tmoreperez.github.io.com/media/icon_hu1075b238d8cd5dc57365db6b2b585e10_96931_512x512_fill_lanczos_center_2.png</url>
+      <title></title>
+      <link>https://tmoreperez.github.io.com/</link>
+    </image>
+    
+    <item>
+      <title>R code for modelling photosynthetic temperature-assimilation curves</title>
+      <link>https://tmoreperez.github.io.com/code/at-curve/</link>
+      <pubDate>Tue, 13 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/code/at-curve/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Photosynthetic carbon assimilation tends to follow a unimodal response to temperature. In other words, carbon assimilation increases from a low temperature, peaks at some optimal temperature, then declines at high temperatures. Different parameters that describe the shape of modelled temperature-assimilation (AT) curves may be useful for understanding how plant are adapted to their environments. For some more background on AT curves, check out this publication:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation]({{ref &amp;ldquo;publication/PCE.2021/index.md&amp;rdquo; }} &amp;ldquo;Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation&amp;rdquo;)&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Here is a &lt;a href=&#34;https://github.com/tmoreperez/AT_Curve_function&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;link to GitHub repository&lt;/a&gt; with some sample temperature and assimilation data, and an R code for a function that can be used to calculate the  maximum rate of photosynthesis (Popt) that occurs at some optimum temperature (Topt), and a metric that describes the breadth of the AT curve (&amp;lsquo;Omega&amp;rsquo;). Another parameter, Tmax indicates the high temperature at which carbon assimilation approaches zero is also produced by the function code.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;Fig.1-Example.TA.&amp;amp;.HT.Curve.color.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/p&gt;
+&lt;p&gt;There are two different models that are used to estimate these parameters. The paper linked above provides details on the different equations that are used. Parameters other than those listed above can be obtained from these equations. However, the function currently only provides output for estimates of Popt, Topt, Omega, and Tmax. The function also includes an option to produce a basic plot of the data.&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;AT_Curve_Function_plot.jpg&#34; alt=&#34;Figure 2&#34;&gt;
+&lt;em&gt;This is an example of the figure that is produced from the function. Each point represents a different leaf for one species (Brosimum alicastrum in this case). The &amp;lsquo;Photosynthesis&amp;rsquo; on the y-axis indicates the amount of carbon assimilated at a given temperature. The two curves in each figure represent the two different equations provided in the paper linked above.&lt;/em&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Biogeography and Macroecology</title>
+      <link>https://tmoreperez.github.io.com/project/biogeography-and-macroecology/</link>
+      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/project/biogeography-and-macroecology/</guid>
+      <description>&lt;hr&gt;
+&lt;p&gt;Biogeography is the study of the geographic and temporal distributions of life. Biogeographic information can help us understand species&#39; adaptations and their evolutionary histories. In recent years, a wealth of plant biogeographic data - &lt;a href=&#34;https://tmoreperez.github.io.com/project/museum-collections/&#34; title=&#34;Museum Collections&#34;&gt;largely from digitized herbarium specimens&lt;/a&gt; - has become publicly available. Coupled with macro- and microclimate data, this biogeographic data has been particularly valuable for understanding how plants are shifting their distributions in response to climate change.&lt;/p&gt;
+&lt;p&gt;As plants shift their distributions, plant communities can become altered. These alterations may include changes in community diversity and to ecosystem services like carbon storage. A goal of my research is to understand patterns in plant biogeography in order to predict about how climate change will alter plant communities and inform conservation decisions.&lt;/p&gt;
+&lt;p&gt;Related Publications: &lt;br&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/jbiogeo.2020/&#34; title=&#34;Weak phylogenetic and climatic signals in plant heat tolerance&#34;&gt;Weak phylogenetic and climatic signals in plant heat tolerance&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/nature.climate.change/&#34; title=&#34;Climate-driven changes in the composition of New World plant communities&#34;&gt;Climate-driven changes in the composition of New World plant communities&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/frontiers.for.glob.change/&#34; title=&#34;The thermal tolerances, distributions, and performances of tropical montane tree species&#34;&gt;The thermal tolerances, distributions, and performances of tropical montane tree species&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/frontiers.biogeog/&#34; title=&#34;Gymnosperm species richness patterns along the elevational gradient and its comparison with other plant taxonomic groups in the Himalayas&#34;&gt;Gymnosperm species richness patterns along the elevational gradient and its comparison with other plant taxonomic groups in the Himalayas&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/diversity.and.distributions.2017/&#34; title=&#34;Most ‘global&amp;#39; reviews of species &amp;#39; responses to climate change are not truly global&#34;&gt;Most ‘global&#39; reviews of species &#39; responses to climate change are not truly global&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/science.2016/&#34; title=&#34;Thermal trouble in the tropics&#34;&gt;Thermal trouble in the tropics&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Climate Change</title>
+      <link>https://tmoreperez.github.io.com/project/climate-change/</link>
+      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/project/climate-change/</guid>
+      <description>&lt;p&gt;Anthropogenic climate change is a complex process that is partially characterized by increasing climatic temperatures and increasing climatic variability. Furthermore, climate change is occurring at a pace that is unprecedented in Earth&amp;rsquo;s history. The short-term and long-term consequences of climate change on plants are unclear. I&amp;rsquo;m interested in understanding how climate change will influence the physiological functions of plants and these functions translate to broader patterns in plant ecology.&lt;/p&gt;
+&lt;p&gt;Related Publications: &lt;br&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/nature.climate.change/&#34; title=&#34;Climate-driven changes in the composition of New World plant communities&#34;&gt;Climate-driven changes in the composition of New World plant communities&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/science.2016/&#34; title=&#34;Thermal trouble in the tropics&#34;&gt;Thermal trouble in the tropics&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/diversity.and.distributions.2017/&#34; title=&#34;Most ‘global&amp;#39; reviews of species&amp;#39; responses to climate change are not truly global&#34;&gt;Most ‘global&#39; reviews of species&#39; responses to climate change are not truly global&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/frontier.ee/&#34; title=&#34;Increasing humidity threatens tropical rainforests&#34;&gt;Increasing humidity threatens tropical rainforests&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/functional.ecology.2020/&#34; title=&#34;Photosynthetic heat tolerances and extreme leaf temperatures&#34;&gt;Photosynthetic heat tolerances and extreme leaf temperatures&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Museum Collections</title>
+      <link>https://tmoreperez.github.io.com/project/museum-collections/</link>
+      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/project/museum-collections/</guid>
+      <description>&lt;p&gt;Museum collections include a wealth of information that can be harnessed to expand what we know about plant physiology, ecology, and evolution. I&amp;rsquo;m interested in identifying new ways that museum collections can be used to understand patterns in plant ecology.&lt;/p&gt;
+&lt;p&gt;Related Publications: &lt;br&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/ajb.2021/&#34; title=&#34;Herbarium-based measurements reliably estimate three functional traits&#34;&gt;Herbarium-based measurements reliably estimate three functional traits&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/ptrsb.2019/&#34; title=&#34;Botanic gardens are an untapped resource for studying the functional ecology of tropical plants&#34;&gt;Botanic gardens are an untapped resource for studying the functional ecology of tropical plants&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/nature.climate.change/&#34; title=&#34;Climate-driven changes in the composition of New World plant communities&#34;&gt;Climate-driven changes in the composition of New World plant communities&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Plant Ecophysiology</title>
+      <link>https://tmoreperez.github.io.com/project/plant-ecophysiology/</link>
+      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/project/plant-ecophysiology/</guid>
+      <description>&lt;p&gt;Ecophysiology is the study of the interrelationship between physiological processes the environment. Plant ecophysiology is a broad discipline, and my research interests currently focus on understanding how plants respond to and cope with variation in temperature. More specifically, I am interested in understanding how temperatures influence photosynthesis.&lt;/p&gt;
+&lt;p&gt;Photosynthesis is an essential metabolic process for most plants, and is important for everything from predicting plant growth, survival, and reproduction to ecosystem services like carbon sequestration. Understanding the effects of temperature on photosynthesis is fundamental for understanding broader patterns in ecology and evolution including predicting how plants will respond to climate change.&lt;/p&gt;
+&lt;p&gt;Related Publications: &lt;br&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation]({{ ref &amp;ldquo;/publication/PCE.2021/index.md&amp;rdquo; }} &amp;ldquo;Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation&amp;rdquo;)&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/functional.ecology.2020/&#34; title=&#34;Photosynthetic heat tolerances and extreme leaf temperatures&#34;&gt;Photosynthetic heat tolerances and extreme leaf temperatures&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/ajb.2021/&#34; title=&#34;Herbarium-based measurements reliably estimate three functional traits&#34;&gt;Herbarium-based measurements reliably estimate three functional traits&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/frontier.ee/&#34; title=&#34;Increasing humidity threatens tropical rainforests&#34;&gt;Increasing humidity threatens tropical rainforests&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/ptrsb.2019/&#34; title=&#34;Botanic gardens are an untapped resource for studying the functional ecology of tropical plants&#34;&gt;Botanic gardens are an untapped resource for studying the functional ecology of tropical plants&lt;/a&gt;&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Weak phylogenetic and climatic signals in plant heat tolerance</title>
+      <link>https://tmoreperez.github.io.com/publication/jbiogeo.2020/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/jbiogeo.2020/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredjpg&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;p&gt;Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/biogeography-and-macroecology/&#34; title=&#34;Biogeography and Macroecology&#34;&gt;Biogeography and Macroecology&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/climate-change/&#34; title=&#34;Climate Change&#34;&gt;Climate Change&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/plant-ecophysiology/&#34; title=&#34;Plant Ecophysiology&#34;&gt;Plant Ecophysiology&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Relevant code:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/code/heat-tolerance/&#34;&gt;Estimating heat tolerances&lt;/a&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/code/pgacer/&#34;&gt;Extracting occurrence and climate data&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>R code for estimating the heat tolerances of photosystem II photochemistry</title>
+      <link>https://tmoreperez.github.io.com/code/heat-tolerance/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/code/heat-tolerance/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;For background on what photosystem II (PSII) is and why the heat tolerance of PSII is of potential interest for plant ecologists, check out these links to some of my publications:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation]({{ ref &amp;ldquo;publication/PCE.2021/index.md&amp;rdquo; }} &amp;ldquo;Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation&amp;rdquo;)&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io.com/publication/functional.ecology.2020/&#34; title=&#34;Photosynthetic heat tolerances and extreme leaf temperatures&#34;&gt;Photosynthetic heat tolerances and extreme leaf temperatures&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The links above will also provide details on how to collect the data needed to estimate PSII heat tolerances. Of course, I&amp;rsquo;m always reachable by email to address any questions. &lt;br&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Here is a &lt;a href=&#34;https://github.com/tmoreperez/Heat_tolerance_function&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;link to GitHub repository&lt;/a&gt;  with some sample data and R code that can be used to calculate three different estimates of heat tolerance for PSII (Tcrit, T50, and T95). The input for the function only requires that a user defines the the columns of a data frame with the 1) Temperature &amp;amp; 2) FvFm variables, then the 3) control temperature, the 4) id/unique factor that you want to estimate the heat tolerances for, 5) a T/F statement to indicate if you want to make plots, and 6) the number of bootstrap iterations for estimating heat tolerances. The three different estimates of PSII heat tolerance are output into a dataframe. &lt;br&gt;&lt;/p&gt;
+&lt;p&gt;Below is an example of the figure that is produced from the function. It&amp;rsquo;s really basic, and not really publication-quality as is, but it effectively illustrates the data and the estimates of the heat tolerance data.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;PSII_Heat_Tolerance_Plot.jpg&#34; alt=&#34;Figure 1&#34;&gt;
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>R script for calculating mean leaf absorptance, transmittance, and reflectance</title>
+      <link>https://tmoreperez.github.io.com/code/absorptivity_script/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/code/absorptivity_script/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;Absorptance, transmittance, and reflectance are traits that influence leaf temperature. Included here is a &lt;a href=&#34;https://github.com/tmoreperez/Absorptivity_script&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;brief R script&lt;/a&gt; for calculating mean leaf absorptance, transmittance, and reflectance for a CID Bio-Science Miniature Leaf Spectrometer CI-710. This script uses the output from a CID Bio-Science Miniature Leaf Spectrometer CI-710. Some sample data is provided. Due to the CID software, output files from the spectrometer have to be named a certain way. The naming structure is such that a species&#39; unique ID is followed by a period (.), which is followed by the number of the leaf replicate, and then another period (.), and finally the type of measurement (reflectance or transmittance).&lt;/p&gt;
+&lt;p&gt;This script estimates mean absorptance, transmittance, and reflectance values across wavelengths 400nm-1000nm, but code could easily be altered to target specific wavelengths of interest.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>R script for extracting geographic occurrences and climate data</title>
+      <link>https://tmoreperez.github.io.com/code/pgacer/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/code/pgacer/</guid>
+      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/tmoreperez/PGaCER&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;This github repository&lt;/a&gt; contains two scripts will extract the geographic occurrence data from the &lt;a href=&#34;https://bien.nceas.ucsb.edu/bien/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BIEN&lt;/a&gt; database or the &lt;a href=&#34;https://www.gbif.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GBIF&lt;/a&gt; database. After obtaing occurrence data, each script will then retrieve climate data for each occurrence, remove potentially erroneous occurrence data, and calculate the mean of selected climatic distributions for species with more than 15 occurrences. At a minimum, users will have to provide a the names of plant species of interest and a file-path to to climatic data. In the past I&amp;rsquo;ve used &lt;a href=&#34;https://www.worldclim.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;WorldClim&lt;/a&gt; data so the code is currently written to retrive Worldclim data from a local file where it is stored. Other climate databases of interest to users may include &lt;a href=&#34;https://chelsa-climate.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Chelsa&lt;/a&gt; and &lt;a href=&#34;https://crudata.uea.ac.uk/cru/data/hrg/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CRU&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Photosynthetic heat tolerances and extreme leaf temperatures</title>
+      <link>https://tmoreperez.github.io.com/publication/functional.ecology.2020/</link>
+      <pubDate>Sun, 01 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/functional.ecology.2020/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredjpg&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;plant-ecophysiologyhahahugoshortcode-s2-hbhb-plant-ecophysiology&#34;&gt;Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/climate-change/&#34; title=&#34;Climate Change&#34;&gt;Climate Change&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/museum-collections/&#34; title=&#34;Museum Collections&#34;&gt;Museum Collections&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/plant-ecophysiology/&#34; title=&#34;Plant Ecophysiology&#34;&gt;Plant Ecophysiology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Herbarium-based measurements reliably estimate three functional traits</title>
+      <link>https://tmoreperez.github.io.com/publication/ajb.2021/</link>
+      <pubDate>Sat, 10 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/ajb.2021/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredjpg&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;museum-collectionshahahugoshortcode-s0-hbhb-museum-collections&#34;&gt;Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/museum-collections/&#34; title=&#34;Museum Collections&#34;&gt;Museum Collections&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Climate-driven changes in the composition of New World plant communities</title>
+      <link>https://tmoreperez.github.io.com/publication/nature.climate.change/</link>
+      <pubDate>Thu, 01 Oct 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/nature.climate.change/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredpng&#34;&gt;&lt;img src=&#34;featured.png&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;climate-changehahahugoshortcode-s1-hbhb-climate-change&#34;&gt;Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/biogeography-and-macroecology/&#34; title=&#34;Biogeography and Macroecology&#34;&gt;Biogeography and Macroecology&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/climate-change/&#34; title=&#34;Climate Change&#34;&gt;Climate Change&lt;/a&gt;,&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The thermal tolerances, distributions, and performances of tropical montane tree species</title>
+      <link>https://tmoreperez.github.io.com/publication/frontiers.for.glob.change/</link>
+      <pubDate>Fri, 13 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/frontiers.for.glob.change/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredpng&#34;&gt;&lt;img src=&#34;featured.png&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;plant-ecophysiologyhahahugoshortcode-s2-hbhb-plant-ecophysiology&#34;&gt;Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/biogeography-and-macroecology/&#34; title=&#34;Biogeography and Macroecology&#34;&gt;Biogeography and Macroecology&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/climate-change/&#34; title=&#34;Climate Change&#34;&gt;Climate Change&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/plant-ecophysiology/&#34; title=&#34;Plant Ecophysiology&#34;&gt;Plant Ecophysiology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Gymnosperm species richness patterns along the elevational gradient and its comparison with other plant taxonomic groups in the Himalayas</title>
+      <link>https://tmoreperez.github.io.com/publication/frontiers.biogeog/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/frontiers.biogeog/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredjpg&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;biogeography-and-macroecologyhahahugoshortcode-s0-hbhb-biogeography-and-macroecology&#34;&gt;Related projects: &lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/biogeography-and-macroecology/&#34; title=&#34;Biogeography and Macroecology&#34;&gt;Biogeography and Macroecology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Open Science principles for accelerating trait-based science across the Tree of Life</title>
+      <link>https://tmoreperez.github.io.com/publication/nature.ecology.evolution.2020/</link>
+      <pubDate>Sun, 01 Mar 2020 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/nature.ecology.evolution.2020/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;featured.png&#34; alt=&#34;Figure 1&#34;&gt;
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Botanic gardens are an untapped resource for studying the functional ecology of tropical plants</title>
+      <link>https://tmoreperez.github.io.com/publication/ptrsb.2019/</link>
+      <pubDate>Mon, 07 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/ptrsb.2019/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredjpg&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;plant-ecophysiologyhahahugoshortcode-s1-hbhb-plant-ecophysiology&#34;&gt;Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/museum-collections/&#34; title=&#34;Museum Collections&#34;&gt;Museum Collections&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/plant-ecophysiology/&#34; title=&#34;Plant Ecophysiology&#34;&gt;Plant Ecophysiology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>The changing nature of collaboration in tropical ecology and conservation</title>
+      <link>https://tmoreperez.github.io.com/publication/biotropica.2018/</link>
+      <pubDate>Tue, 03 Jul 2018 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/biotropica.2018/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;featured.png&#34; alt=&#34;Figure 1&#34;&gt;
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Increasing humidity threatens tropical rainforests</title>
+      <link>https://tmoreperez.github.io.com/publication/frontier.ee/</link>
+      <pubDate>Tue, 05 Jun 2018 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/frontier.ee/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredpng&#34;&gt;&lt;img src=&#34;featured.png&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;plant-ecophysiologyhahahugoshortcode-s1-hbhb-plant-ecophysiology&#34;&gt;Related projects: &lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/climate-change/&#34; title=&#34;Climate Change&#34;&gt;Climate Change&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/plant-ecophysiology/&#34; title=&#34;Plant Ecophysiology&#34;&gt;Plant Ecophysiology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Most ‘ global &#39; reviews of species &#39; responses to climate change are not truly global</title>
+      <link>https://tmoreperez.github.io.com/publication/diversity.and.distributions.2017/</link>
+      <pubDate>Wed, 01 Mar 2017 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/diversity.and.distributions.2017/</guid>
+      <description>&lt;h2 id=&#34;figure-1featuredjpg&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;biogeography-and-macroecologyhahahugoshortcode-s0-hbhb-biogeography-and-macroecology&#34;&gt;Related projects: &lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/biogeography-and-macroecology/&#34; title=&#34;Biogeography and Macroecology&#34;&gt;Biogeography and Macroecology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Thermal trouble in the tropics</title>
+      <link>https://tmoreperez.github.io.com/publication/science.2016/</link>
+      <pubDate>Fri, 25 Mar 2016 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/publication/science.2016/</guid>
+      <description>&lt;h2 id=&#34;plant-ecophysiologyhahahugoshortcode-s2-hbhb-plant-ecophysiology&#34;&gt;&lt;img src=&#34;featured.jpg&#34; alt=&#34;Figure 1&#34;&gt;
+Related projects:&lt;br&gt;
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/biogeography-and-macroecology/&#34; title=&#34;Biogeography and Macroecology&#34;&gt;Biogeography and Macroecology&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/climate-change/&#34; title=&#34;Climate Change&#34;&gt;Climate Change&lt;/a&gt;,
+&lt;a href=&#34;https://tmoreperez.github.io.com/project/plant-ecophysiology/&#34; title=&#34;Plant Ecophysiology&#34;&gt;Plant Ecophysiology&lt;/a&gt;&lt;/h2&gt;
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://tmoreperez.github.io.com/admin/config.yml</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://tmoreperez.github.io.com/admin/config.yml</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
