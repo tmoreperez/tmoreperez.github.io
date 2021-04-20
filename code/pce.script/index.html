@@ -30,10 +30,10 @@
   
     
   
-  <meta name="description" content="Overview Absorptance, transmittance, and reflectance are traits that influence leaf temperature. Included here is a brief R script for calculating mean leaf absorptance, transmittance, and reflectance for a CID Bio-Science Miniature Leaf Spectrometer CI-710." />
+  <meta name="description" content="Overview This script reproduces the main figures and analyses for the publication Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation. The analyses are straightforward and basically consistent of calculating phylogenetically-corrected Pearson&rsquo;s correlation coefficients to test hypotheses regarding the expected relationships between leaf carbon assimilation traits and photosynthetic heat tolerances." />
 
   
-  <link rel="alternate" hreflang="en-us" href="https://www.timothymperez.com/code/absorptivity_script/" />
+  <link rel="alternate" hreflang="en-us" href="https://www.timothymperez.com/code/pce.script/" />
 
   
 
@@ -275,7 +275,7 @@
   <link rel="icon" type="image/png" href="/media/icon_hu1075b238d8cd5dc57365db6b2b585e10_96931_32x32_fill_lanczos_center_2.png" />
   <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu1075b238d8cd5dc57365db6b2b585e10_96931_180x180_fill_lanczos_center_2.png" />
 
-  <link rel="canonical" href="https://www.timothymperez.com/code/absorptivity_script/" />
+  <link rel="canonical" href="https://www.timothymperez.com/code/pce.script/" />
 
   
   
@@ -292,9 +292,9 @@
   <meta property="twitter:card" content="summary" />
   
   <meta property="og:site_name" content="TM Perez" />
-  <meta property="og:url" content="https://www.timothymperez.com/code/absorptivity_script/" />
-  <meta property="og:title" content="R script for calculating mean leaf absorptance, transmittance, and reflectance | TM Perez" />
-  <meta property="og:description" content="Overview Absorptance, transmittance, and reflectance are traits that influence leaf temperature. Included here is a brief R script for calculating mean leaf absorptance, transmittance, and reflectance for a CID Bio-Science Miniature Leaf Spectrometer CI-710." /><meta property="og:image" content="https://www.timothymperez.com/media/icon_hu1075b238d8cd5dc57365db6b2b585e10_96931_512x512_fill_lanczos_center_2.png" />
+  <meta property="og:url" content="https://www.timothymperez.com/code/pce.script/" />
+  <meta property="og:title" content="Main figs from &#39;Photosystem II heat tolerances characterize thermal generalists&#39; publication  | TM Perez" />
+  <meta property="og:description" content="Overview This script reproduces the main figures and analyses for the publication Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation. The analyses are straightforward and basically consistent of calculating phylogenetically-corrected Pearson&rsquo;s correlation coefficients to test hypotheses regarding the expected relationships between leaf carbon assimilation traits and photosynthetic heat tolerances." /><meta property="og:image" content="https://www.timothymperez.com/media/icon_hu1075b238d8cd5dc57365db6b2b585e10_96931_512x512_fill_lanczos_center_2.png" />
     <meta property="twitter:image" content="https://www.timothymperez.com/media/icon_hu1075b238d8cd5dc57365db6b2b585e10_96931_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
   
     
@@ -320,11 +320,11 @@
 
 
 
-  <title>R script for calculating mean leaf absorptance, transmittance, and reflectance | TM Perez</title>
+  <title>Main figs from &#39;Photosystem II heat tolerances characterize thermal generalists&#39; publication  | TM Perez</title>
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="327fa406453fe060dfc93e8ab88ed57c" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="b43d973811a9f8777405a740355236ca" >
 
   
   
@@ -670,7 +670,7 @@
   
   
 <div class="article-container pt-3">
-  <h1>R script for calculating mean leaf absorptance, transmittance, and reflectance</h1>
+  <h1>Main figs from &#39;Photosystem II heat tolerances characterize thermal generalists&#39; publication </h1>
 
   
 
@@ -735,8 +735,8 @@
 
     <div class="article-style">
       <h2 id="overview">Overview</h2>
-<p>Absorptance, transmittance, and reflectance are traits that influence leaf temperature. Included here is a <a href="https://github.com/tmoreperez/Absorptivity_script" target="_blank" rel="noopener">brief R script</a> for calculating mean leaf absorptance, transmittance, and reflectance for a CID Bio-Science Miniature Leaf Spectrometer CI-710. This script uses the output from a CID Bio-Science Miniature Leaf Spectrometer CI-710. Some sample data is provided. Due to the CID software, output files from the spectrometer have to be named a certain way. The naming structure is such that a species' unique ID is followed by a period (.), which is followed by the number of the leaf replicate, and then another period (.), and finally the type of measurement (reflectance or transmittance).</p>
-<p>This script estimates mean absorptance, transmittance, and reflectance values across wavelengths 400nm-1000nm, but code could easily be altered to target specific wavelengths of interest.</p>
+<p>This script reproduces the main figures and analyses for the publication <a href="https://www.timothymperez.com/publication/pce.2021/">Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation</a>. The analyses are straightforward and basically consistent of calculating phylogenetically-corrected Pearson&rsquo;s correlation coefficients to test hypotheses regarding the expected relationships between leaf carbon assimilation traits and photosynthetic heat tolerances.</p>
+<p>Here is a <a href="https://github.com/tmoreperez/PCE.figures" target="_blank" rel="noopener">link to GitHub repository</a> with the data used in the main text and the clade ages from <a href="https://www.scielo.br/scielo.php?pid=S0102-33062017000200191&amp;script=sci_abstract" target="_blank" rel="noopener">Gastauer &amp; Meira-Neto 2017</a>. The code used to estimate the carbon assimilation parameters <a href="https://www.timothymperez.com/code/at-curve/">can be found here</a> and the code used to estimate photosynthetic heat tolerances <a href="https://www.timothymperez.com/code/heat-tolerance/">can be found here.</a></p>
 
     </div>
 
@@ -760,7 +760,7 @@
       
       
       <li>
-        <a href="https://twitter.com/intent/tweet?url=https://www.timothymperez.com/code/absorptivity_script/&amp;text=R%20script%20for%20calculating%20mean%20leaf%20absorptance,%20transmittance,%20and%20reflectance" target="_blank" rel="noopener" class="share-btn-twitter">
+        <a href="https://twitter.com/intent/tweet?url=https://www.timothymperez.com/code/pce.script/&amp;text=Main%20figs%20from%20&amp;#39;Photosystem%20II%20heat%20tolerances%20characterize%20thermal%20generalists&amp;#39;%20publication%20" target="_blank" rel="noopener" class="share-btn-twitter">
           <i class="fab fa-twitter"></i>
         </a>
       </li>
@@ -773,7 +773,7 @@
       
       
       <li>
-        <a href="https://www.facebook.com/sharer.php?u=https://www.timothymperez.com/code/absorptivity_script/&amp;t=R%20script%20for%20calculating%20mean%20leaf%20absorptance,%20transmittance,%20and%20reflectance" target="_blank" rel="noopener" class="share-btn-facebook">
+        <a href="https://www.facebook.com/sharer.php?u=https://www.timothymperez.com/code/pce.script/&amp;t=Main%20figs%20from%20&amp;#39;Photosystem%20II%20heat%20tolerances%20characterize%20thermal%20generalists&amp;#39;%20publication%20" target="_blank" rel="noopener" class="share-btn-facebook">
           <i class="fab fa-facebook"></i>
         </a>
       </li>
@@ -786,7 +786,7 @@
       
       
       <li>
-        <a href="mailto:?subject=R%20script%20for%20calculating%20mean%20leaf%20absorptance,%20transmittance,%20and%20reflectance&amp;body=https://www.timothymperez.com/code/absorptivity_script/" target="_blank" rel="noopener" class="share-btn-email">
+        <a href="mailto:?subject=Main%20figs%20from%20&amp;#39;Photosystem%20II%20heat%20tolerances%20characterize%20thermal%20generalists&amp;#39;%20publication%20&amp;body=https://www.timothymperez.com/code/pce.script/" target="_blank" rel="noopener" class="share-btn-email">
           <i class="fas fa-envelope"></i>
         </a>
       </li>
@@ -799,7 +799,7 @@
       
       
       <li>
-        <a href="https://www.linkedin.com/shareArticle?url=https://www.timothymperez.com/code/absorptivity_script/&amp;title=R%20script%20for%20calculating%20mean%20leaf%20absorptance,%20transmittance,%20and%20reflectance" target="_blank" rel="noopener" class="share-btn-linkedin">
+        <a href="https://www.linkedin.com/shareArticle?url=https://www.timothymperez.com/code/pce.script/&amp;title=Main%20figs%20from%20&amp;#39;Photosystem%20II%20heat%20tolerances%20characterize%20thermal%20generalists&amp;#39;%20publication%20" target="_blank" rel="noopener" class="share-btn-linkedin">
           <i class="fab fa-linkedin-in"></i>
         </a>
       </li>
@@ -812,7 +812,7 @@
       
       
       <li>
-        <a href="whatsapp://send?text=R%20script%20for%20calculating%20mean%20leaf%20absorptance,%20transmittance,%20and%20reflectance%20https://www.timothymperez.com/code/absorptivity_script/" target="_blank" rel="noopener" class="share-btn-whatsapp">
+        <a href="whatsapp://send?text=Main%20figs%20from%20&amp;#39;Photosystem%20II%20heat%20tolerances%20characterize%20thermal%20generalists&amp;#39;%20publication%20%20https://www.timothymperez.com/code/pce.script/" target="_blank" rel="noopener" class="share-btn-whatsapp">
           <i class="fab fa-whatsapp"></i>
         </a>
       </li>
@@ -825,7 +825,7 @@
       
       
       <li>
-        <a href="https://service.weibo.com/share/share.php?url=https://www.timothymperez.com/code/absorptivity_script/&amp;title=R%20script%20for%20calculating%20mean%20leaf%20absorptance,%20transmittance,%20and%20reflectance" target="_blank" rel="noopener" class="share-btn-weibo">
+        <a href="https://service.weibo.com/share/share.php?url=https://www.timothymperez.com/code/pce.script/&amp;title=Main%20figs%20from%20&amp;#39;Photosystem%20II%20heat%20tolerances%20characterize%20thermal%20generalists&amp;#39;%20publication%20" target="_blank" rel="noopener" class="share-btn-weibo">
           <i class="fab fa-weibo"></i>
         </a>
       </li>

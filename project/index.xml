@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>project | TM Perez</title>
-    <link>https://tmoreperez.github.io/project/</link>
-      <atom:link href="https://tmoreperez.github.io/project/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://www.timothymperez.com/project/</link>
+      <atom:link href="https://www.timothymperez.com/project/index.xml" rel="self" type="application/rss+xml" />
     <description>project</description>
     <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>2021</copyright>
     <image>
-      <url>https://tmoreperez.github.io/media/icon_hu1075b238d8cd5dc57365db6b2b585e10_96931_512x512_fill_lanczos_center_2.png</url>
+      <url>https://www.timothymperez.com/media/icon_hu1075b238d8cd5dc57365db6b2b585e10_96931_512x512_fill_lanczos_center_2.png</url>
       <title>project</title>
-      <link>https://tmoreperez.github.io/project/</link>
+      <link>https://www.timothymperez.com/project/</link>
     </image>
     
   </channel>
