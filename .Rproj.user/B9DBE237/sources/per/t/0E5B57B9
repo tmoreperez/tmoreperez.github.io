@@ -3,22 +3,22 @@
     "path": "~/Google Drive/Git_stuff/Git_Website/Blogdown.stuff.R",
     "project_path": null,
     "type": "r_source",
-    "hash": "0",
+    "hash": "2261257126",
     "contents": "",
-    "dirty": true,
+    "dirty": false,
     "created": 1618940207156.0,
     "source_on_save": false,
     "relative_order": 1,
     "properties": {
-        "cursorPosition": "12,0",
+        "cursorPosition": "8,26",
         "scrollLine": "0"
     },
     "folds": "",
-    "lastKnownWriteTime": 1618942238,
+    "lastKnownWriteTime": 1618945524,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1618943811838,
+    "last_content_update": 1618945524115,
     "read_only": false,
     "read_only_alternatives": []
 }
