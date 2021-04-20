@@ -1,0 +1,20 @@
+blogdown::new_site(theme = 'wowchemy/starter-academic')
+blogdown::serve_site()
+#To publish a website if you are not familiar with GIT or GitHub:
+#Restart the R session, and run blogdown::hugo_build(). You should get a
+#public/ directory under the root directory of your project.
+remotes::install_github('rstudio/blogdown')
+library(blogdown)
+blogdown::serve_site()
+#serve_site( .site_dir = "/Users/timothyperez/Google Drive/Git_stuff/Git_Website/Website")
+blogdown::stop_server()
+blogdown::check_site()
+blogdown::hugo_build()
+blogdown::build_dir("static")
+#blogdown::html_page() 
+#rmarkdown::render()
+
+blogdown::check_gitignore()
+
+
+blogdown.knit.on_save
