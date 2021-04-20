@@ -1,74 +1,16 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Codes | </title>
+    <title>code | TM Perez</title>
     <link>https://tmoreperez.github.io/code/</link>
       <atom:link href="https://tmoreperez.github.io/code/index.xml" rel="self" type="application/rss+xml" />
-    <description>Codes</description>
-    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 13 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <description>code</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><copyright>2021</copyright>
     <image>
       <url>https://tmoreperez.github.io/media/icon_hu1075b238d8cd5dc57365db6b2b585e10_96931_512x512_fill_lanczos_center_2.png</url>
-      <title>Codes</title>
+      <title>code</title>
       <link>https://tmoreperez.github.io/code/</link>
     </image>
-    
-    <item>
-      <title>R code for modelling photosynthetic temperature-assimilation curves</title>
-      <link>https://tmoreperez.github.io/code/at-curve/</link>
-      <pubDate>Tue, 13 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>https://tmoreperez.github.io/code/at-curve/</guid>
-      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
-&lt;p&gt;Photosynthetic carbon assimilation tends to follow a unimodal response to temperature. In other words, carbon assimilation increases from a low temperature, peaks at some optimal temperature, then declines at high temperatures. Different parameters that describe the shape of modelled temperature-assimilation (AT) curves may be useful for understanding how plant are adapted to their environments. For some more background on AT curves, check out this publication:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;[Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation]({{ref &amp;ldquo;publication/PCE.2021/index.md&amp;rdquo; }} &amp;ldquo;Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation&amp;rdquo;)&lt;br&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Here is a &lt;a href=&#34;https://github.com/tmoreperez/AT_Curve_function&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;link to GitHub repository&lt;/a&gt; with some sample temperature and assimilation data, and an R code for a function that can be used to calculate the  maximum rate of photosynthesis (Popt) that occurs at some optimum temperature (Topt), and a metric that describes the breadth of the AT curve (&amp;lsquo;Omega&amp;rsquo;). Another parameter, Tmax indicates the high temperature at which carbon assimilation approaches zero is also produced by the function code.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;Fig.1-Example.TA.&amp;amp;.HT.Curve.color.jpg&#34; alt=&#34;Figure 1&#34;&gt;&lt;/p&gt;
-&lt;p&gt;There are two different models that are used to estimate these parameters. The paper linked above provides details on the different equations that are used. Parameters other than those listed above can be obtained from these equations. However, the function currently only provides output for estimates of Popt, Topt, Omega, and Tmax. The function also includes an option to produce a basic plot of the data.&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;AT_Curve_Function_plot.jpg&#34; alt=&#34;Figure 2&#34;&gt;
-&lt;em&gt;This is an example of the figure that is produced from the function. Each point represents a different leaf for one species (Brosimum alicastrum in this case). The &amp;lsquo;Photosynthesis&amp;rsquo; on the y-axis indicates the amount of carbon assimilated at a given temperature. The two curves in each figure represent the two different equations provided in the paper linked above.&lt;/em&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>R code for estimating the heat tolerances of photosystem II photochemistry</title>
-      <link>https://tmoreperez.github.io/code/heat-tolerance/</link>
-      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
-      <guid>https://tmoreperez.github.io/code/heat-tolerance/</guid>
-      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
-&lt;p&gt;For background on what photosystem II (PSII) is and why the heat tolerance of PSII is of potential interest for plant ecologists, check out these links to some of my publications:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;[Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation]({{ ref &amp;ldquo;publication/PCE.2021/index.md&amp;rdquo; }} &amp;ldquo;Photosystem II heat tolerances characterize thermal generalists and the upper limit of carbon assimilation&amp;rdquo;)&lt;br&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://tmoreperez.github.io/publication/functional.ecology.2020/&#34; title=&#34;Photosynthetic heat tolerances and extreme leaf temperatures&#34;&gt;Photosynthetic heat tolerances and extreme leaf temperatures&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The links above will also provide details on how to collect the data needed to estimate PSII heat tolerances. Of course, I&amp;rsquo;m always reachable by email to address any questions. &lt;br&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;Here is a &lt;a href=&#34;https://github.com/tmoreperez/Heat_tolerance_function&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;link to GitHub repository&lt;/a&gt;  with some sample data and R code that can be used to calculate three different estimates of heat tolerance for PSII (Tcrit, T50, and T95). The input for the function only requires that a user defines the the columns of a data frame with the 1) Temperature &amp;amp; 2) FvFm variables, then the 3) control temperature, the 4) id/unique factor that you want to estimate the heat tolerances for, 5) a T/F statement to indicate if you want to make plots, and 6) the number of bootstrap iterations for estimating heat tolerances. The three different estimates of PSII heat tolerance are output into a dataframe. &lt;br&gt;&lt;/p&gt;
-&lt;p&gt;Below is an example of the figure that is produced from the function. It&amp;rsquo;s really basic, and not really publication-quality as is, but it effectively illustrates the data and the estimates of the heat tolerance data.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;PSII_Heat_Tolerance_Plot.jpg&#34; alt=&#34;Figure 1&#34;&gt;
-&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>R script for calculating mean leaf absorptance, transmittance, and reflectance</title>
-      <link>https://tmoreperez.github.io/code/absorptivity_script/</link>
-      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
-      <guid>https://tmoreperez.github.io/code/absorptivity_script/</guid>
-      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
-&lt;p&gt;Absorptance, transmittance, and reflectance are traits that influence leaf temperature. Included here is a &lt;a href=&#34;https://github.com/tmoreperez/Absorptivity_script&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;brief R script&lt;/a&gt; for calculating mean leaf absorptance, transmittance, and reflectance for a CID Bio-Science Miniature Leaf Spectrometer CI-710. This script uses the output from a CID Bio-Science Miniature Leaf Spectrometer CI-710. Some sample data is provided. Due to the CID software, output files from the spectrometer have to be named a certain way. The naming structure is such that a species&#39; unique ID is followed by a period (.), which is followed by the number of the leaf replicate, and then another period (.), and finally the type of measurement (reflectance or transmittance).&lt;/p&gt;
-&lt;p&gt;This script estimates mean absorptance, transmittance, and reflectance values across wavelengths 400nm-1000nm, but code could easily be altered to target specific wavelengths of interest.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>R script for extracting geographic occurrences and climate data</title>
-      <link>https://tmoreperez.github.io/code/pgacer/</link>
-      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
-      <guid>https://tmoreperez.github.io/code/pgacer/</guid>
-      <description>&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/tmoreperez/PGaCER&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;This github repository&lt;/a&gt; contains two scripts will extract the geographic occurrence data from the &lt;a href=&#34;https://bien.nceas.ucsb.edu/bien/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;BIEN&lt;/a&gt; database or the &lt;a href=&#34;https://www.gbif.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;GBIF&lt;/a&gt; database. After obtaing occurrence data, each script will then retrieve climate data for each occurrence, remove potentially erroneous occurrence data, and calculate the mean of selected climatic distributions for species with more than 15 occurrences. At a minimum, users will have to provide a the names of plant species of interest and a file-path to to climatic data. In the past I&amp;rsquo;ve used &lt;a href=&#34;https://www.worldclim.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;WorldClim&lt;/a&gt; data so the code is currently written to retrive Worldclim data from a local file where it is stored. Other climate databases of interest to users may include &lt;a href=&#34;https://chelsa-climate.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Chelsa&lt;/a&gt; and &lt;a href=&#34;https://crudata.uea.ac.uk/cru/data/hrg/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CRU&lt;/a&gt;.&lt;/p&gt;
-</description>
-    </item>
     
   </channel>
 </rss>
