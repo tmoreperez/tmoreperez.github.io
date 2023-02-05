@@ -1,0 +1,174 @@
+# -------------------------------------------------------------------------------
+#Import FMS data
+fmsdat=read.csv("/Users/timothyperez/Google Drive/Michaletzgit/Forest_Macrosystems/Forest_Macrosystems/FMS_2021_census_updates.20211217.csv")
+setwd("/Users/timothyperez/Google Drive/Michaletzgit/Forest_Macrosystems/Forest_Macrosystems/")
+
+
+# -------------------------------------------------------------------------------
+#This is Function 8 from the Correcting_duplicated_stems_script.R
+#OK, In this script, I need to modify the Checking_and_correcting_duplicate_tags
+#Function so that it saves the data after every "error" is checked
+Checking_and_correcting_duplicate_tags=function(FMSdat){
+  #FMSdat=CWTDat
+  #Count number of tags for each species
+  tag_count=aggregate(FMSdat$species_binomial, list(enq=FMSdat$enq), FUN=function(x)(length(unique(x))))
+  #Get tags with counts of more than 1
+  duptags=tag_count[which(tag_count$x>1),]
+  
+  #Count the number of tags recorded for each year
+  tag_count_peryear=aggregate(FMSdat$site, list( census.year=FMSdat$census.year, enq=FMSdat$enq), length)
+  #Get tags with more than 1 count per year
+  duptags_peryear=tag_count_peryear[which(tag_count_peryear$x>1),]#there are up to 4 different measurements per year with the same enq # per site
+  
+  #combine duplicate tag data and get unique duplicated tags
+  duptagslist=unique(c(duptags$enq, duptags_peryear$enq))
+  
+  #Loop through tags to check
+  fmsdat.tagchecksout=list()
+  for( i in 1:length( duptagslist)){
+    dup.tag.data=FMSdat[which(FMSdat$enq %in% duptagslist[i]),]
+    
+    #Get the frequencies for each duplicate tag within its given line and it's distance
+    Freq_df=data.frame(table(paste(dup.tag.data$line, dup.tag.data$distance, dup.tag.data$enq)))
+    
+    #Get the length of the unique frequencies
+    LUF=length(unique(Freq_df$Freq))
+    
+    #If the length is 1, there are not different frequencies, so any stem could be erroneous
+    #If the length is greater than 1, there are different frequencies, and the most frequent stem is assumed to be correct 
+    if(LUF==1){
+      #SAME Frequency:
+      #Get unique tags and line/distance/enq 
+      tag_ld=as.vector(unique(Freq_df$Var1))
+      possible_tags=Find_possible_tags(tag_ld, FMSdat)
+      plausible_year_data=Return_tags_with_plausible_years(possible_tags, FMSdat)
+      
+      #If the length of the plausible_year_data df is not zero, tags missing plausible years has been returned-> check to see if duplicated tag growth is plausible for these/this stem
+      #If the length of the plausible_year_data df is zero, no data has been returned, use function to ask user to select data 
+      if(length(plausible_year_data[,1])>0){
+        
+        #Return data indicating if growth data is plausible:
+        #returns T/F for plausible growth data, the plausible tag #, and the duplicate tag's line, distance, and enq
+        plausible_growth_data=Plausible_growth_sp_matches(plausible_year_data, FMSdat)
+        
+        
+        #Find and alter any potentially plausible data - function will ask for user input
+        altered_or_not=Find_and_alter(plausible_growth_data, FMSdat)
+        plausible_changes_made_df=altered_or_not[[2]]
+        
+        #For any dup tags that contained no plausible data, user is prompted to check data and make changes
+        #Output is data frame
+        user_prompted_changes=Prompt_user_to_alter_duplicates(altered_or_not[[1]], dup.tag.data, FMSdat)
+        
+        #Combine outputs
+        fmsdat.tagchecksout[[i]]=rbind(user_prompted_changes, plausible_changes_made_df)
+            
+      }else if(length(plausible_year_data[,1])==0){
+        duptags_changed_out=Change_tag_species_prompts(dup.tag.data, FMSdat)
+        fmsdat.tagchecksout[[i]]=duptags_changed_out
+      }
+      
+      
+    }else if(LUF>1){
+      #DIFFERENT Frequency
+      #Get the location data for the individual with the greatest frequncy
+      correct_loc=Freq_df[-which(Freq_df$Freq==max(Freq_df$Freq)),]$Var1
+      correct_df=FMSdat[which(paste(FMSdat$line, FMSdat$distance, FMSdat$enq)==correct_loc),]
+      
+      incorrect_loc=as.vector(Freq_df[-which(Freq_df$Freq==max(Freq_df$Freq)),]$Var1)
+      incorrect_df=FMSdat[which(paste(FMSdat$line, FMSdat$distance, FMSdat$enq) %in% incorrect_loc),]
+      
+      possible_tags=Find_possible_tags(incorrect_loc, FMSdat)
+      plausible_year_data=Return_tags_with_plausible_years(possible_tags, FMSdat) 
+      #remove any years that are NA
+      plausible_year_data=plausible_year_data[-is.na(plausible_year_data$census.year),]
+      
+      if(length(plausible_year_data[,1])>0){
+        
+        #Return data indicating if growth data is plausible
+        plausible_growth_data=Plausible_growth_sp_matches(plausible_year_data, FMSdat)
+        
+        #Find and alter any potentially plausible data - function will ask for user input
+        altered_or_not=Find_and_alter(plausible_growth_data, FMSdat)
+        plausible_changes_made_df=altered_or_not[[2]]
+        
+        #For any dup tags that contained no plausible data, user is prompted to check data and make changes
+        #Output is data frame
+        user_prompted_changes=Prompt_user_to_alter_duplicates(altered_or_not[[1]], dup.tag.data, FMSdat)
+        
+        #Combine outputs
+        fmsdat.tagchecksout[[i]]=rbind(user_prompted_changes, plausible_changes_made_df)
+        
+      }else if(length(plausible_year_data[,1])==0){
+        duptags_changed_out=Change_tag_species_prompts(dup.tag.data, FMSdat)
+        fmsdat.tagchecksout[[i]]=duptags_changed_out
+        
+      }
+    }
+    
+    #get name of df and
+    date_name=gsub(" ", "_", format(Sys.time(), "%b %d %Y"))
+    Site_name=deparse(substitute(FMSdat))
+    filename=paste(Site_name, date_name, sep="_")
+    filenamecsv=paste(filename, ".csv", sep="")
+    #assign(Site_name, FMSdat, envir=.GlobalEnv)
+    #Site_name<<-FMSdat
+    write.csv(FMSdat, file = filenamecsv, row.names = FALSE)
+    cat("Saved", i)
+    
+  }
+  
+  correctionsTBM=do.call("rbind",fmsdat.tagchecksout)
+  return(correctionsTBM)
+}
+#^In the function above, I added a script so that each iteration, a file is 
+#saved for a given site.
+
+# -------------------------------------------------------------------------------
+#Implement the function above with different sites
+#Select a site to deal with errors:
+
+#Capilano:
+CapDat=fmsdat[which(fmsdat$site=="Capilano Watershed"),]
+Checking_and_correcting_duplicate_tags(CapDat)
+#CapDat=read.csv("/Users/timothyperez/Google Drive/Michaletzgit/Forest_Macrosystems/Forest_Macrosystems/CapDat_Jan_04_2022.csv")
+#write.csv(CapDat, file="CapDat_Jan_04_2022.csv")
+
+#Coweeta:
+CWTDat=fmsdat[which(fmsdat$site=="Coweeta LTER"),]
+dumfun=function( x, y){
+  return(list(x, y))
+}
+oupur=dumfun(dfx, y=c(0))
+oupur[[1]]
+sdfdfs=rbind(dfx, dfx)
+dfx=CWTDat[0,]
+dfy=CWTDat[2:3,]
+dfz=CWTDat[0,]
+rbind(dfx, dfy)
+CWTDat_corrections=Checking_and_correcting_duplicate_tags(CWTDat)
+#CWTDat=read.csv("/Users/timothyperez/Google Drive/Michaletzgit/Forest_Macrosystems/Forest_Macrosystems/CWTDat_Jan_04_2022.csv")
+
+
+
+
+#CWTDat3562=CWTDat[which(CWTDat$enq==3562),]
+#Checking_and_correcting_duplicate_tags(CWTDat3562)
+
+
+
+
+function(FMSdat){
+tag_count=aggregate(FMSdat$species_binomial, list(enq=FMSdat$enq), FUN=function(x)(length(unique(x))))
+#Get tags with counts of more than 1
+duptags=tag_count[which(tag_count$x>1),]
+
+#Count the number of tags recorded for each year
+tag_count_peryear=aggregate(FMSdat$site, list( census.year=FMSdat$census.year, enq=FMSdat$enq), length)
+#Get tags with more than 1 count per year
+duptags_peryear=tag_count_peryear[which(tag_count_peryear$x>1),]#there are up to 4 different measurements per year with the same enq # per site
+
+#combine duplicate tag data and get unique duplicated tags
+duptagslist=unique(c(duptags$enq, duptags_peryear$enq))
+return(duptagslist)
+}

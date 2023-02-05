@@ -1,0 +1,512 @@
+dbh_inc=combined_pgrowth[2,]$dbh-combined_pgrowth[1,]$dbh
+dgh_inc=combined_pgrowth[2,]$dgh-combined_pgrowth[1,]$dgh
+#Check if year interval is not 0, and the dbh/dgh ince is not na
+#if the appropriate criteria are true, plausible growth is checked and returned as either T (plausible), or not (F)
+dbh_plaus=dgh_plaus=c()
+if(identical(c(T,T), c(!year_inc==0,  !is.na(dbh_inc))) ){
+dbh_plaus=identical(c(T, T), c(dbh_inc/year_inc<=0.7, -abs(combined_pgrowth[1,]$dbh*0.05)< dbh_inc/year_inc) )
+dgh_plaus=F
+}else if(identical(c(T,T), c(!year_inc==0,  !is.na(dgh_inc))) ){
+dbh_plaus=F
+dgh_plaus=identical(c(T, T), c(dgh_inc/year_inc<=0.7, -abs(combined_pgrowth[1,]$dgh*0.05)< dgh_inc/year_inc) )
+}else if(identical(c(T,T), c(year_inc==0,  is.na(dbh_inc))) ){
+dbh_plaus=F
+dgh_plaus=F
+}else if(identical(c(T,T), c(year_inc==0,  is.na(dgh_inc))) ){
+dbh_plaus=F
+dgh_plaus=F
+}else{
+dbh_plaus=F
+dgh_plaus=F
+}
+line=unique(dup.tag.oidf$line)
+#if no data, just add F
+if(length(line)==0){
+line=F
+}else{
+line=line
+}
+distance=unique(dup.tag.oidf$distance)
+#if no data, just add F
+if(length(distance)==0){
+distance=F
+}else{
+distance=distance
+}
+dup_tag_enq=unique(dup.tag.oidf$enq)
+#if no data, just add F
+if(length(dup_tag_enq)==0){
+dup_tag_enq=F
+}else{
+dup_tag_enq=dup_tag_enq
+}
+#make df of plausible data options
+plaus_dat[[i]]=data.frame(dbh_plaus=dbh_plaus, dgh_plaus=dgh_plaus, same_sp=same_sp,
+plaus_tag_to_check=plaus_tag_check, line=line, distance=distance, dup_tag_enq=dup_tag_enq)
+}
+plaus_dat_out=do.call("rbind", plaus_dat)
+return(plaus_dat_out)
+}
+#-------------------------------------------------------------------------------
+#8f Function takes plausible_growth_data and checks if species are the same and if criteria for plausible growth are met
+#If the conditions are met, the duplicate data and plausible data are printed. The user is prompted to confirm combining these data
+#If the criteria are not met, the user is prompted to change the species name or tag number
+#The output is plausible_dat_change_out, which contains a df of the duplicated tag's to remove
+#(labeled "Duplicated data to remove" in the corrections column) from the  FMSdata
+#and it also contains the the data the duplicated tag's data was changed to (labeled "Duplicated data that has been changed" in the corrections column).
+Change_plausible_data_with_user_prompt=function(plaus_criteria, FMSdat){
+#Get plausibly correct data to check
+plaus_check=FMSdat[which(FMSdat$enq==plaus_criteria$plaus_tag_to_check),]
+plaus_check=plaus_check[order(plaus_check$census.year),]
+#Get duplicated data to check correct data to check
+rows_to_change=which(FMSdat$enq==plaus_criteria$dup_tag_enq & FMSdat$line==plaus_criteria$line & FMSdat$distance==plaus_criteria$distance)
+dup_check=FMSdat[rows_to_change,]
+cat("\n Here are the potentially correct data:")
+print(plaus_check[,c( "plot", "line", "distance", "census.year", "species_binomial", "enq", "dbh", "dgh", "notes" )])
+cat("\n Here are the data for the duplicated tag that you can change:")
+print(dup_check[,c( "plot", "line", "distance", "census.year", "species_binomial", "enq", "dbh", "dgh", "notes" )])
+user_yn=readline(prompt="Would you like to merge these data and change the tag for the duplicated data? Enter 'y' or 'n' :")
+if(user_yn=='y'){
+#get old data
+old_tag=paste(unique(dup_check$enq), collapse = " ")
+old_plot=paste(unique(dup_check$plot), collapse = " ")
+old_line=paste(unique(dup_check$line), collapse = " ")
+old_dist=paste(unique(dup_check$distance), collapse = " ")
+#get new data
+new_enq=unique(plaus_check$enq)
+new_plot=unique(plaus_check$plot)
+new_line=unique(plaus_check$line)
+new_dist=unique(plaus_check$distance)
+#make notes
+old_notes=paste(unique(dup_check$notes), collapse = " ")
+new_location_notes=paste("Location changed. Old plot=", old_plot, ", old line=", old_line, ", old dist=", old_dist, sep="")
+new_tag_notes=paste("enq changed from ", old_tag, " to ", new_enq, sep="")
+#Make a copy of the dup_check data to update
+dup_check_changed=dup_check
+#change FMS data
+dup_check_changed$enq=new_enq
+dup_check_changed$plot=new_plot
+dup_check_changed$line=new_line
+dup_check_changed$distance=new_dist
+dup_check_changed$notes=paste(new_tag_notes, new_location_notes, old_notes, sep="; ")
+#Define duplicated data that has bee changes
+dup_check_changed$corrections=paste("Duplicated data that has been changed")
+dup_check$corrections=paste("Duplicated data to remove")
+plausible_dat_change_out=rbind(dup_check_changed, dup_check)
+return(plausible_dat_change_out)
+cat("Duplicate data changed and merged with plausible data")
+}else if(user_yn=='n'){
+user_RSB_decision=readline(prompt = cat("To re-number this tag with a error prefix of 999999999, enter 'R'.
+\n To rename the this species_binomial with the correct name, enter 'S'.
+\n To do both, enter 'B'. "))
+#R=change enq in FMS data
+#S=change species name in FMS data
+#B= change both enq and species name in FMS data
+if(user_RSB_decision=="R"){
+old_tag=paste(unique(dup_check$enq), collapse = " ")
+old_notes_tag=paste(unique(dup_check$notes), collapse = " ")
+new_notes_tag=paste("999999999 prefix added to duplicated tag number ", old_tag, ".", " Check if duplicated in field.", sep= "")
+#make copy of dup_check to update changes
+dup_check_changed=dup_check
+dup_check_changed$enq=paste(999999999, old_tag, sep="")
+dup_check_changed$notes=paste(new_notes_tag, old_notes_tag, sep="; ")
+dup_check_changed$corrections=paste("Duplicated data that has been changed")
+dup_check$corrections=paste("Duplicated data to remove")
+plausible_dat_change_out=rbind(dup_check_changed, dup_check)
+return(plausible_dat_change_out)
+cat("Tag altered \n")
+}else if(user_RSB_decision=="S"){
+old_notes_sp=paste(unique(dup_check$notes), collapse = " ")
+new_species_name=readline(prompt = "Enter the new species binomial for above (CHECK SPELLING!!): \n")
+new_notes_sp=paste("Changed species_binomial from '", old_species, "' to '", new_species_name,"'.", sep="")
+#make copy of dup_check to update changes
+dup_check_changed=dup_check
+dup_check_changed$species_binomial=new_species_name
+dup_check_changed$notes=paste(new_notes_sp, old_notes_sp, sep="; ")
+dup_check_changed$corrections=paste("Duplicated data that has been changed")
+dup_check$corrections=paste("Duplicated data to remove")
+plausible_dat_change_out=rbind(dup_check_changed, dup_check)
+return(plausible_dat_change_out)
+cat("Species name altered \n")
+}else if(user_RSB_decision=="B"){
+old_tag=paste(unique(dup_check$enq), collapse = " ")
+old_notes_tag=paste(unique(dup_check$notes), collapse = " ")
+new_notes_tag=paste("999999999 prefix added to duplicated tag number ", old_tag, ".", " Check if duplicated in field.", sep= "")
+old_species=paste(unique(dup_check$species_binomial), collapse = " ")
+#old_notes_sp=unique(dup_check$notes)
+new_species_name=readline(prompt = "Enter the new species binomial for above (CHECK SPELLING!!): \n")
+new_notes_sp=paste("Changed species_binomial from '", old_species, "' to '", new_species_name,"'.", sep="")
+#make copy of dup_check to update changes
+dup_check_changed=dup_check
+dup_check_changed$enq=paste(999999999, old_tag, sep="")
+dup_check_changed$species_binomial=new_species_name
+dup_check_changed$notes=paste(new_notes_tag, new_notes_sp, old_notes, sep="; ")
+dup_check_changed$corrections=paste("Duplicated data that has been changed")
+dup_check$corrections=paste("Duplicated data to remove")
+plausible_dat_change_out=rbind(dup_check_changed, dup_check)
+return(plausible_dat_change_out)
+cat("Tag and species name altered \n")
+}else{
+cat("skip \n")
+}
+}
+}
+#-------------------------------------------------------------------------------
+#8g A function that cylce through the plausible_growth_data for appropriate growth & species
+#The Change_plausible_data_with_user_prompt duplicated data is based on user prompts and changes data if appropriate
+#The function returns the first df ([[1]]) T/F if the data were altered, and a 2nd df with the changes that were made
+Find_and_alter=function(plausible_growth_data, FMSdat){
+data_altered=c()
+plausible_data_changeddf=list()
+for(i in 1:length(plausible_growth_data[,1])){
+#check criteria for plausible tags
+plaus_criteria=plausible_growth_data[i,]
+#If dbh growth is plausbile and dgh growth is plausible, ask user to confirm re-defining tag number of duplicated number
+if(identical(c(T,T), c(plausible_growth_data$dbh_plaus, plausible_growth_data$same_sp))){
+plausible_data_changeddf[[i]]=Change_plausible_data_with_user_prompt(plaus_criteria, FMSdat)
+data_altered[i]=T
+}else if(identical(c(T,T), c(plausible_growth_data$dgh_plaus, plausible_growth_data$same_sp))){
+plausible_data_changeddf[[i]]=Change_plausible_data_with_user_prompt(plaus_criteria, FMSdat)
+data_altered[i]=T
+}else{
+cat("No clear plausible data \n")
+data_altered[i]=F
+}
+}
+plausible_data_changeddf2=do.call("rbind", plausible_data_changeddf)
+plausible_growth_data$data_altered=data_altered
+return(list(plausible_growth_data, plausible_data_changeddf2))
+}
+#-------------------------------------------------------------------------------
+#8h This function takes the altered_or_not df and checks for any individuals from the duplicated tag df that have been altered
+#Any altered individuals are ommited, then the function cycles through individuals to ask user for prompts to change tag or species name
+#Output is a df of duplicated data, with a column called "corrections" indicating the correct data, data were changed
+Prompt_user_to_alter_duplicates=function(altered_or_not, dup.tag.data, FMSdat){
+need_to_check=altered_or_not[which(altered_or_not$data_altered==F),]
+new_dups=dup.tag.data[which(dup.tag.data$enq %in% need_to_check$dup_tag_enq),]
+new_dups=new_dups[order(new_dups$census.year),]
+new_dups=new_dups[order(new_dups$distance),]
+new_dups=new_dups[order(new_dups$species_binomial),]
+if(length(new_dups[,1])>0){
+cat("Here is the dupicated tag data. Inspect to determine which rows are likely correct.  \n")
+print(new_dups[,c( "plot", "line", "distance", "census.year", "enq","species_binomial", "dbh", "dgh", "notes" )])
+correct_rows=readline(prompt=cat("Enter the row numbers from above that you think are correct separated by a comma and a space (e.g. 1, 2).
+\n These should correspond to what appear to be one stem.
+\n This can be an arbitrary group. You will be prompted to change the species names tag numbers of the other groups."))
+#format user entry to numeric vector
+correct_rows=as.numeric(gsub(",", "", unlist(strsplit(correct_rows, " ", ))))
+if(!length(correct_rows)==0){
+#Get user defined "correct" data and then the other data to remove/alter
+correct_data=new_dups[correct_rows,]
+user_check_data=new_dups[-correct_rows,]
+#get the unique groups from the user_check_data data frame
+grouped_data=paste(user_check_data$plot, user_check_data$line, user_check_data$distance, user_check_data$enq, user_check_data$species_binomial)
+Uuscd=unique(grouped_data)
+#Cycle through these Uuscd and prompt the user to change species name and tag
+tag_edits_out=list()
+for( i in 1:length(Uuscd)){
+change_tagsp_df=user_check_data[which(grouped_data==Uuscd[i]),]
+cat(" 'Correct' data: \n")
+print(correct_data[,c( "plot", "line", "distance", "census.year", "species_binomial", "enq", "dbh", "dgh", "notes" )])
+cat( "Stem that needs modification: \n")
+print(change_tagsp_df[,c( "plot", "line", "distance", "census.year", "species_binomial", "enq", "dbh", "dgh", "notes" )])
+user_RSB_decision=readline(prompt = cat("To re-number this tag with a error prefix of 999999999, enter 'R'.
+\n To rename the this species_binomial with the correct name, enter 'S'.
+\n To do both, enter 'B'.
+\n If the data appear duplicated, you can delete these rows by entering 'DEL'. "))
+#Ugly-ass way to get the rows from the FMSdata that to change
+#If statement is to deal with missing NA species binomial data
+rows_to_change=c()
+if(is.na(as.factor(change_tagsp_df$species_binomial))){
+rows_to_change=which(FMSdat$plot==change_tagsp_df$plot & FMSdat$line==change_tagsp_df$line & FMSdat$distance==change_tagsp_df$distance & FMSdat$enq==change_tagsp_df$enq )
+}else{
+rows_to_change=which(FMSdat$plot==change_tagsp_df$plot & FMSdat$line==change_tagsp_df$line & FMSdat$distance==change_tagsp_df$distance & FMSdat$enq==change_tagsp_df$enq & FMSdat$species_binomial==change_tagsp_df$species_binomial)
+}
+#R=change enq in FMS data
+#S=change species name in FMS data
+#B= change both enq and species name in FMS data
+if(user_RSB_decision=="R"){
+old_tag=paste(unique(change_tagsp_df$enq), collapse = " ")
+old_notes_tag=paste(unique(change_tagsp_df$notes), collapse = " ")
+new_tag=paste(999999999,".", paste(i), ".", old_tag, sep="")
+new_notes_tag=paste("999999999 prefix added to duplicated tag number ", old_tag, ".", "Multiple duplicated tags are designated with a '..#.'", " Check if duplicated in field.", sep= "")
+change_tagsp_df$enq=new_tag
+change_tagsp_df$notes=paste(new_notes_tag, old_notes_tag, sep="; ")
+tag_edits_out[[i]]=change_tagsp_df
+cat("Tag altered \n")
+}else if(user_RSB_decision=="S"){
+old_species=paste(unique(change_tagsp_df$species_binomial), collapse = " ")
+old_notes_sp=paste(unique(change_tagsp_df$notes), collapse = " ")
+new_species_name=readline(prompt = "Enter the new species binomial for above (CHECK SPELLING!!): \n")
+new_notes_sp=paste("Changed species_binomial from '", old_species, "' to '", new_species_name,"'.", sep="")
+change_tagsp_df$species_binomial=new_species_name
+change_tagsp_df$notes=paste(new_notes_sp, old_notes_sp, sep="; ")
+tag_edits_out[[i]]=change_tagsp_df
+cat("Species name altered \n")
+}else if(user_RSB_decision=="B"){
+old_tag=paste(unique(change_tagsp_df$enq),collapse = " ")
+old_notes_tag=paste(unique(change_tagsp_df$notes),collapse = " ")
+new_tag=paste(999999999,".", paste(i), ".", old_tag, sep="")
+new_notes_tag=paste("999999999 prefix added to duplicated tag number ", old_tag, ".", "Multiple duplicated tags are designated with a '..#.'", " Check if duplicated in field.", sep= "")
+old_species=paste(unique(change_tagsp_df$species_binomial), collapse = " ")
+old_notes_sp=paste(unique(change_tagsp_df$notes), collapse = " ")
+new_species_name=readline(prompt = "Enter the new species binomial for above (CHECK SPELLING!!): \n")
+new_notes_sp=paste("Changed species_binomial from '", old_species, "' to '", new_species_name,"'.", sep="")
+#Update FMSdat for the appropriate information
+change_tagsp_df$enq=new_tag
+change_tagsp_df$species_binomial=new_species_name
+change_tagsp_df$notes=paste(new_notes_tag, new_notes_sp, sep="; ")
+tag_edits_out[[i]]=change_tagsp_df
+cat("Tag and species name altered \n")
+}else if(user_RSB_decision=="DEL"){
+tag_edits_out[[i]]=change_tagsp_df[0,]
+cat("Rows deleted! \n")
+}else{
+cat("skip \n")
+}
+}
+#Combine any data that was changed
+tag_edits_out2=do.call("rbind", tag_edits_out)
+if(length(tag_edits_out2[,1])>0){
+tag_edits_out2$corrections=paste("edited data")
+#Add column to correct data
+correct_data$corrections=paste("correct data")
+#combines the new_dups, tag_edits_out, and correct_data to an output
+dup.tag.data_corrections=rbind(correct_data, tag_edits_out2)
+#Add column to data that was checked
+new_dups$corrections=paste("Duplicated data to remove")
+#combine new_dups and dup.tag.data_corrections
+dup.tag.data_out=rbind(dup.tag.data_corrections, new_dups)
+return(dup.tag.data_out)
+}else{
+#Add column to correct data
+correct_data$corrections=paste("correct data")
+#combines the new_dups, tag_edits_out, and correct_data to an output
+dup.tag.data_corrections=rbind(correct_data)
+#Add column to data that was checked
+new_dups$corrections=paste("Duplicated data to remove")
+#combine new_dups and dup.tag.data_corrections
+dup.tag.data_out=rbind(dup.tag.data_corrections, new_dups)
+return(dup.tag.data_out)
+}
+}else if(correct_rows[1]==""){
+#Do nothing, just return unedited duptags
+dup.tag.data_out=new_dups
+dup.tag.data_out$corrections=paste("Not changed, don't remove")
+return(dup.tag.data_out)
+cat("Skip")
+}
+}else{
+dup.tag.data_out=new_dups
+dup.tag.data_out$corrections=paste("Not changed, don't remove")
+return(dup.tag.data_out)
+cat("nothing to do...? \n")
+}
+}
+# -------------------------------------------------------------------------------
+#This is Function 8 from the Correcting_duplicated_stems_script.R
+#OK, In this script, I need to modify the Checking_and_correcting_duplicate_tags
+#Function so that it saves the data after every "error" is checked
+Checking_and_correcting_duplicate_tags=function(FMSdat){
+#FMSdat=CWTDat
+#Count number of tags for each species
+tag_count=aggregate(FMSdat$species_binomial, list(enq=FMSdat$enq), FUN=function(x)(length(unique(x))))
+#Get tags with counts of more than 1
+duptags=tag_count[which(tag_count$x>1),]
+#Count the number of tags recorded for each year
+tag_count_peryear=aggregate(FMSdat$site, list( census.year=FMSdat$census.year, enq=FMSdat$enq), length)
+#Get tags with more than 1 count per year
+duptags_peryear=tag_count_peryear[which(tag_count_peryear$x>1),]#there are up to 4 different measurements per year with the same enq # per site
+#combine duplicate tag data and get unique duplicated tags
+duptagslist=unique(c(duptags$enq, duptags_peryear$enq))
+#Loop through tags to check
+fmsdat.tagchecksout=list()
+for( i in 1:length( duptagslist)){
+dup.tag.data=FMSdat[which(FMSdat$enq %in% duptagslist[i]),]
+#Get the frequencies for each duplicate tag within its given line and it's distance
+Freq_df=data.frame(table(paste(dup.tag.data$line, dup.tag.data$distance, dup.tag.data$enq)))
+#Get the length of the unique frequencies
+LUF=length(unique(Freq_df$Freq))
+#If the length is 1, there are not different frequencies, so any stem could be erroneous
+#If the length is greater than 1, there are different frequencies, and the most frequent stem is assumed to be correct
+if(LUF==1){
+#SAME Frequency:
+#Get unique tags and line/distance/enq
+tag_ld=as.vector(unique(Freq_df$Var1))
+possible_tags=Find_possible_tags(tag_ld, FMSdat)
+plausible_year_data=Return_tags_with_plausible_years(possible_tags, FMSdat)
+#If the length of the plausible_year_data df is not zero, tags missing plausible years has been returned-> check to see if duplicated tag growth is plausible for these/this stem
+#If the length of the plausible_year_data df is zero, no data has been returned, use function to ask user to select data
+if(length(plausible_year_data[,1])>0){
+#Return data indicating if growth data is plausible:
+#returns T/F for plausible growth data, the plausible tag #, and the duplicate tag's line, distance, and enq
+plausible_growth_data=Plausible_growth_sp_matches(plausible_year_data, FMSdat)
+#Find and alter any potentially plausible data - function will ask for user input
+altered_or_not=Find_and_alter(plausible_growth_data, FMSdat)
+plausible_changes_made_df=altered_or_not[[2]]
+#For any dup tags that contained no plausible data, user is prompted to check data and make changes
+#Output is data frame
+user_prompted_changes=Prompt_user_to_alter_duplicates(altered_or_not[[1]], dup.tag.data, FMSdat)
+#Combine outputs
+fmsdat.tagchecksout[[i]]=rbind(user_prompted_changes, plausible_changes_made_df)
+}else if(length(plausible_year_data[,1])==0){
+duptags_changed_out=Change_tag_species_prompts(dup.tag.data, FMSdat)
+fmsdat.tagchecksout[[i]]=duptags_changed_out
+}
+}else if(LUF>1){
+#DIFFERENT Frequency
+#Get the location data for the individual with the greatest frequncy
+correct_loc=Freq_df[-which(Freq_df$Freq==max(Freq_df$Freq)),]$Var1
+correct_df=FMSdat[which(paste(FMSdat$line, FMSdat$distance, FMSdat$enq)==correct_loc),]
+incorrect_loc=as.vector(Freq_df[-which(Freq_df$Freq==max(Freq_df$Freq)),]$Var1)
+incorrect_df=FMSdat[which(paste(FMSdat$line, FMSdat$distance, FMSdat$enq) %in% incorrect_loc),]
+possible_tags=Find_possible_tags(incorrect_loc, FMSdat)
+plausible_year_data=Return_tags_with_plausible_years(possible_tags, FMSdat)
+#remove any years that are NA
+plausible_year_data=plausible_year_data[-is.na(plausible_year_data$census.year),]
+if(length(plausible_year_data[,1])>0){
+#Return data indicating if growth data is plausible
+plausible_growth_data=Plausible_growth_sp_matches(plausible_year_data, FMSdat)
+#Find and alter any potentially plausible data - function will ask for user input
+altered_or_not=Find_and_alter(plausible_growth_data, FMSdat)
+plausible_changes_made_df=altered_or_not[[2]]
+#For any dup tags that contained no plausible data, user is prompted to check data and make changes
+#Output is data frame
+user_prompted_changes=Prompt_user_to_alter_duplicates(altered_or_not[[1]], dup.tag.data, FMSdat)
+#Combine outputs
+fmsdat.tagchecksout[[i]]=rbind(user_prompted_changes, plausible_changes_made_df)
+}else if(length(plausible_year_data[,1])==0){
+duptags_changed_out=Change_tag_species_prompts(dup.tag.data, FMSdat)
+fmsdat.tagchecksout[[i]]=duptags_changed_out
+}
+}
+#get name of df and
+date_name=gsub(" ", "_", format(Sys.time(), "%b %d %Y"))
+Site_name=deparse(substitute(FMSdat))
+filename=paste(Site_name, date_name, sep="_")
+filenamecsv=paste(filename, ".csv", sep="")
+#assign(Site_name, FMSdat, envir=.GlobalEnv)
+#Site_name<<-FMSdat
+write.csv(FMSdat, file = filenamecsv, row.names = FALSE)
+cat("Saved", i)
+}
+correctionsTBM=do.call("rbind",fmsdat.tagchecksout)
+return(correctionsTBM)
+}
+dup.tag.data=FMSdat[which(FMSdat$enq %in% duptagslist[5]),]
+#Get the frequencies for each duplicate tag within its given line and it's distance
+Freq_df=data.frame(table(paste(dup.tag.data$line, dup.tag.data$distance, dup.tag.data$enq)))
+#Get the length of the unique frequencies
+LUF=length(unique(Freq_df$Freq))
+LUF
+LUF>1
+#DIFFERENT Frequency
+#Get the location data for the individual with the greatest frequncy
+correct_loc=Freq_df[-which(Freq_df$Freq==max(Freq_df$Freq)),]$Var1
+correct_df=FMSdat[which(paste(FMSdat$line, FMSdat$distance, FMSdat$enq)==correct_loc),]
+incorrect_loc=as.vector(Freq_df[-which(Freq_df$Freq==max(Freq_df$Freq)),]$Var1)
+incorrect_df=FMSdat[which(paste(FMSdat$line, FMSdat$distance, FMSdat$enq) %in% incorrect_loc),]
+possible_tags=Find_possible_tags(incorrect_loc, FMSdat)
+plausible_year_data=Return_tags_with_plausible_years(possible_tags, FMSdat)
+#remove any years that are NA
+plausible_year_data=plausible_year_data[-is.na(plausible_year_data$census.year),]
+plausible_year_data
+#remove any years that are NA
+plausible_year_data=plausible_year_data[-is.na(plausible_year_data$census.year),]
+plausible_year_data
+length(plausible_year_data[,1])==0
+duptags_changed_out=Change_tag_species_prompts(dup.tag.data, FMSdat)
+duptags_changed_out
+duptags_changed_out=Change_tag_species_prompts(dup.tag.data, FMSdat)
+duptags_changed_out
+# -------------------------------------------------------------------------------
+#This is Function 8 from the Correcting_duplicated_stems_script.R
+#OK, In this script, I need to modify the Checking_and_correcting_duplicate_tags
+#Function so that it saves the data after every "error" is checked
+Checking_and_correcting_duplicate_tags=function(FMSdat){
+#FMSdat=CWTDat
+#Count number of tags for each species
+tag_count=aggregate(FMSdat$species_binomial, list(enq=FMSdat$enq), FUN=function(x)(length(unique(x))))
+#Get tags with counts of more than 1
+duptags=tag_count[which(tag_count$x>1),]
+#Count the number of tags recorded for each year
+tag_count_peryear=aggregate(FMSdat$site, list( census.year=FMSdat$census.year, enq=FMSdat$enq), length)
+#Get tags with more than 1 count per year
+duptags_peryear=tag_count_peryear[which(tag_count_peryear$x>1),]#there are up to 4 different measurements per year with the same enq # per site
+#combine duplicate tag data and get unique duplicated tags
+duptagslist=unique(c(duptags$enq, duptags_peryear$enq))
+#Loop through tags to check
+fmsdat.tagchecksout=list()
+for( i in 1:length( duptagslist)){
+dup.tag.data=FMSdat[which(FMSdat$enq %in% duptagslist[i]),]
+#Get the frequencies for each duplicate tag within its given line and it's distance
+Freq_df=data.frame(table(paste(dup.tag.data$line, dup.tag.data$distance, dup.tag.data$enq)))
+#Get the length of the unique frequencies
+LUF=length(unique(Freq_df$Freq))
+#If the length is 1, there are not different frequencies, so any stem could be erroneous
+#If the length is greater than 1, there are different frequencies, and the most frequent stem is assumed to be correct
+if(LUF==1){
+#SAME Frequency:
+#Get unique tags and line/distance/enq
+tag_ld=as.vector(unique(Freq_df$Var1))
+possible_tags=Find_possible_tags(tag_ld, FMSdat)
+plausible_year_data=Return_tags_with_plausible_years(possible_tags, FMSdat)
+#If the length of the plausible_year_data df is not zero, tags missing plausible years has been returned-> check to see if duplicated tag growth is plausible for these/this stem
+#If the length of the plausible_year_data df is zero, no data has been returned, use function to ask user to select data
+if(length(plausible_year_data[,1])>0){
+#Return data indicating if growth data is plausible:
+#returns T/F for plausible growth data, the plausible tag #, and the duplicate tag's line, distance, and enq
+plausible_growth_data=Plausible_growth_sp_matches(plausible_year_data, FMSdat)
+#Find and alter any potentially plausible data - function will ask for user input
+altered_or_not=Find_and_alter(plausible_growth_data, FMSdat)
+plausible_changes_made_df=altered_or_not[[2]]
+#For any dup tags that contained no plausible data, user is prompted to check data and make changes
+#Output is data frame
+user_prompted_changes=Prompt_user_to_alter_duplicates(altered_or_not[[1]], dup.tag.data, FMSdat)
+#Combine outputs
+fmsdat.tagchecksout[[i]]=rbind(user_prompted_changes, plausible_changes_made_df)
+}else if(length(plausible_year_data[,1])==0){
+duptags_changed_out=Change_tag_species_prompts(dup.tag.data, FMSdat)
+fmsdat.tagchecksout[[i]]=duptags_changed_out
+}
+}else if(LUF>1){
+#DIFFERENT Frequency
+#Get the location data for the individual with the greatest frequncy
+correct_loc=Freq_df[-which(Freq_df$Freq==max(Freq_df$Freq)),]$Var1
+correct_df=FMSdat[which(paste(FMSdat$line, FMSdat$distance, FMSdat$enq)==correct_loc),]
+incorrect_loc=as.vector(Freq_df[-which(Freq_df$Freq==max(Freq_df$Freq)),]$Var1)
+incorrect_df=FMSdat[which(paste(FMSdat$line, FMSdat$distance, FMSdat$enq) %in% incorrect_loc),]
+possible_tags=Find_possible_tags(incorrect_loc, FMSdat)
+plausible_year_data=Return_tags_with_plausible_years(possible_tags, FMSdat)
+#remove any years that are NA
+plausible_year_data=plausible_year_data[-is.na(plausible_year_data$census.year),]
+if(length(plausible_year_data[,1])>0){
+#Return data indicating if growth data is plausible
+plausible_growth_data=Plausible_growth_sp_matches(plausible_year_data, FMSdat)
+#Find and alter any potentially plausible data - function will ask for user input
+altered_or_not=Find_and_alter(plausible_growth_data, FMSdat)
+plausible_changes_made_df=altered_or_not[[2]]
+#For any dup tags that contained no plausible data, user is prompted to check data and make changes
+#Output is data frame
+user_prompted_changes=Prompt_user_to_alter_duplicates(altered_or_not[[1]], dup.tag.data, FMSdat)
+#Combine outputs
+fmsdat.tagchecksout[[i]]=rbind(user_prompted_changes, plausible_changes_made_df)
+}else if(length(plausible_year_data[,1])==0){
+duptags_changed_out=Change_tag_species_prompts(dup.tag.data, FMSdat)
+fmsdat.tagchecksout[[i]]=duptags_changed_out
+}
+}
+#get name of df and
+date_name=gsub(" ", "_", format(Sys.time(), "%b %d %Y"))
+Site_name=deparse(substitute(FMSdat))
+filename=paste(Site_name, date_name, sep="_")
+filenamecsv=paste(filename, ".csv", sep="")
+#assign(Site_name, FMSdat, envir=.GlobalEnv)
+#Site_name<<-FMSdat
+write.csv(FMSdat, file = filenamecsv, row.names = FALSE)
+cat("Saved", i)
+}
+correctionsTBM=do.call("rbind",fmsdat.tagchecksout)
+return(correctionsTBM)
+}
+?save

@@ -1,0 +1,842 @@
+cwt.2020.1=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/CWT.2020RecensusPlot1.csv",fileEncoding="latin1")
+head(cwt.2020.1)
+str(cwt.2020.1)
+colnames(cwt.2020.1)[1]="id"
+
+unique(cwt.2020.1$dateyyyymmdd)
+
+unique(cwt.2020.1$main)
+cwt.2020.1[which(cwt.2020.1$main=="" | cwt.2020.1$main=="na"),]$main="NA"
+unique(cwt.2020.1$main)
+cwt.2020.1$main=as.numeric(cwt.2020.1$main)
+
+unique(cwt.2020.1$line)
+cwt.2020.1[which(cwt.2020.1$line==""),]$line="NA"
+unique(cwt.2020.1$line)
+cwt.2020.1$line=as.numeric(cwt.2020.1$line)
+
+
+str(cwt.2020.1)
+unique(cwt.2020.1$y10dgh)
+cwt.2020.1[which(cwt.2020.1$y10dgh==".." | cwt.2020.1$y10dgh=="É" | cwt.2020.1$y10dgh=="...." | cwt.2020.1$y10dgh==""),]$y10dgh="NA"
+unique(cwt.2020.1$y10dgh)
+cwt.2020.1$y10dgh=as.numeric(cwt.2020.1$y10dgh)
+
+unique(cwt.2020.1$y10dbh)
+cwt.2020.1[which(cwt.2020.1$y10dbh=="." | cwt.2020.1$y10dbh==".." | cwt.2020.1$y10dbh=="É" | cwt.2020.1$y10dbh=="...." | cwt.2020.1$y10dbh=="......" |  cwt.2020.1$y10dbh=="..." | cwt.2020.1$y10dbh==""),]$y10dbh="NA"
+unique(cwt.2020.1$y10dbh)
+cwt.2020.1$y10dbh=as.numeric(cwt.2020.1$y10dbh)
+
+unique(cwt.2020.1$pom)
+
+unique(cwt.2020.1$dtn)
+str(cwt.2020.1)
+
+#########################################################################################################################
+cwt.2020.2=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/CWT.2020RecensusPlot2.csv",fileEncoding="latin1")
+head(cwt.2020.2)
+str(cwt.2020.2)
+
+unique(cwt.2020.2$dateyyyymmdd)
+
+unique(cwt.2020.2$main)
+cwt.2020.2[which(cwt.2020.2$main=="" | cwt.2020.2$main=="na"),]$main="NA"
+unique(cwt.2020.1$main)
+cwt.2020.2$main=as.numeric(cwt.2020.2$main)
+
+unique(cwt.2020.2$line)
+
+str(cwt.2020.2)
+unique(cwt.2020.2$y10dgh)
+cwt.2020.2[which(cwt.2020.2$y10dgh=="." | cwt.2020.2$y10dgh==""),]$y10dgh="NA"
+unique(cwt.2020.2$y10dgh)
+cwt.2020.2$y10dgh=as.numeric(cwt.2020.2$y10dgh)
+
+unique(cwt.2020.2$y10dbh)
+cwt.2020.2[which(cwt.2020.2$y10dbh=="." | cwt.2020.2$y10dbh==".." | cwt.2020.2$y10dbh=="É" | cwt.2020.2$y10dbh=="...." | cwt.2020.2$y10dbh=="......" |  cwt.2020.2$y10dbh=="..." | cwt.2020.2$y10dbh==""),]$y10dbh="NA"
+unique(cwt.2020.2$y10dbh)
+cwt.2020.2$y10dbh=as.numeric(cwt.2020.2$y10dbh)
+
+unique(cwt.2020.2$pom)
+
+unique(cwt.2020.2$dtn)
+str(cwt.2020.2)
+
+#########################################################################################################################
+cwt.2020.3=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/CWT.2020RecensusPlot3.csv",fileEncoding="latin1")
+head(cwt.2020.3)
+str(cwt.2020.3)
+colnames(cwt.2020.3)[2]="site"
+unique(cwt.2020.3$dateyyyymmdd)
+
+unique(cwt.2020.3$main)
+cwt.2020.3[which(cwt.2020.3$main=="" | cwt.2020.3$main=="na"),]$main="NA"
+unique(cwt.2020.3$main)
+cwt.2020.3$main=as.numeric(cwt.2020.3$main)
+
+unique(cwt.2020.3$line)
+cwt.2020.3[which(cwt.2020.3$line=="\\//\\\\\\\\\\\\\\\\\\\\\\/////////////////////////////////////////" | cwt.2020.3$y10dgh=="\\////////////////////////////////////////\\\\\\\\\\\\\\\\\\///////////"),]$y10dgh="NA"
+unique(cwt.2020.3$y10dgh)
+cwt.2020.3$y10dgh=as.numeric(cwt.2020.3$y10dgh)
+
+str(cwt.2020.3)
+unique(cwt.2020.3$y10dgh)
+#cwt.2020.3[which(cwt.2020.3$y10dgh=="" | cwt.2020.3$y10dgh==""),]$y10dgh="NA"
+unique(cwt.2020.3$y10dgh)
+cwt.2020.3$y10dgh=as.numeric(cwt.2020.3$y10dgh)
+
+unique(cwt.2020.3$y10dbh)
+cwt.2020.3$y10dbh=as.numeric(cwt.2020.3$y10dbh)
+
+unique(cwt.2020.3$pom)
+cwt.2020.3$pom=as.numeric(cwt.2020.3$pom)
+
+unique(cwt.2020.3$dtn)
+str(cwt.2020.3)
+
+#########################################################################################################################
+cwt.2020.4=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/CWT.Recensus2020Plot4.csv",fileEncoding="latin1")
+head(cwt.2020.4)
+str(cwt.2020.4)
+colnames(cwt.2020.4)[2]="site"
+
+unique(cwt.2020.4$dateyyyymmdd)
+
+unique(cwt.2020.4$main)
+cwt.2020.4[which(cwt.2020.4$main=="" | cwt.2020.4$main=="na"),]$main="NA"
+unique(cwt.2020.4$main)
+cwt.2020.4$main=as.numeric(cwt.2020.4$main)
+
+unique(cwt.2020.4$line)
+#cwt.2020.4[which(cwt.2020.4$line=="NA"),]$y10dgh="NA"
+unique(cwt.2020.4$y10dgh)
+cwt.2020.4$y10dgh=as.numeric(cwt.2020.4$y10dgh)
+
+str(cwt.2020.4)
+unique(cwt.2020.4$y10dgh)
+#cwt.2020.3[which(cwt.2020.3$y10dgh=="" | cwt.2020.3$y10dgh==""),]$y10dgh="NA"
+unique(cwt.2020.4$y10dgh)
+cwt.2020.4$y10dgh=as.numeric(cwt.2020.4$y10dgh)
+
+unique(cwt.2020.4$y10dbh)
+cwt.2020.4$y10dbh=as.numeric(cwt.2020.4$y10dbh)
+
+unique(cwt.2020.4$pom)
+cwt.2020.4$pom=as.numeric(cwt.2020.4$pom)
+
+unique(cwt.2020.4$dtn)
+str(cwt.2020.4)
+
+#########################################################################################################################
+cwt.2020.5=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/CWT.Recensus2020Plot5.csv",fileEncoding="latin1")
+head(cwt.2020.5)
+str(cwt.2020.5)
+colnames(cwt.2020.5)[2]="site"
+
+unique(cwt.2020.5$dateyyyymmdd)
+
+unique(cwt.2020.5$main)
+cwt.2020.5[which(cwt.2020.5$main=="" | cwt.2020.5$main=="na"),]$main="NA"
+unique(cwt.2020.5$main)
+cwt.2020.5$main=as.numeric(cwt.2020.5$main)
+
+unique(cwt.2020.5$line)
+
+unique(cwt.2020.5$y10dgh)
+cwt.2020.5[which(cwt.2020.5$y10dgh=="" | cwt.2020.5$y10dgh=="....."),]$y10dgh="NA"
+cwt.2020.5$y10dgh=as.numeric(cwt.2020.5$y10dgh)
+
+str(cwt.2020.5)
+unique(cwt.2020.5$y10dgh)
+
+unique(cwt.2020.5$y10dbh)
+cwt.2020.5[which(cwt.2020.5$y10dbh=="" | cwt.2020.5$y10dbh=="....."),]$y10dbh="NA"
+cwt.2020.5$y10dbh=as.numeric(cwt.2020.5$y10dbh)
+
+
+unique(cwt.2020.5$pom)
+cwt.2020.5$pom=as.numeric(cwt.2020.5$pom)
+
+unique(cwt.2020.5$dtn)
+str(cwt.2020.4)
+
+
+CWT.2020=rbind(cwt.2020.1, cwt.2020.2[,-c(23)], cwt.2020.3, cwt.2020.4, cwt.2020.5)
+CWT.2020$status=NA
+unique(CWT.2020$y10dgh)
+CWT.2020$mort.=gsub("#", "", CWT.2020$mort.)
+CWT.2020$mort.=gsub("2021", "2020", CWT.2020$mort.)
+unique(CWT.2020[ which( is.na(CWT.2020$y10dgh) & is.na(CWT.2020$y10dbh)),]$mort.)
+CWT.2020[ which( is.na(CWT.2020$y10dgh) & is.na(CWT.2020$y10dbh)),]$mort.
+CWT.2020[ intersect(which( is.na(CWT.2020$y10dgh) & is.na(CWT.2020$y10dbh)), grep("2020", CWT.2020$mort.)) , ]$status="D"
+CWT.2020[ which( !is.na(CWT.2020$y10dgh) | !is.na(CWT.2020$y10dbh)) , ]$status="A"
+#CWT.2020[ which( !is.na(CWT.2020$y10dgh) | !is.na(CWT.2020$y10dbh)),  ]$status="D"
+CWT.2020[grep("dead", CWT.2020$y10notes),]$status="D"
+CWT.2020[grep("not", CWT.2020$y10notes),]$status="M"
+CWT.2020[grep("not in 3", CWT.2020$y10notes),]$status="A"
+
+unique(CWT.2020[grep("in trans", CWT.2020$y10notes),]$y10notes)
+CWT.2020[grep("in transect 7", CWT.2020$y10notes),]$line=7
+CWT.2020[grep("in transect 6", CWT.2020$y10notes),]$line=6
+CWT.2020[grep("in transect 8", CWT.2020$y10notes),]$line=8
+CWT.2020[grep("in transect8", CWT.2020$y10notes),]$line=8
+CWT.2020[grep("in transect6", CWT.2020$y10notes),]$line=6
+CWT.2020[grep("in transect 4", CWT.2020$y10notes),]$line=4
+CWT.2020[grep("in transect 2 ", CWT.2020$y10notes),]$line=2
+CWT.2020[grep("in transect 10", CWT.2020$y10notes),]$line=10
+CWT.2020[grep("in transect 3", CWT.2020$y10notes),]$line=3
+CWT.2020[grep("in transect 5", CWT.2020$y10notes),]$line=5
+
+unique(CWT.2020[grep("line", CWT.2020$y10notes),]$y10notes)
+CWT.2020[grep("line 1", CWT.2020$y10notes),]$line="1"
+CWT.2020[grep("line 2", CWT.2020$y10notes),]$line="2"
+CWT.2020[grep("line 3", CWT.2020$y10notes),]$line="3"
+CWT.2020[grep("line 4", CWT.2020$y10notes),]$line="4"
+CWT.2020[grep("line 5", CWT.2020$y10notes),]$line="5"
+CWT.2020[grep("line 6", CWT.2020$y10notes),]$line="6"
+CWT.2020[grep("line 7", CWT.2020$y10notes),]$line="7"
+CWT.2020[grep("line 8", CWT.2020$y10notes),]$line="8"
+CWT.2020[grep("line 9", CWT.2020$y10notes),]$line="9"
+
+CWT.2020[grep("can't", CWT.2020$y10notes),]$status="M"
+CWT.2020[grep("cant", CWT.2020$y10notes),]$status="M"
+
+unique(CWT.2020[grep("main", CWT.2020$y10notes),]$y10notes)
+CWT.2020[grep("main 776", CWT.2020$y10notes),]$main=776
+CWT.2020[grep("main 764", CWT.2020$y10notes),]$main=764
+CWT.2020[grep("main 659", CWT.2020$y10notes),]$main=659
+CWT.2020[grep("main 661", CWT.2020$y10notes),]$main=661
+CWT.2020[grep("main 1021", CWT.2020$y10notes),]$main=1021
+CWT.2020[grep("main 751", CWT.2020$y10notes),]$main=751
+CWT.2020[grep("main 814", CWT.2020$y10notes),]$main=814
+CWT.2020[grep("main 678", CWT.2020$y10notes),]$main=678
+CWT.2020[grep("main 3151", CWT.2020$y10notes),]$main=3151
+CWT.2020[grep("main 151", CWT.2020$y10notes),]$main=151
+CWT.2020[grep("main 2096", CWT.2020$y10notes),]$main=2096
+str(CWT.2020)
+
+pl=length(CWT.2020$id)
+CWT2020=data.frame(id=CWT.2020$id, site=rep("Coweeta LTER", pl), plot=CWT.2020$plot, date=rep(NA, pl), census.year=rep(10, pl), date.year=rep(2020, pl), 
+                   date.month=rep(09, pl), 
+                   date.day=rep(15, pl), 
+                   census.year.1=rep(10, pl),  date.year.1=rep(2020, pl), 
+                   date.month.1=rep(09, pl), 
+                   julian=rep(NA, pl), year=rep(2020, pl), latitude=rep(NA, pl), longitude=rep(NA,pl),
+                   elevation=rep(NA, pl), line=CWT.2020$line, main=CWT.2020$main, lter=CWT.2020$lter, enq=CWT.2020$enq, distance=CWT.2020$dist., location=CWT.2020$loc., species_binomial=CWT.2020$species_binomial,
+                   genus=gsub(" .*","", CWT.2020$species_binomial), species=CWT.2020$species_binomial, family=rep(NA,pl), morpho=rep(NA,pl), habit=rep(NA,pl), authority=rep(NA,pl), determiner=rep(NA,pl), dbh=CWT.2020$y10dbh, dgh=CWT.2020$y10dgh, 
+                   mortality=CWT.2020$mort., error=rep(NA, pl), dendro=CWT.2020$y10dend, y2_recorder=rep(NA, pl), y2_tagger=rep(NA, pl), y2_measurer=rep(NA, pl), dtn=CWT.2020$dtn, pom=CWT.2020$pom, notes=CWT.2020$y10notes,
+                   biomass=rep(NA, pl), sampled=rep(NA, pl), angle=rep(NA, pl), location2=CWT.2020$loc., cloth_tape=rep(NA, pl), rufino=rep(NA, pl), vnum=rep(NA, pl), wood_density=rep(NA, pl), status=rep(NA, pl),
+                   error.check=rep(NA, pl), mortality.year=rep(NA, pl), revised.main=rep(NA, pl))
+
+sort(unique(CWT2020$distance))
+CWT2020[which(CWT2020$distance=="/"),]$distance=NA
+CWT2020[which(CWT2020$distance==""),]$distance=NA
+CWT2020$distance=as.numeric(CWT2020$distance)
+unique(CWT2020$dendro)
+
+sort(unique(CWT2020$lter))
+CWT2020[which(CWT2020$lter=="\\\\"),]$lter=NA
+CWT2020[which(CWT2020$lter==""),]$lter=NA
+CWT2020$lter=as.numeric(CWT2020$lter)
+unique(CWT2020$dendro)
+
+sort(unique(CWT2020$enq))
+CWT2020[which(CWT2020$enq=="" | CWT2020$enq=="?" | CWT2020$enq=="\\/"),]$enq=NA
+CWT2020$enq=as.numeric(CWT2020$enq)
+
+sort(unique(CWT2020$main))
+
+
+sort(unique(CWT2020$line))
+CWT2020[which(CWT2020$line=="" | CWT2020$line=="\\//\\\\\\\\\\\\\\\\\\\\\\/////////////////////////////////////////" | CWT2020$line=="\\////////////////////////////////////////\\\\\\\\\\\\\\\\\\///////////"),]$line=NA
+CWT2020$line=as.numeric(CWT2020$line)
+
+setwd("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/")
+
+
+#########################################################################################################################
+bci.2020=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/BCI.2020.Recensus.datasheet.complete.csv")
+str(bci.2020)
+
+pl=length(bci.2020$ID)
+BCI2020=data.frame(id=bci.2020$ID, site=rep("Barro Colorado Island", pl), plot=bci.2020$plot, date=rep(NA, pl), census.year=rep(10, pl), date.year=rep(2020, pl), 
+                   date.month=rep(02, pl), 
+                   date.day=rep(15, pl), 
+                   census.year.1=rep(10, pl),  date.year.1=rep(2020, pl), 
+                   date.month.1=rep(02, pl), 
+                   julian=rep(NA, pl), year=rep(2020, pl), latitude=rep(NA, pl), longitude=rep(NA,pl),
+                   elevation=rep(NA, pl), line=bci.2020$line, main=bci.2020$Main, lter=rep(NA,pl), enq=bci.2020$Tag.., distance=bci.2020$dist, location=bci.2020$loc., species_binomial=bci.2020$binom.,
+                   genus=gsub(" .*","", bci.2020$binom.), species=bci.2020$binom., family=rep(NA,pl), morpho=rep(NA,pl), habit=rep(NA,pl), authority=rep(NA,pl), determiner=rep(NA,pl), dbh=bci.2020$y6_dbh, dgh=bci.2020$y6_dgh, 
+                   mortality=bci.2020$mort., error=rep(NA, pl), dendro=bci.2020$dendro, y2_recorder=rep(NA, pl), y2_tagger=rep(NA, pl), y2_measurer=rep(NA, pl), dtn=bci.2020$dtn, pom=bci.2020$pom, notes=bci.2020$y6_notes,
+                   biomass=rep(NA, pl), sampled=rep(NA, pl), angle=rep(NA, pl), location2=bci.2020$loc., cloth_tape=rep(NA, pl), rufino=rep(NA, pl), vnum=rep(NA, pl), wood_density=rep(NA, pl), status=rep(NA, pl),
+                   error.check=rep(NA, pl), mortality.year=rep(NA, pl), revised.main=rep(NA, pl))
+str(BCI2020)
+unique(BCI2020$id)
+unique(BCI2020$line)
+BCI2020[grep("or", BCI2020$line),]$notes="check.line"
+BCI2020[grep("or", BCI2020$line),]$line=NA
+BCI2020$line=as.integer(BCI2020$line)
+
+unique(BCI2020$main)
+BCI2020$main=as.integer(BCI2020$main)
+
+unique(BCI2020$dgh)
+BCI2020[grep("0/9", BCI2020$dgh),]$dgh=0.9
+BCI2020[which(BCI2020$dgh==""),]$dgh=NA
+BCI2020[which(BCI2020$dgh=="Dead"),]$status="D"
+BCI2020[which(BCI2020$dgh=="Dead"),]$dbh=NA
+BCI2020[which(BCI2020$dgh=="Dead"),]$dgh=NA
+BCI2020[which(BCI2020$dgh=="NF"),]$status="M"
+BCI2020[which(BCI2020$dgh=="NF"),]$dgh=NA
+BCI2020$dgh=as.numeric(BCI2020$dgh)
+
+sort(unique(BCI2020$dbh))
+unique(BCI2020$dbh)
+BCI2020[which(BCI2020$dbh==""),]$dbh=NA
+BCI2020[which(BCI2020$dbh=="Dead"),]$status="D"
+BCI2020[which(BCI2020$dbh=="Dead"),]$dgh=NA
+BCI2020[which(BCI2020$dbh=="Dead"),]$dbh=NA
+BCI2020[which(BCI2020$dbh=="NF"),]$status="M"
+BCI2020[which(BCI2020$dbh=="NF"),]$dbh=NA
+#BCI2020[which(BCI2020$dbh=="z1.1"),]$enq
+#BCI2020[which(BCI2020$dbh=="z1.1"),]$status="A"
+BCI2020[which(BCI2020$dbh=="z1.1"),]$dbh=2.1
+BCI2020$dbh=as.numeric(BCI2020$dbh)
+
+str(BCI2020)
+unique(BCI2020$dtn)
+
+unique(BCI2020$pom)
+BCI2020[which(BCI2020$pom=="BLAZED"),]$notes="pom is blazed"
+BCI2020[which(BCI2020$pom=="BLAZED"),]$pom=NA
+BCI2020[which(BCI2020$pom==""),]$pom=NA
+BCI2020$pom=as.numeric(BCI2020$pom)
+
+unique(BCI2020$mortality)
+BCI2020[which(BCI2020$mortality==""),]$mortality=NA
+BCI2020[which(BCI2020$mortality==" "),]$mortality=NA
+BCI2020[which(BCI2020$mortality=="02_2020"),]$status="D"
+BCI2020[which(BCI2020$mortality=="02_2021"),]$mortality="02_2020"
+BCI2020[which(BCI2020$mortality=="02_2022"),]$mortality="02_2020"
+BCI2020[which(BCI2020$mortality=="02_2023"),]$mortality="02_2020"
+BCI2020[which(BCI2020$mortality=="02_2020"),]$status="D"
+BCI2020[which(BCI2020$mortality=="Dead"),]$status="D"
+BCI2020[intersect(grep("ot", BCI2020$notes), grep("ound", BCI2020$notes)),][-c(389),]$status="M"
+BCI2020[intersect(grep("ot", BCI2020$notes), grep("ound", BCI2020$notes)),]$notes
+
+#BCI2020[which(BCI2020$pom==""),]$pom=NA
+
+str(BCI2020)
+unique(BCI2020$notes)
+BCI2020$pom=as.numeric(BCI2020$pom)
+
+unique(BCI2020[grep("Main", BCI2020$notes),]$notes)
+#strsplit( BCI2020[grep("main", BCI2020$notes),]$notes, '=')[c(1,4:6)]
+BCI2020[grep("main", BCI2020$notes),][c(1,4:6),]$main=as.numeric(gsub(" ", "", do.call("rbind", strsplit( BCI2020[grep("main", BCI2020$notes),]$notes, '=')[c(1,4:6)] )[,2] )) #[,2]
+
+unique(BCI2020[grep("Main", BCI2020$notes),]$notes)
+BCI2020[grep("Main", BCI2020$notes),][-c(1,4:7,9,18,28:31,34,70),]$main
+BCI2020[grep("Main", BCI2020$notes),][-c(1,4:7,9,18,28:31,34,70),]$main=as.numeric(gsub(",Tagremoved", "", gsub(" ", "", do.call("rbind", strsplit( BCI2020[grep("Main", BCI2020$notes),]$notes, '='))[-c(1,4:7,9,18,28:31,34,70), 2]) ))
+
+unique(BCI2020[grep("Main", BCI2020$notes),]$notes)
+
+BCI2020[grep("main", BCI2020$notes),]$notes
+
+BCI2020[which( !is.na(BCI2020$dbh) | !is.na(BCI2020$dgh) ),]$status="A"
+unique(BCI2020[ intersect( which(is.na(BCI2020$status)), unique(c( grep("ume", BCI2020$notes), grep("dead", BCI2020$notes)))) ,]$status)
+BCI2020[ intersect( which(is.na(BCI2020$status)), unique(c( grep("ume", BCI2020$notes), grep("dead", BCI2020$notes)))) ,]$status="D"
+
+unique(BCI2020[grep("dead", BCI2020$notes),]$notes)
+BCI2020[ intersect(which(is.na(BCI2020$status)),grep("Dead", BCI2020$notes) ),]$status="D"
+unique(BCI2020[which(is.na(BCI2020$status)),]$notes)
+BCI2020[grep("oo small", BCI2020$notes),]$status="D"
+unique(BCI2020[which(is.na(BCI2020$status)),]$notes)
+BCI2020[ intersect(which(is.na(BCI2020$dgh)) , c(grep("ag Found", BCI2020$notes), grep("ag found", BCI2020$notes))),]$status="D"
+unique(BCI2020[which(is.na(BCI2020$status)),]$notes)
+
+BCI2020[ intersect(which(is.na(BCI2020$status)), grep("tag", BCI2020$notes)) ,]$notes=paste("Adjust tag in database", BCI2020[ intersect(which(is.na(BCI2020$status)), grep("tag", BCI2020$notes)) ,]$notes)
+
+
+unique(BCI2020$notes)
+str(BCI2020$dbh)
+str(BCI2020$dgh)
+
+#########################################################################################################################
+nwt1.2020=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/Niwot_1.csv")
+nwt2.2020=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/Niwot_2.csv")
+nwt3.2020=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/Niwot_3.csv")
+nwt4.2020=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/Niwot_4.csv")
+nwt5.2020=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/Niwot_5.csv")
+NWT.2020=rbind(nwt1.2020, nwt2.2020, nwt3.2020, nwt4.2020, nwt5.2020)
+str(NWT.2020)
+
+pl=length(NWT.2020$id)
+unique(NWT.2020$y9_date)
+NWT.2020$y9_date=gsub("-", "", NWT.2020$y9_date)
+
+NWT2020=data.frame(id=NWT.2020$id, site=rep("Niwot Ridge LTER", pl), plot=NWT.2020$plot, date=NWT.2020$y9_date, census.year=rep(9, pl), date.year=substr(as.character(NWT.2020$y9_date), 5, 8), 
+                   date.month=substr(as.character(NWT.2020$y9_date), 1, 2),
+                   date.day=substr(as.character(NWT.2020$y9_date), 3, 4),
+                   census.year.1=rep(10, pl),  date.year.1=rep(2020, pl), 
+                   date.month.1=substr(as.character(NWT.2020$y9_date), 1, 2),
+                   julian=rep(NA, pl), year=substr(as.character(NWT.2020$y9_date), 5, 8),  latitude=rep(NA, pl), longitude=rep(NA,pl),
+                   elevation=rep(NA, pl), line=NWT.2020$line, main=NWT.2020$main, lter=NWT.2020$lter, enq=NWT.2020$enq, distance=NWT.2020$distance, location=NWT.2020$location, species_binomial=NWT.2020$species_binomial,
+                   genus=gsub(" .*","", NWT.2020$species_binomial), species=NWT.2020$species_binomial, family=rep(NA,pl), morpho=NWT.2020$morpho, habit=rep(NA,pl), authority=rep(NA,pl), determiner=rep(NA,pl), dbh=NWT.2020$y9_dbh, dgh=NWT.2020$y9_dgh, 
+                   mortality=NWT.2020$main, error=NWT.2020$error, dendro=NWT.2020$dendro_measure, y2_recorder=rep(NA, pl), y2_tagger=NWT.2020$dendro_measure, y2_measurer=rep(NA, pl), dtn=NWT.2020$dtn, pom=NWT.2020$pom, notes=NWT.2020$y9_notes,
+                   biomass=rep(NA, pl), sampled=rep(NA, pl), angle=rep(NA, pl), location2=NWT.2020$location, cloth_tape=rep(NA, pl), rufino=rep(NA, pl), vnum=rep(NA, pl), wood_density=rep(NA, pl), status=rep(NA, pl),
+                   error.check=rep(NA, pl), mortality.year=rep(NA, pl), revised.main=rep(NA, pl))
+str(NWT2020)
+NWT2020$date=paste(NWT2020$date.year, NWT2020$date.month, NWT2020$date.day, sep="")
+
+NWT2020[which( !is.na(NWT2020$dbh) | !is.na(NWT2020$dgh)),]$status="A"
+
+unique(NWT2020$notes)
+unique( NWT2020[grep("Dead", NWT2020$notes),]$notes )
+
+unique(NWT2020[setdiff(grep("ead", NWT2020$notes), grep("all", NWT2020$notes)),]$notes)
+NWT2020[NWT2020$notes %in% c("Dead", "Dead, Tag removed", "Dead, tag removed", "Dead, Tag removed ", "Dead, Tag left"),]$status="D"
+
+unique(NWT2020$notes)
+unique( NWT2020[grep("NF", NWT2020$notes),]$notes )
+NWT2020[grep("NF", NWT2020$notes),]$status="M"
+unique( NWT2020[grep("ound", NWT2020$notes),]$notes )
+NWT2020[grep("ound", NWT2020$notes),]$status="M"
+unique( NWT2020$notes )
+unique( NWT2020[grep("tag", NWT2020$notes),]$notes )
+NWT2020[grep("tag", NWT2020$notes),]$notes=paste("Adjust tag in database", NWT2020[grep("tag", NWT2020$notes),]$notes)
+
+NWT2020[grep("na", NWT2020$mortality),]$mortality=NA
+NWT2020[which(NWT2020$mortality==""),]$mortality=NA
+unique(NWT2020$mortality)
+unique(NWT2020[ intersect( which(is.na(NWT2020$dgh) & is.na(NWT2020$dbh)), which(!is.na(NWT2020$mortality))) ,]$mortality)
+NWT2020[ intersect( which(is.na(NWT2020$dgh) & is.na(NWT2020$dbh)), which(!is.na(NWT2020$mortality))) ,]$status="D"
+
+#########################################################################################################################
+mtb.2020=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/MTB_2020_Datasheets - MTB_data_Y7.csv")
+str(mtb.2020)
+colnames(mtb.2020)[17]="date"
+unique(mtb.2020$date)
+mtb.2020$day=NA
+mtb.2020$month=NA
+mtb.2020$year=2020
+unique(mtb.2020$date)
+mtb.2020[grep("Sep/5/20", mtb.2020$date),]$month=09
+mtb.2020[grep("Sep/19/20", mtb.2020$date),]$month=09
+mtb.2020[grep("Aug/18/20", mtb.2020$date),]$month=08
+unique(mtb.2020$month)
+#
+mtb.2020[grep("Sep/5/20", mtb.2020$date),]$day=05
+mtb.2020[grep("Sep/19/20", mtb.2020$date),]$day=19
+mtb.2020[grep("Aug/18/20", mtb.2020$date),]$day=18
+unique(mtb.2020$day)
+#
+unique(paste(mtb.2020$year, mtb.2020$month, mtb.2020$day, sep=""))
+
+mtb.2020$status=NA
+sort(unique(mtb.2020$y7_dbh))
+mtb.2020[which(mtb.2020$y7_dbh %in% c("", "--") ),]$status=NA
+mtb.2020[which(mtb.2020$y7_dbh %in% c("DEAD", "DEAD Branch") ),]$status="D"
+sort(unique(mtb.2020$y7_dgh))
+mtb.2020[which(mtb.2020$y7_dbh %in% c("", "--") ),]$status=NA
+mtb.2020[which(mtb.2020$y7_dbh %in% c("DEAD") ),]$status="D"
+mtb.2020[which(mtb.2020$y7_dbh %in% c("DEAD", "DEAD Branch") ),]$status
+mtb.2020[ which(mtb.2020$y7_dbh %in% c("", "--", "DEAD", "DEAD Branch")),]$y7_dbh=NA
+mtb.2020$y7_dbh=as.numeric(mtb.2020$y7_dbh)
+
+mtb.2020[which(mtb.2020$y7_dgh %in% c("", "--") ),]$status
+mtb.2020[which(mtb.2020$y7_dgh %in% c("", "--") ),]$y7_dgh=NA
+mtb.2020[which(mtb.2020$y7_dgh %in% c("DEAD") ),]$y7_dgh=NA
+mtb.2020$y7_dgh=as.numeric(mtb.2020$y7_dgh)
+sort(unique(mtb.2020$y7_dgh))
+
+sort(unique(mtb.2020$y7_notes))
+pl=length(mtb.2020$ID)
+MTB2020=data.frame(id=mtb.2020$ID, site=rep("Mount Bigelow", pl), plot=mtb.2020$plot, date=paste(mtb.2020$year, mtb.2020$month, mtb.2020$day, sep="") , census.year=rep(10, pl), date.year=mtb.2020$year, 
+                   date.month=mtb.2020$month,
+                   date.day=mtb.2020$day,
+                   census.year.1=rep(10, pl),  date.year.1=mtb.2020$year,
+                   date.month.1=mtb.2020$month,
+                   julian=rep(NA, pl), year=mtb.2020$year,  latitude=rep(NA, pl), longitude=rep(NA,pl),
+                   elevation=rep(NA, pl), line=mtb.2020$line, main=mtb.2020$main, lter=rep(NA, pl), enq=mtb.2020$Tag.., distance=mtb.2020$distance, location=mtb.2020$location, species_binomial=rep(NA,pl),
+                   genus=rep(NA,pl), species=rep(NA,pl), family=rep(NA,pl), morpho=rep(NA,pl), habit=rep(NA,pl), authority=rep(NA,pl), determiner=rep(NA,pl), dbh=mtb.2020$y7_dbh, dgh=mtb.2020$y7_dgh, 
+                   mortality=rep(NA,pl), error=rep(NA,pl), dendro=rep(NA,pl), y2_recorder=mtb.2020$field.participants, y2_tagger=rep(NA,pl), y2_measurer=rep(NA, pl), dtn=mtb.2020$dtn, pom=mtb.2020$pom, notes=mtb.2020$y7_notes,
+                   biomass=rep(NA, pl), sampled=rep(NA, pl), angle=rep(NA, pl), location2=mtb.2020$location, cloth_tape=rep(NA, pl), rufino=rep(NA, pl), vnum=rep(NA, pl), wood_density=rep(NA, pl), status=rep(NA, pl),
+                   error.check=rep(NA, pl), mortality.year=rep(NA, pl), revised.main=rep(NA, pl))
+
+MTB2020[which( !is.na(MTB2020$dbh)|  !is.na(MTB2020$dgh)),]$status="A"
+unique(MTB2020$notes)
+unique(MTB2020[grep("ead", MTB2020$notes),]$notes)
+MTB2020[ c(grep("Dead", MTB2020$notes), grep("dead", MTB2020$notes) ),]$status="D"
+unique(MTB2020[ c(grep("DEAD", MTB2020$notes), grep("dead", MTB2020$notes) ),]$notes)
+MTB2020[ c(grep("DEAD", MTB2020$notes), grep("dead", MTB2020$notes) ),]$status="D"
+
+unique(MTB2020[grep("issing ", MTB2020$notes),]$notes)
+unique(MTB2020[grep("MISS", MTB2020$notes),]$notes)
+
+MTB2020[grep("tag", MTB2020$notes),]$notes=paste("Update tag", MTB2020[grep("tag", MTB2020$notes),]$notes)
+
+unique(MTB2020$notes)
+unique(MTB2020[grep("not", MTB2020$notes),]$notes)
+MTB2020[grep("not", MTB2020$notes),]$status="M"
+MTB2020[grep("MISS", MTB2020$notes),]$status="M"
+unique(MTB2020$notes)
+MTB2020[grep("cut", MTB2020$notes),]$status="D"
+unique(MTB2020$notes)
+
+unique(MTB2020$line)
+unique(MTB2020$site)
+sort(unique(MTB2020$distance))
+MTB2020$distance=gsub("'", "", MTB2020$distance)
+MTB2020[which(MTB2020$distance==""),]$distance=NA
+MTB2020$distance=as.numeric(MTB2020$distance)
+
+#########################################################################################################################
+har.2020=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/Harvard 2019_final.csv")
+str(har.2020)
+
+pl=length(har.2020$Plot)
+HAR2019=data.frame(id=rep(NA, pl), site=rep("Harvard Forest LTER", pl), plot=har.2020$Plot, date=har.2020$Y9_date, census.year=rep(9, pl), date.year=as.numeric(substr(as.character(har.2020$Y9_date), 1, 4)), 
+                   date.month=as.numeric(substr(as.character(har.2020$Y9_date), 5, 6)), 
+                   date.day=as.numeric(substr(as.character(har.2020$Y9_date), 7, 8)), 
+                   census.year.1=rep(9, pl),  date.year.1=as.numeric(substr(as.character(har.2020$Y9_date), 1, 4)), 
+                   date.month.1=as.numeric(substr(as.character(har.2020$Y9_date), 5, 6)), 
+                   julian=rep(NA, pl), year=as.numeric(substr(as.character(har.2020$Y9_date), 1, 4)),  latitude=rep(NA, pl), longitude=rep(NA,pl),
+                   elevation=rep(NA, pl), line=har.2020$Line, main=har.2020$MS., lter=har.2020$LTER., enq=har.2020$ENQ., distance=har.2020$Dist, location=har.2020$loc, species_binomial=har.2020$Taxon,
+                   genus=gsub(" .*","",  har.2020$Taxon),  species=rep(NA,pl), family=rep(NA,pl), morpho=rep(NA,pl), habit=rep(NA,pl), authority=rep(NA,pl), determiner=rep(NA,pl), dbh=har.2020$Y9_DBH, dgh=har.2020$Y9_DGH, 
+                   mortality=har.2020$Mortality_Date, error=rep(NA,pl), dendro=har.2020$Dendro_mm, y2_recorder=rep(NA,pl), y2_tagger=rep(NA,pl), y2_measurer=rep(NA, pl), dtn=har.2020$DTN, pom=har.2020$POM, notes=har.2020$Year9_Notes,
+                   biomass=rep(NA, pl), sampled=rep(NA, pl), angle=rep(NA, pl), location2=har.2020$loc, cloth_tape=rep(NA, pl), rufino=rep(NA, pl), vnum=rep(NA, pl), wood_density=rep(NA, pl), status=rep(NA, pl),
+                   error.check=rep(NA, pl), mortality.year=har.2020$Mortality_Date, revised.main=rep(NA, pl))
+
+sort(unique(HAR2019$dbh))
+HAR2019[grep("see note", HAR2019$dbh),]$dbh=32.9
+HAR2019[grep("60714", HAR2019$lter),]$dbh
+HAR2019[grep("60713", HAR2019$lter),]$dbh
+sort(unique(HAR2019$dbh))
+HAR2019[which(HAR2019$dbh==""),]$dbh=NA
+HAR2019$dbh=gsub(" ", "", HAR2019$dbh)
+HAR2019$dbh=as.numeric(HAR2019$dbh)
+
+sort(unique(HAR2019$dgh))
+
+sort(unique(HAR2019$line))
+
+sort(unique(HAR2019$main))
+
+HAR2019[which(HAR2019$main %in% c("", "n", "na", "na ")),]$main=NA
+sort(unique(HAR2019$main))
+HAR2019$main=as.numeric(HAR2019$main)
+sort(unique(HAR2019$lter))
+
+sort(unique(HAR2019$enq))
+HAR2019[which(HAR2019$enq =="20__"),]$notes=paste("Check tag", HAR2019[which(HAR2019$enq =="20__"),]$notes)
+HAR2019[which(HAR2019$enq =="20__"),]$enq=NA
+HAR2019[which(HAR2019$enq ==""),]$enq=NA
+sort(unique(HAR2019$enq))
+HAR2019$enq=as.numeric(HAR2019$enq)
+
+str(HAR2019)
+HAR2019[which(!is.na(HAR2019$dbh) | !is.na(HAR2019$dgh)),]$status="A"
+
+sort(unique(HAR2019$mortality))
+HAR2019[grep("19",HAR2019$mortality),]$status="D"
+
+sort(unique(HAR2019$notes))
+HAR2019[intersect(grep("issi", HAR2019$notes), which(is.na(HAR2019$status))) ,]$status="M"
+HAR2019[which(is.na(HAR2019$status)),]$status
+str(HAR2019)
+####new stems
+har.2019.ns=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/Harvard 2019_final.new.stems.csv")
+str(har.2019.ns)
+
+pl=length(har.2019.ns$Plot)
+HAR2019.ns=data.frame(id=rep(NA, pl), site=rep("Harvard Forest LTER", pl), plot=har.2019.ns$Plot, date=har.2019.ns$Y9_date, census.year=rep(9, pl), date.year=as.numeric(substr(as.character(har.2019.ns$Y9_date), 1, 4)), 
+                      date.month=as.numeric(substr(as.character(har.2019.ns$Y9_date), 5, 6)), 
+                      date.day=as.numeric(substr(as.character(har.2019.ns$Y9_date), 7, 8)), 
+                      census.year.1=rep(9, pl),  date.year.1=as.numeric(substr(as.character(har.2019.ns$Y9_date), 1, 4)), 
+                      date.month.1=as.numeric(substr(as.character(har.2019.ns$Y9_date), 5, 6)), 
+                      julian=rep(NA, pl), year=as.numeric(substr(as.character(har.2019.ns$Y9_date), 1, 4)),  latitude=rep(NA, pl), longitude=rep(NA,pl),
+                      elevation=rep(NA, pl), line=har.2019.ns$Line, main=har.2019.ns$MS., lter=har.2019.ns$LTER., enq=har.2019.ns$ENQ., distance=har.2019.ns$Dist, location=har.2019.ns$loc, species_binomial=har.2019.ns$Taxon,
+                      genus=gsub(" .*","",  har.2019.ns$Taxon),  species=rep(NA,pl), family=rep(NA,pl), morpho=rep(NA,pl), habit=rep(NA,pl), authority=rep(NA,pl), determiner=rep(NA,pl), dbh=har.2019.ns$Y9_DBH, dgh=har.2019.ns$Y9_DGH, 
+                      mortality=rep(NA, pl), error=rep(NA,pl), dendro=har.2019.ns$Dendro_mm, y2_recorder=rep(NA,pl), y2_tagger=rep(NA,pl), y2_measurer=rep(NA, pl), dtn=rep(NA, pl), pom=rep(NA, pl), notes=har.2019.ns$Year9_Notes,
+                      biomass=rep(NA, pl), sampled=rep(NA, pl), angle=rep(NA, pl), location2=har.2019.ns$loc, cloth_tape=rep(NA, pl), rufino=rep(NA, pl), vnum=rep(NA, pl), wood_density=rep(NA, pl), status=rep(NA, pl),
+                      error.check=rep(NA, pl), mortality.year=rep(NA, pl), revised.main=rep(NA, pl))
+HAR2019=rbind(HAR2019, HAR2019.ns)
+
+#########################################################################################################################
+and.2019=read.csv("//Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/AND_2019_DataSheets.csv")
+str(and.2019)
+
+pl=length(and.2019$Plot)
+unique(and.2019$Y7.sample.date)
+AND2019=data.frame(id=rep(NA, pl), site=rep("HJ Andrews Experimental Forest LTER", pl), plot=and.2019$Plot, date=rep(NA, pl), census.year=rep(9, pl), date.year=rep(2019, pl),
+                   date.month=rep(9, pl),
+                   date.day=rep(9, pl),
+                   census.year.1=rep(9, pl),  date.year.1=rep(9, pl),
+                   date.month.1=rep(9, pl),
+                   julian=rep(NA, pl), year=rep(9, pl),  latitude=rep(NA, pl), longitude=rep(NA,pl),
+                   elevation=rep(NA, pl), line=and.2019$Line, main=and.2019$Main, lter=and.2019$LTER., enq=and.2019$ENQ., distance=and.2019$Dist, location=and.2019$loc, species_binomial=and.2019$Taxon,
+                   genus=gsub(" .*","",  and.2019$Taxon),  species=rep(NA,pl), family=rep(NA,pl), morpho=rep(NA,pl), habit=rep(NA,pl), authority=rep(NA,pl), determiner=rep(NA,pl), dbh=and.2019$Y6_DBH, dgh=and.2019$Y6_DGH, 
+                   mortality=and.2019$Mortality_Date, error=rep(NA,pl), dendro=and.2019$Dendro, y2_recorder=rep(NA,pl), y2_tagger=rep(NA,pl), y2_measurer=rep(NA, pl), dtn=and.2019$DTN, pom=and.2019$POM, notes=and.2019$Year6_Notes,
+                   biomass=rep(NA, pl), sampled=rep(NA, pl), angle=rep(NA, pl), location2=and.2019$loc, cloth_tape=rep(NA, pl), rufino=rep(NA, pl), vnum=rep(NA, pl), wood_density=rep(NA, pl), status=rep(NA, pl),
+                   error.check=rep(NA, pl), mortality.year=and.2019$Mortality_Date, revised.main=rep(NA, pl))
+
+sort(unique(AND2019$dgh))
+AND2019[which(AND2019$dgh %in% c("")),]$status=NA
+AND2019[which(AND2019$dgh %in% c("Dead", "Deda")),]$status="D"
+AND2019[which(AND2019$dgh %in% c("NF", "NM")),]$status="M"
+
+AND2019[which(AND2019$dgh %in% c("","Dead", "Deda","NF", "NM", "Out", "w" )),]$dgh=NA
+sort(unique(AND2019$dgh))
+AND2019$dgh=as.numeric(AND2019$dgh)
+
+sort(unique(AND2019$dbh))
+AND2019[which(AND2019$dbh %in% c("")),]$status=NA
+AND2019[which(AND2019$dbh %in% c("Dead")),]$status="D"
+AND2019[which(AND2019$dbh %in% c("NF", "NM", "missed", "w", "tape too short")),]$status="M"
+AND2019[which(AND2019$dbh %in% c("", "Dead", "NF", "NM", "missed", "w", "tape too short")),]$dbh=NA
+sort(unique(AND2019$dbh))
+AND2019$dbh=as.numeric(AND2019$dbh)
+
+sort(unique(AND2019$line))
+
+sort(unique(AND2019$main))
+AND2019[which(AND2019$main %in% c("", "na")),]$main=NA
+AND2019$main=as.numeric(AND2019$main)
+
+sort(unique(AND2019$lter))
+
+sort(unique(AND2019$enq))
+
+sort(unique(AND2019$notes))
+AND2019[intersect(grep("ead", AND2019$notes), grep("ot", AND2019$notes)),]$notes="M"
+AND2019[ which(AND2019$notes=="Dead") ,]$status="D"
+AND2019[ which(AND2019$notes=="Not Found") ,]$status="M"
+
+AND2019[which( !is.na(AND2019$dbh) | !is.na(AND2019$dgh)),]$status="A"
+
+
+AND2019$main=as.numeric(AND2019$main)
+sort(unique(AND2019$status))
+sort(unique(AND2019$mortality))
+
+
+#########################################################################################################################
+last=rbind(AND2019, HAR2019, MTB2020, NWT2020, CWT2020, BCI2020)
+
+#########################################################################################################################
+setwd("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections")
+ufn = list.files("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections", pattern="*.csv", full.names=T)
+ufn=ufn[c(1,2,5,17,20,22,23,27,28)]
+FMS.data=list()
+for(i in 1:length(ufn)){
+  x=ufn[i]
+  df=read.csv(paste(x), header=T)
+  str(df)
+  FMS.data[[i]]=df }
+FMS.04.29.2021=do.call("rbind", FMS.data)
+
+str(FMS.04.29.2021)
+table(FMS.04.29.2021$date.year, FMS.04.29.2021$site)
+
+FMS.04.29.2021=rbind(FMS.04.29.2021, last)
+
+#########################################################################################################################
+setwd("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections")
+
+fms=FMS.04.29.2021
+unique(fms$site)
+
+unique(fms[which(fms$site=="Coweeta LTER" ),]$census.year)
+unique(fms$plot)
+str(fms)
+fms[which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT1"),]$date=20200913
+fms[which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT1"),]$date.year=2020
+fms[which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT1"),]$date.month=09
+fms[which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT1"),]$date.day=13
+
+fms[which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT2"),]$date=20201108
+fms[which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT2"),]$date.year=2020
+fms[which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT2"),]$date.month=11
+fms[which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT2"),]$date.day=08
+
+p31=intersect( which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT3"), which(fms$line==1 | fms$line==2 | fms$line==3))
+fms[ p31, ]$date=20201017
+fms[p31,]$date.year=2020
+fms[p31,]$date.month=10
+fms[p31,]$date.day=17
+
+p32=intersect( which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT3"), which(fms$line %in% c(4:10)))
+fms[ p32, ]$date=20201107
+fms[p32,]$date.year=2020
+fms[p32,]$date.month=11
+fms[p32,]$date.day=07
+
+p41=intersect( which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT4"), which(fms$line %in% c(6:10)))
+fms[ p41, ]$date=20200920
+fms[p41,]$date.year=2020
+fms[p41,]$date.month=09
+fms[p41,]$date.day=20
+
+p42=intersect( which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT4"), which(fms$line %in% c(1:5)))
+fms[ p42, ]$date=20200921
+fms[p42,]$date.year=2020
+fms[p42,]$date.month=09
+fms[p42,]$date.day=21
+
+
+fms[ which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT5"), ]$date=20201004
+fms[which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT5"),]$date.year=2020
+fms[which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT5"),]$date.month=10
+fms[which(fms$site=="Coweeta LTER" &  fms$census.year=="10" & fms$plot=="CWTT5"),]$date.day=04
+
+setwd("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections")
+
+
+
+#########################################################################################################################
+#All of the Taxonomic information is missing for MTB site.
+
+#########################################################################################################################
+#Add the updated taxonomic information for MTB
+mtbnames3=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/MTB.Missing names.filled.Feb.03.2021.csv")
+str(mtbnames3)
+mtbnames3=mtbnames3[,c(2,16)]
+str(mtbnames3)
+colnames(mtbnames3)[2]="species_binomial"
+
+mtbnames=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/neednames(filled-in)1.csv") 
+str(mtbnames)
+mtbnames[,16]==mtbnames[,22]
+mtbnames=mtbnames[,c(1,16)]
+str(mtbnames)
+mtbnames$enq=as.numeric(mtbnames$enq)
+mtbnames4=rbind(mtbnames, mtbnames3)
+str(mtbnames4)
+
+
+fms=FMS.04.29.2021
+fmsmtb=fms[which(fms$site=="Mount Bigelow"),]
+length(fmsmtb[,1])
+str(fmsmtb)
+setdiff(as.factor(unique(fmsmtb$enq)), unique(as.factor(mtbnames4$enq)))
+setdiff(unique(as.factor(mtbnames4$enq)), as.factor(unique(fmsmtb$enq)))
+
+fmsmtb3=merge(fmsmtb, mtbnames4, by="enq", all.x=T)
+length(fmsmtb3[,1])
+
+str(fmsmtb3)
+fmsmtb3$species_binomial.x=fmsmtb3$species_binomial.y
+str(fmsmtb3)
+fmsmtb3=fmsmtb3[,c(1:53)]
+str(fmsmtb3)
+colnames(fmsmtb3)[23]="species_binomial"
+fmsmtb3=fmsmtb3[,c(2:19,1,20:53)]
+
+str(fms)
+which(colnames(fms)=="enq")
+fms=fms[-which(fms$site=="Mount Bigelow"),]
+str(fms)
+
+fms.new=rbind(fms, fmsmtb3)
+length(unique(fms.new$species_binomial))
+aggregate(fms.new$species_binomial, list( "site"=fms.new$site), FUN=function(x)(length(unique(x))))
+
+
+#########################################################################################################################
+#need tp update and correct BCI species names
+
+#########################################################################################################################
+#Correct the incorrect species names from BCI
+bci.corrections=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/Add_to_MacroSystems/incorrect.names.BCI.Feb.04.2021(filled out).csv" )
+bci.corrections=bci.corrections[,-c(1,4)]
+bci=fms.new[which(fms.new$site=="Barro Colorado Island"),]
+
+bcics=bci[which(bci$species_binomial %in% unique(bci$species_binomial)[269:335]),]
+setdiff(bcics$species_binomial, bci.corrections$incorrect_name)
+
+bcics2=merge( bcics, bci.corrections, by.x ="species_binomial", by.y="incorrect_name")
+str(bcics2)
+
+bcics2$morpho=bcics2$Morpho
+bcics2$species_binomial=bcics2$corrected_name
+str(bcics2)
+#str(bcics2[,c(2,3,56,57)])
+#bcics2=bcics2[,-c(2,3,56,57)]
+str(bcics2)
+
+#Removes unwanted columns
+bci=bci[-which(bci$species_binomial %in% unique(bci$species_binomial)[269:335]),]
+str(bci)
+#bci=bci[,-c(1,2)]
+
+str(bcics2)
+colnames(bcics2[,c(2:23,1,24:53)])
+bcics2=bcics2[,c(2:23,1,24:53)]
+str(bcics2)
+
+colnames(bcics2)==colnames(bci)
+bci=rbind(bci,bcics2)
+
+str(bci)
+fms.new=fms.new[-which(fms.new$site=="Barro Colorado Island"),]
+str(fms.new)
+
+#
+#
+#
+#Check to make sure this is correct vvvbeow is not needed
+#str(fms.new[,c(1,2)])
+#fms.new
+#
+#
+#
+
+
+#these can be "bound:
+fmsnewAPR292021=rbind(fms.new, bci)
+str(fmsnewAPR292021)
+getwd()
+#write.csv(fm02082020, file="FMS.February.08.2021.csv")
+
+unique(fmsnewAPR292021$species_binomial)
+sp.names.df=unique(data.frame(species_binomial=fmsnewAPR292021$species_binomial, site=fmsnewAPR292021$site))
+#########################################################################################################################
+#merge corrected names into old names
+#fms=read.csv("FMS.February.08.2021.csv")
+fms=fmsnewAPR292021
+names=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/FMS.sp.names.All.sites.Feb.08.2021.csv")
+setdiff(unique(fms$species_binomial), unique(names$species_binomial))
+fms2=merge(fms, names, by.x=c("species_binomial", "site"), by.y=c("species_binomial", "site"), all.x=T)
+str(fms2)
+fms2$species_binomial=fms2$species_binomial_corrected
+str(fms2)
+fms2=fms2[,-c(54)]
+str(fms2)
+fms2=fms2[,c(2:23,1,24:53)]
+
+oldfms=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/FMS.Feb.09.2021.csv")
+str(oldfms)
+str(fms2)
+
+unique(fms2$date)
+unique(fms2$census.year)
+unique(fms2$date.year)
+unique(fms2$date.month)
+unique(fms2$date.day)
+table(fms2$census.year, fms2$site)
+fms2[which(fms2$site=="Harvard Forest LTER" & fms2$census.year==7),]$dgh
+fms2[which(fms2$census.year==7),]
+fms2[which(fms2$site=="Harvard Forest LTER" & fms2$census.year==8),]$dgh
+fms2[which(fms2$site=="Harvard Forest LTER" & fms2$census.year==9),]$dgh
+
+#check which rows have 1) no dbh & dgh, 2) have no status, 3) have census years that do not math date.year, 
+unique(fms2[which( is.na(fms2$dbh)& is.na(fms2$dgh) ),]$dbh)
+length(fms2[ intersect(which( is.na(fms2$dbh) & is.na(fms2$dgh)), which(!fms2$census.year+2010==fms2$date.year)),][,1])
+
+
+write.csv(fms2, file="FMS.Apr.29.2021.csv")
+
+
+str(fms2)
+#fms2=fms2[-which(duplicated(fms2)==T),]
+str(fms2)

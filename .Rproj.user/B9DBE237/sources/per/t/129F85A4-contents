@@ -1,0 +1,268 @@
+#calculate change in basal area per species per plot per year
+setwd("/Users/timothyperez/Google Drive/FMS.Thermophilization/")
+fmsdat=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/FMS.Feb.09.2021.csv")
+fmsdat[which(fmsdat$species_binomial== "Swartzia simplex_var.grandiflora"),]$species_binomial="Swartzia simplex var. grandiflora"
+fmsdat[which(fmsdat$species_binomial== "Swartzia simplex_var.ochnacea"),]$species_binomial="Swartzia simplex var. ochnacea"
+fmsdat[which(fmsdat$species_binomial== "fraxinus americana"),]$species_binomial="Fraxinus americana"
+fmsdat[which(fmsdat$species_binomial== "Tabernaemontana glabra "),]$species_binomial="Tabernaemontana glabra"
+fmsdat[which(fmsdat$species_binomial== "Ostrich fern"),]$species_binomial=NA
+fmsdat[which(fmsdat$species_binomial== "Ostrich Fern"),]$species_binomial=NA
+
+fmsdat2=fmsdat[-which(is.na(fmsdat$dbh)),]
+fmsdat2=fmsdat2[-which(fmsdat2$status=="D"),]
+fmsdat2=fmsdat2[which(fmsdat2$dbh<7),]
+unique(fmsdat2$date.year)
+unique(fmsdat2[which(fmsdat2$site=="Harvard Forest LTER"),]$date.year)
+table(fmsdat2$site, fmsdat2$date.year)
+str(fmsdat2[,33])
+fmsdat2$BA=pi*(fmsdat2$dbh/200)^2 #divide by 2*100 to convert to meters before calculating area
+#
+site.year.species.BA.sp=aggregate(fmsdat2[,c(56)], list("site"=fmsdat2$site,  "census.year"=fmsdat2$census.year, "species"=fmsdat2$species_binomial), FUN=function(x)(sum(na.omit(x))))
+#
+colnames(site.year.species.BA.sp)[4]="BA"
+#
+site.year.BA=aggregate(site.year.species.BA.sp$BA, list("site"=site.year.species.BA.sp$site, "census.year"=site.year.species.BA.sp$census.year), FUN=function(x)(sum(na.omit(x))))
+#
+colnames(site.year.BA)[3]="site.BA"
+length(site.year.BA[,1])
+length(site.year.species.BA.sp[,1])
+#
+str(site.year.BA);str(site.year.species.BA.sp)
+BAdf.sp=merge(site.year.species.BA.sp, site.year.BA, by=c("site",  "census.year"), all=T)
+length(BAdf.sp[,1])
+
+#Determine year of first census for each plot
+yofc=data.frame(table(site.year.species.BA.sp$site,site.year.species.BA.sp$census.year))
+#dfp=yofc[which(yofc$Var1=="Coweeta LTER"),]
+#fycFUN(dfp)
+
+#Create function
+fycFUN=function(df){
+  #Determine the minimum census year by first removing rows with measurements in a given year
+  if( length(df[-which(df$Freq==0),][,1])>=1 ){ 
+    fcy=min(as.numeric(df[-which(df$Freq==0),]$Var2))
+  }else(fcy=min(as.numeric(df$Var2)))
+  return(data.frame(fcy=as.integer(fcy), site=unique(df$Var1))) 
+}
+fyc=do.call("rbind", by(yofc, yofc$Var1, fycFUN))
+
+#merge data with first census year back into main data
+l1=length(BAdf.sp$BA)
+BAdf.sp=merge(BAdf.sp, fyc, by="site", all.x=T)
+l2=length(BAdf.sp$BA)
+l1==l2 #check that df's are same legnth (they should be)
+
+#################################################################################
+#Merge climate data and basal area per species
+climdist.sp=read.csv("/Users/timothyperez/Google Drive/FMS.Thermophilization/Spp.climatic.distributions.csv")
+str(BAdf.sp)
+str(climdist.sp)
+batrdf.sp=merge(climdist.sp, BAdf.sp, by.x=c("unscrubbed.name"), by.y=c("species"), all=T)
+#
+batrdf.sp$Sp_temp_score.med=(batrdf.sp$bio1.med/10)*(batrdf.sp$BA/batrdf.sp$site.BA)
+batrdf.sp$Sp_temp_score.mn=(batrdf.sp$bio1.mn/10)*(batrdf.sp$BA/batrdf.sp$site.BA)
+#Using median
+CTscore.sp=aggregate(batrdf.sp[,c(11,12)], list("site"=batrdf.sp$site,  "census.year"=batrdf.sp$census.year,"fcy"=batrdf.sp$fcy), FUN=function(x)(sum(na.omit(x))))
+#order the data
+CTscore.sp=CTscore.sp[order(CTscore.sp$date.year),]
+CTscore.sp=CTscore.sp[order(CTscore.sp$site),]
+
+year1cti=CTscore.sp[which(CTscore.sp$fcy==CTscore.sp$census.year),]
+#plot(CTscore.sp$Sp_temp_score.med, CTscore.sp$Sp_temp_score.mn)
+#abline(0,1)
+#Calculate community temperature score anomaly from first year
+pract=CTscore.sp[which(CTscore.sp$site=="Coweeta LTER"),]
+dfx=pract[, which(colnames(pract)%in%c("site", "census.interval",  "census.year", "Sp_temp_score.mn"))]
+#getcti of 
+ctiy1=year1cti[which(year1cti$site==unique(dfx$site)),]$Sp_temp_score.mn
+dfx$cti.anom=dfx$Sp_temp_score.mn -ctiy1
+
+ctanom=function(df){
+  #select rows of interest
+  dfx=df[, which(colnames(df)%in%c("site", "census.interval", "census.year", "Sp_temp_score.mn"))]
+  #getcti of 
+  ctiy1=year1cti[which(year1cti$site==unique(dfx$site)),]$Sp_temp_score.mn
+  dfx$cti.anom=dfx$Sp_temp_score.mn -ctiy1
+  #Return a df with data of interest
+  return(dfx)}
+
+smalldbhanom=do.call("rbind", by(CTscore.sp, CTscore.sp$site, ctanom))
+
+#merge in data from another project with appropriate color scheme
+clr=read.csv("/Users/timothyperez/Dropbox/MacroSystems/AGU_Figures/FMS_Map_data.csv")
+clr=clr[,c(4:7)]
+tanomdat=merge(smalldbhanom, clr, by=c("site"))
+#hist(tanomdat$CTI_diff.mn)
+mean(na.omit((tanomdat.smalldbh$CTI_diff.mn)))
+
+
+
+par(mfcol=c(1,1), mar=c(3,3,1, 0.5), mgp=c(1.25, .5,0))
+#Plot anomalies
+plot(NULL, NULL, ylim=c(-.5, .5), xlim=c(2011, 2020), xlab="year", ylab="CTI anomaly", main="DBH<10cm")
+abline(h=0, lty=2)
+pdatfun=function(df){
+  points(df$census.year+2010, df$cti.anom, col=as.character(df$clrz))
+  lines(df$census.year+2010, df$cti.anom, col=as.character(df$clrz))
+  #abline(lm(df$x~df$date.year, ))
+  TR=summary(lm(df$cti.anom~df$census.year))$coeff[2,1]
+  pval=summary(lm(df$cti.anom~df$census.year))$coeff[2,4]
+  return( data.frame(site=unique(df$site), TR, pval))
+}
+#tanomdat=tanomdat[which(tanomdat$site=="Parque Nacional Santa Rosa"| tanomdat$site=="Capilano Watershed"),]
+trdf.mn.dbh=do.call("rbind", by(tanomdat, tanomdat$site, pdatfun))
+#hist(trdf.mn.dbh$TR)
+clr=read.csv("/Users/timothyperez/Dropbox/MacroSystems/AGU_Figures/FMS_Map_data.csv")
+trdf.mn.dbh=merge(trdf.mn.dbh, clr,  by=c("site"))
+site.clim.dat=read.csv("/Users/timothyperez/Dropbox/MacroSystems/AGU_Figures/Climate space.Feb.27.2021.csv")
+trdf.mn.dbh=merge(trdf.mn.dbh, site.clim.dat,  by=c("site"))
+
+trdf.mn.dbh=trdf.mn.dbh[order(trdf.mn.dbh$lat),]
+#plot(trdf.mn.dbh$lat, trdf.mn.dbh$TR)
+#plot(trdf.mn.dbh$MAT, trdf.mn.dbh$TR)
+summary(lm(trdf.mn.dbh$TR~trdf.mn.dbh$MAP))
+
+#----------------------------------------------------------------------------------------------------
+# thermophil for large stems
+#----------------------------------------------------------------------------------------------------
+#calculate change in basal area per species per plot per year
+setwd("/Users/timothyperez/Google Drive/FMS.Thermophilization/")
+fmsdat=read.csv("/Users/timothyperez/Dropbox/MacroSystems/Error.checking.and.corrections/FMS.Feb.09.2021.csv")
+fmsdat[which(fmsdat$species_binomial== "Swartzia simplex_var.grandiflora"),]$species_binomial="Swartzia simplex var. grandiflora"
+fmsdat[which(fmsdat$species_binomial== "Swartzia simplex_var.ochnacea"),]$species_binomial="Swartzia simplex var. ochnacea"
+fmsdat[which(fmsdat$species_binomial== "fraxinus americana"),]$species_binomial="Fraxinus americana"
+fmsdat[which(fmsdat$species_binomial== "Tabernaemontana glabra "),]$species_binomial="Tabernaemontana glabra"
+fmsdat[which(fmsdat$species_binomial== "Ostrich fern"),]$species_binomial=NA
+fmsdat[which(fmsdat$species_binomial== "Ostrich Fern"),]$species_binomial=NA
+
+fmsdat2=fmsdat[-which(is.na(fmsdat$dbh)),]
+fmsdat2=fmsdat2[-which(fmsdat2$status=="D"),]
+fmsdat2=fmsdat2[which(fmsdat2$dbh>=7),]
+unique(fmsdat2$date.year)
+unique(fmsdat2[which(fmsdat2$site=="Harvard Forest LTER"),]$date.year)
+table(fmsdat2$site, fmsdat2$date.year)
+str(fmsdat2[,33])
+fmsdat2$BA=pi*(fmsdat2$dbh/200)^2 #divide by 2*100 to convert to meters before calculating area
+#
+site.year.species.BA.sp=aggregate(fmsdat2[,c(56)], list("site"=fmsdat2$site,  "census.year"=fmsdat2$census.year, "species"=fmsdat2$species_binomial), FUN=function(x)(sum(na.omit(x))))
+#
+colnames(site.year.species.BA.sp)[4]="BA"
+#
+site.year.BA=aggregate(site.year.species.BA.sp$BA, list("site"=site.year.species.BA.sp$site, "census.year"=site.year.species.BA.sp$census.year), FUN=function(x)(sum(na.omit(x))))
+#
+colnames(site.year.BA)[3]="site.BA"
+length(site.year.BA[,1])
+length(site.year.species.BA.sp[,1])
+#
+str(site.year.BA);str(site.year.species.BA.sp)
+BAdf.sp=merge(site.year.species.BA.sp, site.year.BA, by=c("site",  "census.year"), all=T)
+length(BAdf.sp[,1])
+
+#Determine year of first census for each plot
+yofc=data.frame(table(site.year.species.BA.sp$site,site.year.species.BA.sp$census.year))
+#dfp=yofc[which(yofc$Var1=="Coweeta LTER"),]
+#fycFUN(dfp)
+
+#Create function
+fycFUN=function(df){
+  #Determine the minimum census year by first removing rows with measurements in a given year
+  if( length(df[-which(df$Freq==0),][,1])>=1 ){ 
+    fcy=min(as.numeric(df[-which(df$Freq==0),]$Var2))
+  }else(fcy=min(as.numeric(df$Var2)))
+  return(data.frame(fcy=as.integer(fcy), site=unique(df$Var1))) 
+}
+fyc=do.call("rbind", by(yofc, yofc$Var1, fycFUN))
+
+#merge data with first census year back into main data
+l1=length(BAdf.sp$BA)
+BAdf.sp=merge(BAdf.sp, fyc, by="site", all.x=T)
+l2=length(BAdf.sp$BA)
+l1==l2 #check that df's are same legnth (they should be)
+
+#################################################################################
+#Merge climate data and basal area per species
+climdist.sp=read.csv("/Users/timothyperez/Google Drive/FMS.Thermophilization/Spp.climatic.distributions.csv")
+str(BAdf.sp)
+str(climdist.sp)
+batrdf.sp=merge(climdist.sp, BAdf.sp, by.x=c("unscrubbed.name"), by.y=c("species"), all=T)
+#
+batrdf.sp$Sp_temp_score.med=(batrdf.sp$bio1.med/10)*(batrdf.sp$BA/batrdf.sp$site.BA)
+batrdf.sp$Sp_temp_score.mn=(batrdf.sp$bio1.mn/10)*(batrdf.sp$BA/batrdf.sp$site.BA)
+#Using median
+CTscore.sp=aggregate(batrdf.sp[,c(11,12)], list("site"=batrdf.sp$site,  "census.year"=batrdf.sp$census.year,"fcy"=batrdf.sp$fcy), FUN=function(x)(sum(na.omit(x))))
+#order the data
+CTscore.sp=CTscore.sp[order(CTscore.sp$census.year),]
+CTscore.sp=CTscore.sp[order(CTscore.sp$site),]
+
+year1cti=CTscore.sp[which(CTscore.sp$fcy==CTscore.sp$census.year),]
+#plot(CTscore.sp$Sp_temp_score.med, CTscore.sp$Sp_temp_score.mn)
+#abline(0,1)
+#Calculate community temperature score anomaly from first year
+pract=CTscore.sp[which(CTscore.sp$site=="Coweeta LTER"),]
+dfx=pract[, which(colnames(pract)%in%c("site", "census.interval",  "census.year", "Sp_temp_score.mn"))]
+#getcti of 
+ctiy1=year1cti[which(year1cti$site==unique(dfx$site)),]$Sp_temp_score.mn
+dfx$cti.anom=dfx$Sp_temp_score.mn -ctiy1
+
+ctanom=function(df){
+  #select rows of interest
+  dfx=df[, which(colnames(df)%in%c("site", "census.interval", "census.year", "Sp_temp_score.mn"))]
+  #getcti of 
+  ctiy1=year1cti[which(year1cti$site==unique(dfx$site)),]$Sp_temp_score.mn
+  dfx$cti.anom=dfx$Sp_temp_score.mn -ctiy1
+  #Return a df with data of interest
+  return(dfx)}
+
+bigdbhanom=do.call("rbind", by(CTscore.sp, CTscore.sp$site, ctanom))
+
+#merge in data from another project with appropriate color scheme
+clr=read.csv("/Users/timothyperez/Dropbox/MacroSystems/AGU_Figures/FMS_Map_data.csv")
+clr=clr[,c(4:7)]
+tanomdat=merge(bigdbhanom, clr, by=c("site"))
+#hist(tanomdat$CTI_diff.mn)
+mean(na.omit((tanomdat.smalldbh$CTI_diff.mn)))
+
+
+
+par(mfcol=c(1,1), mar=c(3,3,1, 0.5), mgp=c(1.25, .5,0))
+#Plot anomalies
+plot(NULL, NULL, ylim=c(-1, 1), xlim=c(2011, 2020), xlab="year", ylab="CTI anomaly", main="DBH>10cm")
+abline(h=0, lty=2)
+pdatfun=function(df){
+  points(df$census.year+2010, df$cti.anom, col=as.character(df$clrz))
+  lines(df$census.year+2010, df$cti.anom, col=as.character(df$clrz))
+  #abline(lm(df$x~df$date.year, ))
+  TR=summary(lm(df$cti.anom~df$census.year))$coeff[2,1]
+  pval=summary(lm(df$cti.anom~df$census.year))$coeff[2,4]
+  return( data.frame(site=unique(df$site), TR, pval))
+}
+#tanomdat=tanomdat[which(tanomdat$site=="Parque Nacional Santa Rosa"| tanomdat$site=="Capilano Watershed"),]
+trdf.mn.dbh=do.call("rbind", by(tanomdat, tanomdat$site, pdatfun))
+#hist(trdf.mn.dbh$TR)
+clr=read.csv("/Users/timothyperez/Dropbox/MacroSystems/AGU_Figures/FMS_Map_data.csv")
+trdf.mn.dbh=merge(trdf.mn.dbh, clr,  by=c("site"))
+site.clim.dat=read.csv("/Users/timothyperez/Dropbox/MacroSystems/AGU_Figures/Climate space.Feb.27.2021.csv")
+trdf.mn.dbh=merge(trdf.mn.dbh, site.clim.dat,  by=c("site"))
+
+trdf.mn.dbh=trdf.mn.dbh[order(trdf.mn.dbh$lat),]
+#plot(trdf.mn.dbh$lat, trdf.mn.dbh$TR)
+#plot(trdf.mn.dbh$MAT, trdf.mn.dbh$TR)
+summary(lm(trdf.mn.dbh$TR~trdf.mn.dbh$MAP))
+
+#----------------------------------------------------------------------------------------------------
+# compare anomalies for big and small stems
+#----------------------------------------------------------------------------------------------------
+anomdat=merge(bigdbhanom, smalldbhanom, by=c("site", "census.year"))
+clr=read.csv("/Users/timothyperez/Dropbox/MacroSystems/AGU_Figures/FMS_Map_data.csv")
+anomdat=merge(anomdat, clr[,-c(1:3)], by=c("site"))
+plot(anomdat$cti.anom.x, anomdat$cti.anom.y, xlab="big stem anom", ylab=c("small stem anom"), col=anomdat$clrz,
+     ylim=c(-.5, 0.5))
+abline(h=0, lty=2)
+abline(v=0, lty=2)
+
+length(which(anomdat$cti.anom.x>0))/length(anomdat$cti.anom.x)
+length(which(anomdat$cti.anom.y>0))/length(anomdat$cti.anom.y)
+
+
+plot(anomdat$Sp_temp_score.mn.x, anomdat$Sp_temp_score.mn.y, xlab="big stem cti", ylab=c("small stem cti"), col=anomdat$clrz)
+abline(0,1, lty=2)

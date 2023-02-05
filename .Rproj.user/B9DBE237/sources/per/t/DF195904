@@ -1,0 +1,24 @@
+{
+    "id": "DF195904",
+    "path": "~/Dropbox/CH2/Data/LS.env.data/compiling.envdat.script.R",
+    "project_path": null,
+    "type": "r_source",
+    "hash": "577411635",
+    "contents": "",
+    "dirty": false,
+    "created": 1619761770445.0,
+    "source_on_save": false,
+    "relative_order": 5,
+    "properties": {
+        "cursorPosition": "66,8",
+        "scrollLine": "62"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1569511836,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1569511836,
+    "read_only": false,
+    "read_only_alternatives": []
+}

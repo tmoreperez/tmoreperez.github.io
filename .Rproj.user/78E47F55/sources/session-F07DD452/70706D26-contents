@@ -1,0 +1,311 @@
+#get current date and convert to character to save data
+as.character(format(Sys.time(), "%Y%b%d"))
+
+
+#iport data and do pre-liminary cleaning
+#Note: Many of the Harvard stems are missing tag information, so very few data dbh's of 3
+setwd("/Users/timothyperez/Google Drive/FMS.Thermophilization/")
+#fmsdat=read.csv("/Users/timothyperez/Google Drive/Michaletzgit/Forest_Macrosystems/Forest_Macrosystems/FMS.Apr.29.2021.csv")
+fmsdat[which(fmsdat$species_binomial== "Swartzia simplex_var.grandiflora"),]$species_binomial="Swartzia simplex var. grandiflora"
+fmsdat[which(fmsdat$species_binomial== "Swartzia simplex_var.ochnacea"),]$species_binomial="Swartzia simplex var. ochnacea"
+fmsdat[which(fmsdat$species_binomial== "fraxinus americana"),]$species_binomial="Fraxinus americana"
+fmsdat[which(fmsdat$species_binomial== "Tabernaemontana glabra "),]$species_binomial="Tabernaemontana glabra"
+fmsdat[which(fmsdat$species_binomial== "Ostrich fern"),]$species_binomial=NA
+fmsdat[which(fmsdat$species_binomial== "Ostrich Fern"),]$species_binomial=NA
+fmsdat[which(fmsdat$species_binomial== "Prestoea montana"),]
+sort(unique(fmsdat$species_binomial))
+
+#fmsdat=fmsdat[-grep("Prestoea", fmsdat$species_binomial),]
+
+
+#Combine LTER and enq tag numbers
+fmsdat$enq=paste(fmsdat$lter, fmsdat$enq, sep="")
+fmsdat$enq=gsub("NA", "", fmsdat$enq)
+
+fmsdat=fmsdat[-which(fmsdat$status=="D"),]
+fmsdat=fmsdat[-which(is.na(fmsdat$species_binomial)),]
+fmsdat=fmsdat[-which(is.na(fmsdat$dbh) & is.na(fmsdat$dgh)),]
+fmsdat=fmsdat[-which(is.na(fmsdat$enq) | fmsdat$enq=="" | fmsdat$enq=="9999999999"),]
+fmsdat=fmsdat[-which(fmsdat$dbh<1),]
+fmsdat=fmsdat[-which(fmsdat$dgh<1),]
+
+
+fmsdat$census.year
+length(unique(paste(fmsdat$census.year, fmsdat$enq, fmsdat$site)))
+length(which(duplicated(fmsdat[,-1])==T))
+
+#remake fms data with only important data for this analysis
+roi=c("site","id","plot", "date", "census.year", "date.year", "date.month",
+      "date.day", "line", "main", "lter", "enq", "distance", "species_binomial",
+      "dbh", "dgh", "mortality.year", "status", "notes")
+
+fmsdat=fmsdat[,which(colnames(fmsdat)%in%roi)]
+fmsdat=fmsdat[-which(duplicated(fmsdat[,-1])==T),]#here, remove duplicated tags
+
+
+#OK, to check for duplicated tag errors:
+#This checks if there are tags with more than one species wihtin a given site
+duptags=aggregate(fmsdat$sp, list(site=fmsdat$site, enq=fmsdat$enq), FUN=function(x)(length(unique(x))))
+duptags2=duptags[which(duptags$x>1),] #there are up to 4 different species with the same enq #
+table(duptags2$site)
+length(duptags[which(duptags$x>1),][,1])
+
+duptagslist1=paste(duptags2$site, duptags2$enq)
+which(duptagslist1==paste("Barro Colorado Island 929"))
+
+#This checks for tags that have multiple measurements per year
+dtpy=aggregate(fmsdat$site, list(site=fmsdat$site, census.year=fmsdat$census.year, enq=fmsdat$enq), length)
+dtpy=dtpy[which(dtpy$x>1),]#there are up to 4 different measurements per year with the same enq # per site
+table(dtpy$site)
+length(duptags[which(dtpy$x>1),][,1])
+
+duptagslist2=paste(dtpy$site, dtpy$enq)
+
+#combine duplicate tage data and get unique duplicated tags
+duptagslist=unique(c(duptagslist1, duptagslist2))
+duptagslist
+which(duptagslist==paste("Barro Colorado Island 929"))
+
+dup.tag.data=fmsdat[which(paste(fmsdat$site, fmsdat$enq) %in% duptagslist),]
+used=unique(paste(dup.tag.data$site, dup.tag.data$enq))
+which(used=="Barro Colorado Island 929")
+fmsdat.tagchecksout=list()
+for( i in 1:length( used)){
+  
+  practicedf=dup.tag.data[ which(paste(dup.tag.data$site, dup.tag.data$enq) ==used[i]),]
+
+#get the available census years for a site "acys"
+sitename=unique(na.omit(practicedf$site))[1]
+acys=unique(na.omit(practicedf[which(practicedf$site==sitename),]$census.year))
+
+#determine if ther is more than one location
+diff.location=unique(paste(practicedf$site, practicedf$line, practicedf$distance, practicedf$enq))
+
+if(length(diff.location)>1){ #If there is more than 1 unique location per tag
+  loc.freq=data.frame(t(table(paste(practicedf$site, practicedf$line, practicedf$distance, practicedf$enq))))
+  correct.loc=loc.freq[which(loc.freq$Freq==max(loc.freq$Freq)[1]),]$Var2 #here it's possible that there is more than 1 correct location
+  incorrect.loc=loc.freq[which(loc.freq$Freq %in% min(loc.freq$Freq)),]$Var2
+  
+  #Get correct tag's data
+  correct.df=practicedf[which( paste(practicedf$site, practicedf$line, practicedf$distance, practicedf$enq)==correct.loc),]
+  
+  #Get incorrect tag's data
+  incorrect.df=practicedf[which( paste(practicedf$site, practicedf$line, practicedf$distance, practicedf$enq)==incorrect.loc),]
+  
+  #find other tags in same locations
+  tisl=fmsdat[which(paste(fmsdat$site, fmsdat$line,fmsdat$distance) %in%  paste(incorrect.df$site, incorrect.df$line, incorrect.df$distance)),]
+  tisl.len=length(tisl[,1])
+  if(tisl.len>0){
+    #Do any tags have missing years of censuses that are missing, and are those missings years equal to the year that the "erroroneous" tag was measured?
+    utisl=unique(tisl$enq)
+    missingyear=c() #is error year missing from the potential measurements?
+    correctcy=c() #is the error year in the 
+
+    #loop through potential  "correct"tags  to see if one is missing a year 
+    for( t in 1:length(utisl)){ 
+      tisldf=tisl[which(tisl$enq==utisl[t]),]
+      #get the year missing from the potential tag that could be the error
+      
+      #is there a missing year?
+      if( length(setdiff( incorrect.df$census.year, unique(na.omit(tisldf$census.year))))==0){
+        missingyear[t]=NA
+      }else{
+        missingyear[t]=setdiff( incorrect.df$census.year, unique(na.omit(tisldf$census.year)))
+      }
+      correctcy[t]=incorrect.df$census.year %in% acys
+    }#endloop "t"
+    
+    #this selectst the potential rows of tags that are missing census data in the same year that the error occurs. 
+    prtmcd=tisl[which(tisl$enq %in% utisl[which( !is.na(missingyear) & correctcy==T)]),]
+    
+    #here we determine if the erroneous measuremt is actually mislabeled as a different species
+    prtmcd.len=length(prtmcd[,1])#get lenght of this df
+    if(prtmcd.len>0){
+      uprtmcd=unique(prtmcd$enq)
+      dbhinc=dghinc=samesp=yearinc=c()
+      #loop through the potential tags to find the dbh or dbh for the most recent recensut and determine if the growth rate is plausible & if species are the same. If growth is plausible and species are the same,the erroneous tag is renamed witht eh species of the plausible value, if not, the tag i renunbered
+      for( s in length(uprtmcd)){
+        prtmcddf=prtmcd[which(prtmcd$enq==uprtmcd[s]),]
+        if(incorrect.df$census.year == max(acys)){ #this gets the most recent year before the last year on record for the census
+          dfs1=prtmcddf[which(incorrect.df$census.year-prtmcddf$census.year== min(abs(na.omit(incorrect.df$census.year-prtmcddf$census.year)))),]
+          yearinc[s]=min(abs(na.omit(incorrect.df$census.year-prtmcddf$census.year)))
+          dbhinc[s]=dfs1$dbh-incorrect.df$dbh
+          dghinc[s]=dfs1$dgh-incorrect.df$dgh
+          samesp[s]=dfs1$species_binomial==incorrect.df$species_binomial
+        }else if(incorrect.df$census.year == min(acys)){
+          dfs2=prtmcddf[which((incorrect.df$census.year+1)-prtmcddf$census.year== min(abs(na.omit((incorrect.df$census.year+1)-prtmcddf$census.year)))),]
+          yearinc[s]=min(abs(na.omit((incorrect.df$census.year+1)-prtmcddf$census.year)))
+          dbhinc[s]=dfs2$dbh-incorrect.df$dbh
+          dghinc[s]=dfs2$dgh-incorrect.df$dgh
+          samesp[s]=dfs2$species_binomial==incorrect.df$species_binomial
+        }else{
+          dfs3=prtmcddf[which(incorrect.df$census.year-prtmcddf$census.year== min(abs(na.omit(incorrect.df$census.year-prtmcddf$census.year)))),]
+          yearinc[s]=min(abs(na.omit(incorrect.df$census.year-prtmcddf$census.year)))
+          dbhinc[s]=dfs3$dbh-incorrect.df$dbh
+          dghinc[s]=dfs3$dgh-incorrect.df$dgh
+          samesp[s]=dfs3$species_binomial==incorrect.df$species_binomial
+        }
+      }#end loop s
+      
+      #get the tag numbers for rows that might be the right year for the erroneous data
+      dbhincrowssp=which( !is.na(dbhinc) & (incorrect.df$dbh+dbhinc)/yearinc<incorrect.df$dbh+0.7 & -abs(incorrect.df$dbh*0.05)< dbhinc & samesp==T) #if growth is less than 0.7cm and greater than -5%, and is not, na, and sp is true
+      tagsdbhsp=uprtmcd[dbhincrowssp]
+      dghincrowssp=which( !is.na(dghinc) & (incorrect.df$dbh+dghinc)/yearinc<incorrect.df$dbh+0.7 & -abs(incorrect.df$dbh*0.05) <dghinc & samesp==T ) #if growth is less than 0.7cm and greater than -5%, and is not, na, and sp is true
+      tagsdghsp=uprtmcd[dghincrowssp]
+      
+      dbhincrows=which( !is.na(dbhinc) & (incorrect.df$dbh+dbhinc)/yearinc<incorrect.df$dbh+0.7 & (-incorrect.df$dbh*0.05)<dbhinc ) #if growth is less than 0.7cm and greater than -5%, and is not, na, and  no sp info
+      tagsdbh=uprtmcd[dbhincrows]
+      dghincrows=which( !is.na(dghinc) & (incorrect.df$dbh+dghinc)/yearinc<incorrect.df$dbh+0.7 & (-incorrect.df$dbh*0.05)<dghinc) #if growth is less than 0.7cm and greater than -5%, and is not, na, and no sp info
+      tagsdgh=uprtmcd[dbhincrows]
+      
+      #here, is the tag for the species with a growth increment that is plausible for the erroneous measurement
+      if(length(tagsdbhsp)>0){ 
+        incorrect.df$enq=rep( unique(prtmcd[which(prtmcd$enq %in% tagsdbhsp),]$enq), length(incorrect.df$enq)) #this replaces the erroneous tag's enq name with that of the tag it is likley to be, repeated for the length of the incorrect df
+        incorrect.df$species_binomial=rep( unique(prtmcd[which(prtmcd$enq %in% tagsdbhsp),]$species_binomial), length(incorrect.df$species_binomial)) #this replaces the erroneous tag's species name with that of the tag it is likley to be, repeated for the length of the incorrect df
+        incorrect.df$distance=rep(unique(prtmcd[which(prtmcd$enq %in% tagsdbhsp),]$distance), length(incorrect.df$distance)) #this replaces the erroneous tag's species name with that of the tag it is likley to be
+      }else if(length(tagsdghsp)>0){
+        incorrect.df$species_binomial=rep(unique(prtmcd[which(prtmcd$enq %in% tagsdghsp),]$species_binomial), length(incorrect.df$species_binomial)) #this replaces the erroneous tag's species name with that of the tag it is likley to be
+        incorrect.df$distance=rep(unique(prtmcd[which(prtmcd$enq %in% tagsdbh),]$distance), length(incorrect.df$distance)) #this replaces the erroneous tag's species name with that of the tag it is likley to be
+      }else if(length(tagsdbhsp)==0){
+        incorrect.df$enq=rep("needs_reassignment", length(incorrect.df$enq))
+      }else if(length(tagsdghsp)==0){
+        incorrect.df$enq=rep("needs_reassignment", length(incorrect.df$enq))
+      }else if(length(tagsdbh)==0){
+        incorrect.df$enq=rep("needs_reassignment", length(incorrect.df$enq))
+      }else if(length(tagsdgh)==0){
+        incorrect.df$enq=rep("needs_reassignment", length(incorrect.df$enq))
+      }
+      fmsdat.tagchecks=rbind(incorrect.df, correct.df)
+    }else{
+      incorrect.df$enq=rep("needs_reassignment", length(incorrect.df$enq))
+      fmsdat.tagchecks=rbind(incorrect.df, correct.df)
+    }
+    
+  }else{
+    incorrect.df$enq=rep("needs_reassignment", length(incorrect.df$enq))
+    fmsdat.tagchecks=rbind(incorrect.df, correct.df)
+    #Here the code runs if there are no other tags in the same vicinity as the error.
+    #So, the error that exists is likely to be be an incorrect tag assignment, and an incorect location assignment
+    #Therefore, it would be very difficult to know what this measurement is for.
+    #So, I'll need to remove the dbh or dbh measurment for the error on this ( and maybe make a note for later in the comments )
+  }
+  
+
+  }else if(length(diff.location)==1){ #If there is only 1 unique location per tag
+    sp.freq=data.frame(t(table(paste(practicedf$site, practicedf$line, practicedf$distance, practicedf$species_binomial )))) #make frequency table of speciesxlocation
+    correct.loc=sp.freq[which(sp.freq$Freq==max(sp.freq$Freq)[1]),]$Var2 #which sp is most frequent
+    incorrect.loc=sp.freq[which(sp.freq$Freq %in% min(sp.freq$Freq)),]$Var2 #which sp is least frequent? probably incorrect
+    
+    #Get correct tag's data
+    correct.df=practicedf[which( paste(practicedf$site, practicedf$line, practicedf$distance, practicedf$species_binomial)==correct.loc),]
+    
+    #Get incorrect tag's data
+    incorrect.df=practicedf[which( paste(practicedf$site, practicedf$line, practicedf$distance, practicedf$species_binomial)==incorrect.loc),]
+    
+    #find other tags in same locations
+    tisl=fmsdat[which(paste(fmsdat$site, fmsdat$line,fmsdat$distance) %in%  paste(practicedf$site, practicedf$line, practicedf$distance)),]
+    
+    tisl.len=length(tisl[,1]) #get the number of rows of the df
+    #If there are any other tags in the same location
+    if(tisl.len>0){
+      #Do any tags have missing years of censuses that are missing, and are those missings years equal to the year that the "erroroneous" tag was measured?
+      utisl=unique(tisl$enq)
+      missingyear=c() #is error year missing from the potential measurements?
+      correctcy=c() #is the error year in the 
+      
+      #loop through potential tags "correct" to see if one is missing a year 
+      for( t in 1:length(utisl)){ 
+        tisldf=tisl[which(tisl$enq==utisl[t]),]
+        #get the year missing from the potential tag that could be the error
+        
+        #is there a missing year?
+        if( length(setdiff( incorrect.df$census.year, unique(na.omit(tisldf$census.year))))==0){
+          missingyear[t]=NA
+        }else{
+          missingyear[t]=setdiff( incorrect.df$census.year, unique(na.omit(tisldf$census.year)))
+        }
+        correctcy[t]=incorrect.df$census.year %in% acys
+      }#endloop "t"
+      
+      #this selectst the potential rows of tags that are missing census data in the same year that the error occurs. 
+      prtmcd=tisl[which(tisl$enq %in% utisl[which( !is.na(missingyear) & correctcy==T)]),]
+    
+      #here we determine if the erroneous measuremt is actually mislabeled as a different species
+      prtmcd.len=length(prtmcd[,1])#get lenght of this df
+      if(prtmcd.len>0){
+      uprtmcd=unique(prtmcd$enq)
+      dbhinc=dghinc=samesp=yearinc=c()
+      #loop through the potential tags to find the dbh or dbh for the most recent recensut and determine if the growth rate is plausible - if it is, the erroneous tag is renamed witht eh species of the plausible value, if not, the tag i renunbered
+        for( s in length(uprtmcd)){
+          prtmcddf=prtmcd[which(prtmcd$enq==uprtmcd[s]),]
+          if(incorrect.df$census.year == max(acys)){ #this gets the most recent year before the last year on record for the census
+            dfs1=prtmcddf[which(incorrect.df$census.year-prtmcddf$census.year== min(abs(na.omit(incorrect.df$census.year-prtmcddf$census.year)))),]
+            yearinc[s]=min(abs(na.omit(incorrect.df$census.year-prtmcddf$census.year)))
+            dbhinc[s]=dfs1$dbh-incorrect.df$dbh
+            dghinc[s]=dfs1$dgh-incorrect.df$dgh
+            samesp[s]=dfs1$species_binomial==incorrect.df$species_binomial
+          }else if(incorrect.df$census.year == min(acys)){
+            dfs2=prtmcddf[which((incorrect.df$census.year+1)-prtmcddf$census.year== min(abs(na.omit((incorrect.df$census.year+1)-prtmcddf$census.year)))),]
+            yearinc[s]=min(abs(na.omit((incorrect.df$census.year+1)-prtmcddf$census.year)))
+            dbhinc[s]=dfs2$dbh-incorrect.df$dbh
+            dghinc[s]=dfs2$dgh-incorrect.df$dgh
+            samesp[s]=dfs2$species_binomial==incorrect.df$species_binomial
+          }else{
+            dfs3=prtmcddf[which(incorrect.df$census.year-prtmcddf$census.year== min(abs(na.omit(incorrect.df$census.year-prtmcddf$census.year)))),]
+            yearinc[s]=min(abs(na.omit(incorrect.df$census.year-prtmcddf$census.year)))
+            dbhinc[s]=dfs3$dbh-incorrect.df$dbh
+            dghinc[s]=dfs3$dgh-incorrect.df$dgh
+            samesp[s]=dfs3$species_binomial==incorrect.df$species_binomial
+          }
+        }#end loop s
+      
+      #get the tag numbers for rows that might be the right year for the erroneous data
+      dbhincrows=which( !is.na(dbhinc) & (incorrect.df$dbh+dbhinc)/yearinc<incorrect.df$dbh+0.7 & -abs(incorrect.df$dbh*0.05)< dbhinc) #if growth is less than 0.7cm and greater than -5%, and is not, na
+      tagsdbh=uprtmcd[dbhincrows]
+      dghincrows=which( !is.na(dghinc) & (incorrect.df$dbh+dghinc)/yearinc<incorrect.df$dbh+0.7 & -abs(-incorrect.df$dbh*0.05)<dghinc) #if growth is less than 0.7cm and greater than -5%, and is not, na
+      tagsdgh=uprtmcd[dbhincrows]
+      
+      #here, is the tag for the species with a growth increment that is plausible for the erroneous measurement
+      if(length(tagsdbh)>0){ 
+        incorrect.df$species_binomial=rep( unique(prtmcd[which(prtmcd$enq %in% tagsdbh),]$species_binomial), length(incorrect.df$species_binomial)) #this replaces the erroneous tag's species name with that of the tag it is likley to be
+      }else if(length(tagsdgh)>0){
+        incorrect.df$species_binomial=rep(unique(prtmcd[which(prtmcd$enq %in% tagsdgh),]$species_binomial), length(incorrect.df$species_binomial)) #this replaces the erroneous tag's species name with that of the tag it is likley to be
+      }else if(length(tagsdbh)==0){
+        incorrect.df$enq=rep("needs_reassignment", length(incorrect.df$enq))
+      }else if(length(tagsdgh)==0){
+        incorrect.df$enq=rep("needs_reassignment", length(incorrect.df$enq))
+      }
+        
+      fmsdat.tagchecks=rbind(incorrect.df, correct.df)
+      
+      }else{
+        incorrect.df$enq=rep("needs_reassignment", length(incorrect.df$enq))
+        fmsdat.tagchecks=rbind(incorrect.df, correct.df)
+      }
+      
+    }else{
+      incorrect.df$enq=rep("needs_reassignment", length(incorrect.df$enq))
+      fmsdat.tagchecks=rbind(incorrect.df, correct.df)
+    #Here the code runs if there are no other tags in the same vicinity as the error.
+    #So, the error that exists is likely to be be an incorrect tag assignment, and an incorect location assignment
+    #Therefore, it would be very difficult to know what this measurement is for.
+    #So, I'll need to remove the dbh or dbh measurment for the error on this ( and maybe make a note for later in the comments )
+  }
+}
+fmsdat.tagchecksout[[i]]=fmsdat.tagchecks
+}
+
+fmsdat.tagchecksout2=do.call("rbind", fmsdat.tagchecksout)
+
+#remove tags that needed to be checked
+fmsdat.tagchecks.removed=fmsdat[-which(paste(fmsdat$site, fmsdat$enq) %in% duptagslist),]
+
+#add corrected "tag-check" data back to full fms data
+fmsdat=rbind(fmsdat.tagchecksout2, fmsdat.tagchecks.removed)
+
+#create new set of tag numbers
+fmsdat[which(fmsdat$enq=="needs_reassignment"),]$enq=seq(from=100000, to=(99999+length(fmsdat[which(fmsdat$enq=="needs_reassignment"),]$enq)))
+
+
+
+#Might need to write some more code checkl for tags per site that have mor than 10 rows.

@@ -1,0 +1,66 @@
+{
+    "debugBreakpointsState": {
+        "breakpoints": [
+            {
+                "id": 1,
+                "path": "~/Google Drive/HT&Dimorphism/R-scripts/Ttest.and.Trait.correlation.figures.Apr.22.2021.R",
+                "line_number": 72,
+                "function_steps": "",
+                "function_name": "Ltemp",
+                "state": 2,
+                "editor_state": 2,
+                "editor_line_number": 72,
+                "is_pending_debug_completion": false,
+                "needs_updated_steps": false,
+                "type": 0,
+                "is_package_breakpoint": false,
+                "package_name": ""
+            },
+            {
+                "id": 2,
+                "path": "~/Google Drive/HT&Dimorphism/R-scripts/Ttest.and.Trait.correlation.figures.Apr.22.2021.R",
+                "line_number": 61,
+                "function_steps": "",
+                "function_name": "Ltemp",
+                "state": 2,
+                "editor_state": 2,
+                "editor_line_number": 61,
+                "is_pending_debug_completion": false,
+                "needs_updated_steps": false,
+                "type": 0,
+                "is_package_breakpoint": false,
+                "package_name": ""
+            },
+            {
+                "id": 4,
+                "path": "~/Google Drive/HT&Dimorphism/R-scripts/Ttest.and.Trait.correlation.figures.Apr.22.2021.R",
+                "line_number": 68,
+                "function_steps": "",
+                "function_name": "Ltemp",
+                "state": 2,
+                "editor_state": 2,
+                "editor_line_number": 68,
+                "is_pending_debug_completion": false,
+                "needs_updated_steps": false,
+                "type": 0,
+                "is_package_breakpoint": false,
+                "package_name": ""
+            },
+            {
+                "id": 5,
+                "path": "~/Google Drive/HT&Dimorphism/R-scripts/Ttest.and.Trait.correlation.figures.Apr.22.2021.R",
+                "line_number": 85,
+                "function_steps": "",
+                "function_name": "LTfun2",
+                "state": 2,
+                "editor_state": 2,
+                "editor_line_number": 85,
+                "is_pending_debug_completion": false,
+                "needs_updated_steps": false,
+                "type": 0,
+                "is_package_breakpoint": false,
+                "package_name": ""
+            }
+        ]
+    }
+}

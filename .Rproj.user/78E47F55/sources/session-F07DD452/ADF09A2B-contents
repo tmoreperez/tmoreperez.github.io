@@ -1,0 +1,445 @@
+#This contains a series of function that requires user interaction to compile new census data. 
+
+#Notes on best practices before compiling data
+#Make sure that the data in the columns of the census data are correctly formatted
+#Check that the new dbh and dgh columns have no incorrect formats - e.g. no letters, only numbers or NA's (just sort in excel to verify)
+#Add NA's to blank spaces
+#Make sure date data is included and the census.year for each site at a bare minimum
+#Make sure forest plot names are consistent with those already existing in the database
+#Make sure that previous year's comments are not included repeated for present year - this is something that data collectors need to check & that data-entry people need to exclude if necessary
+#Check that species' names are spelled correctly.
+
+
+#Below defines functions for compiling data. 
+#"FMSdata" = the entire FMS dataset; 
+#"new_census_df"= the new census data you want to append.
+#Note: These functions require user input
+#Functions 1-6 below are run below in a forloop beginning in line 
+
+# -------------------------------------------------------------------------------
+#1) A function to remove the columns of data you don't want in when appending new data to the full FMS Dataset
+Remove_unwanted_columns=function(new_census_df){
+  print(colnames(new_census_df)) #new_census_df
+  
+  #get user input for columns to remove
+  c2r=readline(prompt=" Enter column names to be removed from new census' dataframe : \n
+  Enter NA to remove no columns \n 
+  Separate items with a comma and a space" )
+  
+  #Split usrer entry into by commas
+  c2rlist=strsplit(c2r, ",")
+  
+  #Remove spaces and redefine as a vector from list
+  names_of_cols=unlist(lapply(c2rlist, FUN=function(x){gsub(" ", "", x)}))
+  
+  
+  #If length is greater than 0, then there are NA's, remove the NA's from the columns name vector
+  names_of_cols_nar=c()
+  if(  length(which(names_of_cols=="NA"))>0){
+    names_of_cols_nar=names_of_cols[-which( (names_of_cols %in% "NA"))]
+  }else{
+    names_of_cols_nar=names_of_cols
+  }
+  
+  #Check if vector is greater than 0, and remove columns with thos names
+  new_census_df_cols_removed=list()
+  if( length(names_of_cols_nar)>0){
+    new_census_df_cols_removed=new_census_df[,-which(colnames(new_census_df) %in% names_of_cols_nar)]
+  }else{
+    new_census_df_cols_removed=new_census_df
+  }
+  return(new_census_df_cols_removed)
+}
+
+# -------------------------------------------------------------------------------
+#2) A function to remove the columns of data you don't want when appending new data to the full FMS Dataset
+Colname_mismatch=function(new_census_df, FMSdata){
+  
+  #Get column names of new census data
+  ndcn=colnames(new_census_df) 
+  
+  #Get column names from FMS data
+  fmscn=colnames(FMSdata) 
+  
+  #Create function that find the columns names from the new census data that are not in the FMS data
+  '%!in%' <- function(x,y)!('%in%'(x,y))
+  
+  #Find the row numbers from the new census data that are not in the FMS data
+  FMS_Column_Mismatch_rownum=which(ndcn %!in% fmscn)
+  #Find the columns names from the new census data that are not in the FMS data
+  FMS_Column_Mismatch_name=ndcn[FMS_Column_Mismatch_rownum]
+  
+  mismatch=data.frame(FMS_Column_Mismatch_rownum=FMS_Column_Mismatch_rownum, 
+                      FMS_Column_Mismatch_name=FMS_Column_Mismatch_name)
+  cat("The follwing column names from the input do not match the existing FMS dataframe columns:\n")
+  print(mismatch)
+  #make cycle through unmatched columns and rename as desired:
+  
+  new_column_namev=c()
+  for(i in 1:length(mismatch[,1])){
+    #get unmatched column names
+    unmatched_name=mismatch[i,]$FMS_Column_Mismatch_name
+    
+    #find a potential column name match
+    potentialcolumn_name=fmscn[agrep(unmatched_name, fmscn, max.distance = 4)]
+    cat("Here are all the column names in the FMS data:\n")
+    cat("\n", fmscn, sep=", ", "\n")      
+    cat(c("\nWould you like to rename column", paste(unmatched_name), "as: \n")) 
+    cat(c(paste(potentialcolumn_name), "?", "\n"))
+    rename_newcensud_columnx=readline(prompt="Enter 'y', 'n' or type a user-defined name: \n")
+    
+    #Conditional statement to redefine mismatch column name based on user input
+    new_column_name=c()
+    if(rename_newcensud_columnx=="y"){
+      new_column_name=potentialcolumn_name
+    }else if(rename_newcensud_columnx=="n"){
+      new_column_name="NA"
+    }else{
+      new_column_name=rename_newcensud_columnx
+    }
+    new_column_namev[i]=new_column_name
+  }
+  
+  
+  mismatch$new_column_name=new_column_namev
+  
+  #rename unmatched columns
+  colnames(new_census_df)[mismatch$FMS_Column_Mismatch_rownum]=mismatch$new_column_name
+  return(new_census_df)
+}
+
+# -------------------------------------------------------------------------------
+#3) Create a function that adds the missing columns to the new data census dataframe, then reorders in to add to full fms census
+Add_missing_cols_to_new=function(new_census_df, FMSdata){
+  
+  #get new census data columns names
+  nccn=colnames(new_census_df)
+  
+  #get new full fms data columns names
+  fmscn=colnames(fmsdat)
+  
+  #Create function that find the columns names from the FMS data that are not in the new census data
+  '%!in%' <- function(x,y)!('%in%'(x,y))
+  
+  #Find the row numbers from the new census data that are not in the FMS data
+  Columns_number_not_in_new_census_data=which(fmscn %!in% nccn)
+  #Find the columns names from the new census data that are not in the FMS data
+  Columns_name_not_in_new_census_data=fmscn[Columns_number_not_in_new_census_data]
+  
+  empty.vector=rep(NA, length(new_census_df[,1]))
+  for(i in 1:length(Columns_name_not_in_new_census_data)){
+    Variable=Columns_name_not_in_new_census_data[i]
+    new_census_df[,Variable]=empty.vector
+  }
+  
+  return(new_census_df[,fmscn])
+}
+
+# -------------------------------------------------------------------------------
+#4) Change the classes of the data in the new census df to match the fms data
+Change_column_classes=function(new_census_df, FMSdata){
+  #New_Census_Data3, fmsdat
+  new_data_classes=sapply(new_census_df, class)
+  fms_classes=sapply(FMSdata, class)
+  columns_class_to_change=which( (new_data_classes==fms_classes)==F)
+  
+  #loop through mis-matched columns and change the to the correct class according to the fms data 
+  for(i in 1:length(columns_class_to_change)){
+    col_select=columns_class_to_change[i]
+    if(fms_classes[col_select]=="logical"){
+      new_census_df[,col_select]=as.logical(new_census_df[,col_select])
+      cat("column", col_select, "changed to logical \n" )
+    }else if(fms_classes[col_select]=="character"){
+      new_census_df[,col_select]=as.character(new_census_df[,col_select])
+      cat("column", col_select, "changed to character \n" )
+    }else if(fms_classes[col_select]=="integer"){
+      new_census_df[,col_select]=as.integer(new_census_df[,col_select])
+      cat("column", col_select, "changed to integer \n" )
+    }else if(fms_classes[col_select]=="numeric"){
+      new_census_df[,col_select]=as.numeric(new_census_df[,col_select])
+      cat("column", col_select, "changed to numeric \n" )
+    }
+  }
+  return(new_census_df)
+}
+
+# -------------------------------------------------------------------------------
+#5) Function to append new census data to existing fms census data
+Append_new_census_data=function(new_census_df, FMSdata){
+  fmsappended=rbind(FMSdata, new_census_df)
+  return(fmsappended)
+}
+
+# -------------------------------------------------------------------------------
+#A) Import full FMS data
+fmsdat=read.csv("/Users/timothyperez/Google Drive/Michaletzgit/Forest_Macrosystems/Forest_Macrosystems/FMS.Apr.29.2021.csv")
+
+# -------------------------------------------------------------------------------
+#B) Import census' to compile
+file_list=list.files("/Users/timothyperez/Google Drive/Michaletzgit/New_Census_Data_Not_Added_Full/", full.names=T)
+file_list=file_list[order(file_list)]
+#get cvs's of interest
+file_list2=file_list[c(2,3,10, 12, 13, 14)]
+
+# -------------------------------------------------------------------------------
+#C) loop through each new census data file to append it to existing fms data
+for(i in 1:length(file_list2)){
+  Newcensusdf=read.csv(file_list2[i]) 
+  
+  #Implement functions:
+  #1) Use function to remove unwanted columns from the New census' dataframe
+  New_Census_Data1=Remove_unwanted_columns(Newcensusdf)
+  
+  #2) #Use function to rename column names in new census df match full fms dataframe's columnm names
+  New_Census_Data2=Colname_mismatch(New_Census_Data1, fmsdat)
+  
+  #3) Use a function that adds the missing columns to the new data census dataframe, then reorders in to add to full fms census
+  New_Census_Data3=Add_missing_cols_to_new(New_Census_Data2, fmsdat)
+  
+  #4) 
+  New_Census_Data4=Change_column_classes(New_Census_Data3, fmsdat)
+  
+  #5)
+  fmsdat=Append_new_census_data(New_Census_Data4, fmsdat)
+}
+# Check results-------------------------------------------------------------------------------
+table(fmsdat$site, fmsdat$census.year) #insect all records
+# -------------------------------------------------------------------------------
+#Get cwt data
+CWT=fmsdat[which(fmsdat$site=="Coweeta LTER"),]
+unique(CWT$census.year)
+#get year 10 from cwt data
+CWT10=CWT[which(CWT$census.year==10),]
+#remove cwt data from fms
+fmsdat=fmsdat[-which(fmsdat$site=="Coweeta LTER"),]
+#add CWT10 back to fmsdat
+fmsdat=rbind(CWT10, fmsdat)
+
+#Add all CWT census dat back to fms data
+file_list3=file_list[c(9)]
+for(i in 1:length(file_list3)){
+  Newcensusdf=read.csv(file_list3[i]) 
+  
+  #Implement functions:
+  #1) Use function to remove unwanted columns from the New census' dataframe
+  New_Census_Data1=Remove_unwanted_columns(Newcensusdf)
+  
+  #2) #Use function to rename column names in new census df match full fms dataframe's columnm names
+  New_Census_Data2=Colname_mismatch(New_Census_Data1, fmsdat)
+  
+  #3) Use a function that adds the missing columns to the new data census dataframe, then reorders in to add to full fms census
+  New_Census_Data3=Add_missing_cols_to_new(New_Census_Data2, fmsdat)
+  
+  #4) 
+  New_Census_Data4=Change_column_classes(New_Census_Data3, fmsdat)
+  
+  #5)
+  fmsdat=Append_new_census_data(New_Census_Data4, fmsdat)
+}
+# Check results-------------------------------------------------------------------------------
+table(fmsdat$site, fmsdat$census.year) #insect all records
+# -------------------------------------------------------------------------------
+#D) Combine LTER and enq tag numbers
+fmsdat$enq=paste(fmsdat$lter, fmsdat$enq, sep="")
+fmsdat$enq=gsub("NA", "", fmsdat$enq)
+
+#-------------------------------------------------------------------------------
+#save data
+setwd("/Users/timothyperez/Google Drive/Michaletzgit/Forest_Macrosystems/Forest_Macrosystems")
+write.csv(fmsdat, file="FMS_2021_census_updates.20211217.csv")
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#IMPORTANT NOTE: Above, the R script is for compiling new census data and FMSdata 
+#refers to the the entire fms dataset (i.e. all forest sites and all census years).
+#Below, is where the error-checking functions begin. Below, FMSdat is an input for 
+#most of the functions, but must be a single forest site. The 'By_site_wrapper'
+#and the 'By_site_output' function are used to perform the designated function
+#over all forest sites. 
+
+fmsdat=read.csv("/Users/timothyperez/Google Drive/Michaletzgit/Forest_Macrosystems/Forest_Macrosystems/FMS_2021_census_updates.20211217.csv")
+# -------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+#6 Function to reassign tag numbers as needed. One site is passed to the function 
+#at a time. Input is the full df of fms data. Output is the corrected fms dataframe
+tag_rename_function=function(FMSdat){
+  #find rows with notes about possible new tag numbers
+  notes1=grep("tag", FMSdat$notes)
+  notes2=grep("enq", FMSdat$notes)
+  notes3=grep("number", FMSdat$notes)
+  notes4=grep("new", FMSdat$notes)
+  notes5=grep("change", FMSdat$notes)
+  
+  #get unique rows to check
+  check_new_tag_rows=unique(c(notes1, notes2, notes3, notes4, notes5))
+  
+  #get unique tags to check
+  check_tag=FMSdat[check_new_tag_rows,]$enq
+  check_tag_year=FMSdat[check_new_tag_rows,]$census.year
+  
+  #loop through each tag that needs to be checked.
+  for(i in 1:length(check_tag)){
+    
+    #extract all rows for which there is a comment about a new tag, and all 
+    #the census years before the comment was made
+    tag_of_interest=FMSdat[which(FMSdat$enq==check_tag[i] & FMSdat$census.year<=check_tag_year[i]),]
+    
+    #check if tag_of_interest dataframe contains anything
+    if(length(tag_of_interest[,1])>0){
+      #reorder tags of interest based on year of census
+      reordered_tags=tag_of_interest[order(tag_of_interest$census.year),]
+      
+      cat("\n Would you like to change the number for this tag? \n")
+      
+      print(reordered_tags[, c("plot", "line", "enq", "species_binomial", "census.year", "dbh", "dgh", "notes")])
+      tag_decision=readline(prompt="\n Enter 'n' to not change tag number, 'o' for other tags in same location,  or type in a new tag number based on notes. \n")
+      
+      
+      #turn off NA coercion warning
+      oldw <- getOption("warn")
+      options(warn = -1)
+      
+      #Evaluate tag_decision to change tags or not
+      eval_vector=c(tag_decision=="n", tag_decision=="o", is.na(as.numeric(tag_decision)), tag_decision=="")
+      
+      #turn NA coercion warning back on
+      options(warn = oldw)
+      if( identical(eval_vector, c(F, F, F, F)) ){ #this condition is run if the entry is a number
+        #get old tag 
+        old.tags=unique(reordered_tags$enq)
+        
+        #re-designate tag base don user input
+        reordered_tags$enq=as.numeric(tag_decision)
+        
+        #remove old rows from main FMS data
+        FMSdat=FMSdat[-which(FMSdat$enq==check_tag[i] & FMSdat$census.year<=check_tag_year[i]),]
+        
+        #get largest year, which should be the year when tag was changed
+        max_year=max(reordered_tags$census.year)
+        
+        #add to notes what was changed
+        reordered_tags$notes=paste(reordered_tags$notes, "tags", old.tags, "changed to", tag_decision, "in census year", max_year, sep=" ")
+        
+        #add corrected rows back to full fsm data
+        FMSdat=rbind(FMSdat, reordered_tags)
+        cat("Tag changed \n")
+        
+      }else if(identical(eval_vector, c(F, T, T, F))){ #This is the conditions for the option 'o'
+        
+        #get year before current tag's comment
+        previous_year=max(reordered_tags$census.year)-1
+        
+        #find tags from site based on potential location matches 
+        possible_tag_matches=FMSdat[which(paste(FMSdat$plot, FMSdat$line, FMSdat$distance) %in%  
+                                            paste(reordered_tags$plot, reordered_tags$line, reordered_tags$distance )),]
+        
+        #find the tags that DO NOT have data for the same year as the reordered_tags, but have data from the previous year
+        applicable_tags_to_change=as.vector(unlist(by(possible_tag_matches, possible_tag_matches$enq,  FUN=function(x){
+          #x=practdf2
+          #get rows from tag that contain the same year as the tag with note
+          rows_with_same_year=which(x$census.year==max(reordered_tags$census.year)) #this should be length zero
+          #get rows from tag that contain the previous year as the tag with note
+          rows_with_prev_year=which(x$census.year==previous_year) #this length should be greater than 1
+          
+          #evaluate if both following conditions are true, return the tag number
+          if(identical( c( length(rows_with_same_year)==0, (length(rows_with_prev_year)>0)), c(T, T))){
+            tag_2_check=unique(x$enq)
+            return(tag_2_check)
+          }
+        }))[1])
+        
+        
+        if( length(applicable_tags_to_change)>0 ){
+          #sort the potential matches
+          possible_tag_matches=possible_tag_matches[which(possible_tag_matches$enq %in% as.numeric(applicable_tags_to_change)),]
+          possible_tag_matches_revised=possible_tag_matches[order(possible_tag_matches$census.year),]
+          possible_tag_matches_revised=possible_tag_matches_revised[order(possible_tag_matches_revised$species_binomial),]
+          
+          cat("Here is the tag that was changed: \n")
+          print(reordered_tags[, c("plot", "line", "distance", "enq", "species_binomial", "census.year", "dbh", "dgh", "notes")])
+          
+          cat("Do any of these tags appear to be the same stem and need to be changed to match above? \n")
+          print(possible_tag_matches_revised[, c("plot", "line", "distance", "enq", "species_binomial", "census.year", "dbh", "dgh", "notes")])
+          
+          tag_decision2=readline(prompt = "Enter tag number from above that needs to be changed or enter 'n' to do nothing and add to note:\n")
+          
+          #Evaluate if user determined a tag to change or not.
+          if(is.na(as.numeric(tag_decision2))==F ){
+            
+            #Change user entry to numeric
+            tag_to_rename=as.numeric(tag_decision2)
+            
+            #extract tag numbers based on the user's entry
+            tags_extraction=FMSdat[which(FMSdat$enq==tag_to_rename),]
+            
+            #Remove rows from main FMS dataframe
+            FMSdat=FMSdat[-which(FMSdat$enq==tag_to_rename),]
+            
+            tags_extraction$enq=as.numeric(unique(reordered_tags$enq))
+            FMSdat=rbind(FMSdat, tags_extraction)
+            cat("Tag changed")
+            
+            
+          }else{ #no tag change, but an option to add a comment
+            
+            add_to_notes=readline(prompt = "Add comment to notes or enter 'n':\n")
+            if( !add_to_notes=='n'){
+              
+              FMSdat=FMSdat[-which(FMSdat$enq==check_tag[i] & FMSdat$census.year<=check_tag_year[i]),]
+              reordered_tags$notes=paste(reordered_tags$notes, add_to_notes, sep="; ")
+              FMSdat=rbind(FMSdat, reordered_tags)
+              cat("No tags found, tag not changed, but notes added \n")
+              
+            }else{
+              cat("No tags found, tag not changed, no notes added \n")
+            }
+            
+          } 
+          
+        }else{
+          FMSdat=FMSdat
+          cat("Tag not changed, no applicable tags found \n")
+        }
+      }else{
+        FMSdat=FMSdat
+        cat("Decided to not change tags \n")
+      }
+    }else{
+      cat("No tags of interest found")
+    }
+  }
+  return(FMSdat)
+}
+Tag_check_update_function=function(X){by(X, X$site, tag_rename_function) }
+#dfpract=do.call("rbind", Tag_check_update_function(fmsdat))
+
+# -------------------------------------------------------------------------------
+#7 A "wrapper" function to loop through each site. This passes a single site to
+# a user-defined function for "corrections"
+#Here, X= the entire FMS dataset, and Func_name refers to functions 6 or 8 (so far)
+By_site_wrapper=function(X, Func_name){by(X, X$site, Func_name) }
+By_site_output=function(X, Func_name){do.call("rbind", Func_wrap(X, Func_name))}
+#By_site_output(fmsdat, Func_name=tag_rename_function)
+
+# -------------------------------------------------------------------------------
+#8 A function to check for duplicate stems
+#See Correcting_duplicated_stems_script.R for full script. The entire 
+#Correcting_duplicated_stems_script.R script will have to be run before performing
+#the  'Checking_and_correcting_duplicate_tags' function
+Checking_and_correcting_duplicate_tags
+#-------------------------------------------------------------------------------
+#tag- checking
+fmsdat_tag_rename=By_site_wrapper(fmsdat, Func_name=tag_rename_function)
+fmsdat_tag_output=do.call("rbind", fmsdat_tag_rename)
+str(fmsdat_tag_output)
+
+#-------------------------------------------------------------------------------
+#remove duplicated data
+fmsdat_tag_output_nodup=fmsdat_tag_output[!duplicated(fmsdat_tag_output[, c("site", "plot", "line", "distance", "census.year", "enq", "species_binomial", "dbh", "dgh", "notes")]),]
+str(fmsdat_tag_output_nodup)
+#------------------------------------------------------------------------------
+#check for duplicated tags
+#I should probbaly do this 1 site at a time.
+unique(fmsdat_tag_output_nodup$site)
+#BCI
+fmsdat_tag_output_nodupBCI=fmsdat_tag_output_nodup[which(fmsdat_tag_output_nodup$site=="Barro Colorado Island"),]
+fmsdat_tag_output_nodupBCItag=By_site_wrapper(fmsdat_tag_output_nodupBCI, Func_name=Checking_and_correcting_duplicate_tags)

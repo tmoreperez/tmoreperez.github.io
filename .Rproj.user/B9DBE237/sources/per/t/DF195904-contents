@@ -1,0 +1,1254 @@
+#################################################################################################
+#################################################################################################
+#make "ideal" data.frame
+minperday=data.frame(minperday=seq(from=0, to=1410, by=30))
+
+daypermonth=data.frame(daypermonth=seq(from=1, to=31, by=1))
+monthperyear=data.frame(monthperyear=seq(from=1, to=12, by=1))
+numofyear=data.frame(numofyear=seq(from=1998, to=2017, by=1))
+
+mpm=merge(daypermonth, monthperyear, all=T)
+mpy=merge(mpm, numofyear, all=T)
+mpy=mpy[order(mpy$daypermonth),]
+mpy=mpy[order(mpy$monthperyear),]
+mpy=mpy[order(mpy$numofyear),]
+mpy$cumd=seq(from = 1, to = length(mpy$daypermonth), by=1)
+mpy=merge(mpy, minperday, all=T)
+
+mpy=mpy[order(mpy$minperday),]
+mpy=mpy[order(mpy$daypermonth),]
+mpy=mpy[order(mpy$monthperyear),]
+mpy=mpy[order(mpy$numofyear),]
+
+mpy$mdmy=paste(mpy$minperday, mpy$daypermonth, mpy$monthperyear, mpy$numofyear)
+mpy[1:100,]
+mpy[which(mpy$cumd==1),]
+
+#compile LS environmental data
+#y07<-read.csv("C:/Users/tmp94/Dropbox/CH2/Data/LS.env.data/2007env.csv", header=T)
+#y08<-read.csv("C:/Users/tmp94/Dropbox/CH2/Data/LS.env.data/2008env.csv", header=T)
+#y09<-read.csv("C:/Users/tmp94/Dropbox/CH2/Data/LS.env.data/2009env.csv", header=T)
+#y10<-read.csv("C:/Users/tmp94/Dropbox/CH2/Data/LS.env.data/2010env.csv", header=T)
+#y11<-read.csv("C:/Users/tmp94/Dropbox/CH2/Data/LS.env.data/2011env.csv", header=T)
+#y12<-read.csv("C:/Users/tmp94/Dropbox/CH2/Data/LS.env.data/2012env.csv", header=T)
+#y13<-read.csv("C:/Users/tmp94/Dropbox/CH2/Data/LS.env.data/2013env.csv", header=T)
+#y14<-read.csv("C:/Users/tmp94/Dropbox/CH2/Data/LS.env.data/2014env.csv", header=T)
+#y15<-read.csv("C:/Users/tmp94/Dropbox/CH2/Data/LS.env.data/2015env.csv", header=T)
+#y16<-read.csv("C:/Users/tmp94/Dropbox/CH2/Data/LS.env.data/2016env.csv", header=T)
+
+y98<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/Compiled/1998.Compiled.csv", header=T)
+str(y98)
+y99<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/Compiled/1999.Compiled.csv", header=T)
+str(y99)
+y00<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/Compiled/2000.Compiled.csv", header=T)
+str(y00)
+y01<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/Compiled/2001.Compiled.csv", header=T)
+str(y01)
+y02<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/Compiled/2002.Compiled.csv", header=T)
+str(y02)
+y03<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/Compiled/2003.Compiled.csv", header=T)
+str(y03)
+y04<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/Compiled/2004.Compiled.csv", header=T)
+str(y04)
+y05<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/Compiled/2005.Compiled.csv", header=T)
+str(y05)
+y06<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/Compiled/2006.Compiled.csv", header=T)
+str(y06)
+y07<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/2007env.csv", header=T)
+str(y07)
+y07$hour=gsub(":", "", as.character(y07$hourxx))
+y08<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/2008env.csv", header=T)
+str(y08)
+y08$hour=gsub(":", "", as.character(y08$hourxx))
+y09<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/2009env.csv", header=T)
+str(y09)
+y09$hour=gsub(":", "", as.character(y09$hourxx))
+y10<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/2010env.csv", header=T)
+str(y10)
+y10$hour=gsub(":", "", as.character(y10$hourxx))
+y11<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/2011env.csv", header=T)
+str(y11)
+y11$hour=gsub(":", "", as.character(y11$hourxx))
+y12<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/2012env.csv", header=T)
+str(y12)
+y12$hour=gsub(":", "", as.character(y12$hourxx))
+y13<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/2013env.csv", header=T)
+str(y13)
+y13$hour=gsub(":", "", as.character(y13$hourxx))
+y14<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/2014env.csv", header=T)
+str(y14)
+y14$hour=gsub(":", "", as.character(y14$hourxx))
+y15<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/2015env.csv", header=T)
+str(y15)
+y15$hour=gsub(":", "", as.character(y15$hourxx))
+
+y16<-read.csv("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data/2016env.csv", header=T)
+length(is.na(y16$ws))
+str(y16)
+y16$hour=gsub(":", "", as.character(y16$hourxx))
+length(is.na(y16$ws))
+
+str(y98)#      5101
+unique(y98$year)
+str(y99)#      5101
+str(y00)#      5101
+str(y01)#      5101
+str(y02)#      4879
+str(y03)#      5937
+str(y04)#good, 10605
+str(y05)#good, 10402
+str(y06)#only  3541
+envdat.1=do.call("rbind", list(y98,y99,y00,y01,y02,y03,y04,y05,y06))
+str(envdat.1)
+envdat.1=envdat.1[,-c(1,5)]
+str(envdat.1)
+
+str(envdat.1)
+str(y07)#good, 1048575
+str(y08)#good, 17570
+str(y09)#good, 18688
+str(y10)#good, 17615
+str(y11)#good, 17706
+str(y13)#good, 19417
+str(y14)#good, 19033
+str(y15)#OK,   17614
+str(y16)#few,  4882
+#y98,y99,y00,y01,y02,y03,y04,y05,y06,
+envdat.2=do.call("rbind", list(y07,y08,y09,y10,y11,y12,y13,y14,y15,y16))
+length(is.na(envdat$ws))
+str(envdat.2)
+envdat.2=envdat.2[,c(9,7,8,4,13,11,12,14)]
+
+envdat.3=rbind(envdat.1,envdat.2)#bind earlier and ater years of data
+
+envdat.3$mdmy=paste(envdat.3$minutes, envdat.3$day, envdat.3$month, envdat.3$year)#make unique column for data
+unique(envdat.3$year)
+mdmydf=merge(mpy, envdat.3, by.x = c("mdmy", "minperday", "daypermonth", "monthperyear", "numofyear"),
+             by.y = c("mdmy", "minutes", "day", "month", "year"), all.x=T) #merge placeholder date dataframe and env.data
+
+mdmydf$ws=as.numeric((mdmydf$ws))
+mdmydf$airtemp=as.numeric((mdmydf$airtemp))
+mdmydf$rh=as.numeric((mdmydf$rh))
+
+mdmydf=mdmydf[order(mdmydf$minperday),]
+mdmydf=mdmydf[order(mdmydf$daypermonth),]
+mdmydf=mdmydf[order(mdmydf$monthperyear),]
+mdmydf[order(mdmydf$cumd),]
+mdmydf=mdmydf[which(mdmydf$minperday>660 & mdmydf$minperday<960),]
+
+
+htod=aggregate(mdmydf[,8], list("day"=mdmydf$daypermonth, "month"=mdmydf$monthperyear, "year"=mdmydf$numofyear), FUN=function(x) mean(max(na.omit(x)))) #find highest temp per day for entire dataset
+names(htod)[4]<-"airtemp"
+
+
+htod2=merge(htod, mdmydf, by.x=c("day", "month", "year", "airtemp"), by.y=c("daypermonth", "monthperyear", "numofyear", "airtemp"), all.x=T)#obtain the other env. data for the hottest time of each day
+#Clean the data
+hist(htod2$airtemp)
+htod2[which(htod2$airtemp==-Inf),]$airtemp=NA
+length(htod2$airtemp)
+htod2[which(htod2$airtemp==max(na.omit(htod2$airtemp))),]$airtemp=NA
+plot(htod2$year, htod2$airtemp)
+abline(lm(htod2$airtemp~htod2$year))
+hist(htod2$ws)
+hist(htod2$rh)
+hist(htod2$wm2)
+#htod2[which(htod2$wm2<=1),]
+
+htod2=htod2[order(htod2$day),]
+htod2=htod2[order(htod2$month),]
+htod2=htod2[order(htod2$year),]
+
+table(htod2$year)
+htod3=htod2[-which(is.na(htod2$year)==T),]
+htod4=list()
+uy=unique(htod2$year)
+for(i in 1:length(uy)){
+  dfy1=subset(htod2, htod2$year==uy[i])
+  dfy2=subset(htod2, htod2$year==uy[i+1])
+  dfy1.2=dfy1[which(dfy1$month>=4),]
+  dfy2.2=dfy2[which(dfy2$month<4),]
+  dfc=rbind(dfy1.2, dfy2.2)
+  dfc$yoc=paste(uy[i])
+  htod4[[i]]=dfc
+}
+htod4=do.call("rbind", htod4)
+write(htod4, file="htod4.9.23.19.csv")
+plot(htod4$yoc, htod4$airtemp)
+
+htod4=htod4[order(htod4$day),]
+htod4=htod4[order(htod4$month),]
+htod4=htod4[order(htod4$year),]
+htod4=htod4[order(htod4$cumd),]
+
+plot(htod4$cumd, htod4$airtemp)
+loess(htod4$airtemp~htod4$cumd)
+cars.lo <- loess(htod4$airtemp~htod4$cumd, span = .05)
+p=predict(cars.lo, data.frame(speed = seq(1, 8000, 1)), se = TRUE)
+x=seq(1, 7717, 1)
+lines(x,p$fit, lwd=4, col="blue")
+
+
+par(mfcol=c(34), mgp=c(0,0,0), mar=c(1,2,2,2))
+uyoc=unique(htod4$yoc)
+for(i in 1:length(uyoc[-c(18:20)])){
+  df=htod4[which(htod4$yoc==uyoc[i]),]
+  max(na.omit(df$cumd))
+  df[which(df$cumd>365),]
+
+  plot(df$cumd, df$airtemp,main=uyoc[i])
+  cars.lo <- loess(df$airtemp~df$cumd, span = 1)
+  p=predict(cars.lo, data.frame(list(num=seq(min(na.omit(df$cumd)),max(na.omit(df$cumd))), 1 ), se = TRUE))
+  x=seq(min(na.omit(df$cumd)), min(na.omit(df$cumd))+length(p)-1 , 1)
+  lines(x, p, lwd=4, col="blue")
+}
+
+
+setwd("/Users/timothyperez/Dropbox/CH2/Data/LS.env.data")
+#write.csv(htod2,file="Daily.max.temp.data.LS.csv")
+
+abline(lm(htod2$airtemp~htod2$year))
+uyear=unique(htod2$year)
+for(i in 1:length(uyear)){
+  df1=htod2[which(htod2$numofyear==uyear[i]),]
+  complete.cases(df1)
+}
+
+
+
+###################################################################################################
+#################################################################################################
+#################################################################################################
+#get means for thermoregulatory leaf traits
+gmin=read.csv("/Users/timothyperez/Dropbox/CH2/Data/gmin/Gmin.data.1.19.18.csv",header=T)
+lfdat=read.csv("/Users/timothyperez/Dropbox/CH2/Data/Leaf.data/Compiled.leaf.morphology.csv",header=T)
+specdat=read.csv("/Users/timothyperez/Dropbox/CH2/Data/Spec.data/Results/Compiled.SPEC.csv",header=T)
+htdat=read.csv("/Users/timothyperez/Dropbox/CH2/Data/CTmax/La.Selva.HT.data.csv",header=T)
+
+gminM=subset(gmin, gmin$group=="M"); aggregate(gminM$leaf, list(gminM$tag), length )
+gminM$latin=paste(gminM$genus, gminM$species)
+
+lfdatM=subset(lfdat, lfdat$group=="M"); aggregate(lfdatM$leaf, list(lfdatM$tag), length )
+lfdatM$latin=paste(lfdatM$genus, lfdatM$species)
+
+specdatM=subset(specdat, specdat$group=="M"); aggregate(specdatM$leaf, list(specdatM$ID), length )
+
+htdatM=subset(htdat, htdat$group=="M")
+htdatM$latin=paste(htdatM$genus, htdatM$species)
+
+unique(paste(htdatM$genus, htdatM$species))
+sps=c("Balizia elegans", "Brosimum alicastrum", "Cecropia insignis", "Cecropia obtusifolia", "Dipteryx panamensis", "Hieronyma alchorneoides", "Hymenolobium mesoamericanum", 
+      "Laetia procera","Lecythis ampla","Minquartia guianensis","Pentaclethra macroloba", "Simarouba amara", "Virola sebifera")
+
+gminsp=gminM[which( gminM$latin %in% sps ),]
+lfdatMsp=lfdatM[which( lfdatM$latin %in% sps ),]
+specdatsp=specdatM[which( specdatM$name %in% sps ),]
+htdatMsp=htdatM[which( htdatM$latin %in% sps ),]
+
+#create a data frame of mean trait values for each species
+sps=unique(sps)
+leaf=list()
+for(i in 1:length(sps)){
+  g=subset(gminsp, gminsp$latin==sps[i])
+  l=subset(lfdatMsp, lfdatMsp$latin==sps[i])
+  s=subset(specdatsp, specdatsp$name==sps[i])
+  h=subset(htdatMsp, htdatMsp$latin==sps[i])
+  leaf[[i]] = data.frame(latin=sps[i],
+                         gmin.mol=mean(na.omit(g$gmin.mmol)),
+                         width=mean(na.omit(l$we)),
+                         abs=mean(na.omit(s$abs)),
+                         ctmax=mean(na.omit(h$ctmax)),
+                         tcrit=mean(na.omit(h$tcrit)))}
+leafd=do.call("rbind", leaf)
+str(leafd)
+
+#################################################################################################
+#################################################################################################
+#merge thermoregulatory leaf data and environmental data
+#practice=envdat4[sample(1:nrow(envdat4), 100, replace=T),]
+
+Ltemp.no.long.wave=function( W.m2, ws, Ta, RH, WE, g, abs){
+  u=ws #windspeedm/s
+  #albedo (Table 11.2, Jones) #sand
+  A=10 #altitude above sea-level (m)
+  d=(WE/100)*.72 #leaf width (m)
+  #d=w* #characteristic dimension of leaf(m)
+  cp=29.35 #specific heat of air @constant pressure(J*mol^-1*C^-1) -this should change with air temp, and could be better
+  y=6.66*10^-4 #psychrometric constant is constants, but does change with temp, so the value could be better
+  sb=(5.67*10^-8) #Stefan-Boltzman constant
+  es=(0.611)*exp((17.502*Ta)/(Ta+240.97)) #saturation vapor pressure Kpa (eq. 3.8, Jones p. 41)
+  ea=es*(RH/100) #vapor pressure of air (eq. 3.11, Jones p. 41)
+  D= es-ea #vapor presure defecit (eq. 3.12, Jones p. 41)
+  DELT=(17.502*240.97*es)/((240.97+Ta)^2) #slope of the saturation vapor pressure function (eq 3.9, Jones p. 41)
+  pa= 101.3*exp(-A/8200) #atmospheric pressure (eq. 3.7, Jones p. 41)
+  s=DELT/pa #slope of saturation mole fraction (eq. 3.10, Jones p. 41)
+  gHa=1.4*0.135*sqrt(u/d) #boundary layer conductance for heat
+  gr= (4*0.98*(5.67*10^-8)*((273.15+Ta)^3))/cp #radiative conductance can't find an equation for specific heat capacity of air in diferent temps or air pressures
+  gva=1.4*0.147*sqrt(u/d) #boundary layer conductance for vapor
+  gHr=gHa+gr #sum of boundary layer and radiative conductance (mol*m^-2*s^-1)
+  gv=(0.5*g*gva)/(g+gva) #conductance to water vapor (eq. 14.2, Jones)
+  ym= y*gHr/gv#modified psychrometric constant
+  Rld.sky.lawn=0.98*(5.67*10^-8) * (((273.3+Ta)^4)+((273.3-20)^4)) ##(Jones pg. 27)
+  #deg2rad <- function(deg) {(deg * pi) / (180)}
+  #view=cos(deg2rad(angle))
+  Rsw=W.m2*abs*(1+.15) #(Jones pg. 27)
+  Rn=Rsw+Rld.sky.lawn-(2*(0.98*((5.67*10^-8)*((273.3+Ta)^4))))
+  #
+  TL=Ta+(ym/(s+ym))*((Rn/(gHr*cp))-(D/(pa*ym)))
+  return(TL)
+}
+
+
+lsdat=list()
+for(i in 1:length(leafd$latin)){
+    lsdat[[i]]=cbind(leafd[i,], htod4)}
+warnings()
+lsdat2=do.call("rbind", lsdat)
+str(lsdat2)
+
+#30=canopy height
+#0.95=zm
+
+lsdat2$ws.a=(((lsdat2$ws*0.4)/log(((60-(.65*30))/(0.70*.30))))/0.4)*1.25#windwpeed.adjusted
+lsdat2$Tl.gmin.wa=Ltemp.no.long.wave(lsdat2$wm2, lsdat2$ws.a, lsdat2$airtemp, lsdat2$rh, lsdat2$width, lsdat2$gmin.mol/1000, lsdat2$abs)
+lsdat2$Tl.gmin=Ltemp.no.long.wave(lsdat2$wm2,lsdat2$ws, lsdat2$airtemp, lsdat2$rh, lsdat2$width, lsdat2$gmin.mol/1000, lsdat2$abs)
+lsdat2$Tl.gstop=Ltemp.no.long.wave(lsdat2$wm2, lsdat2$ws, lsdat2$airtemp, lsdat2$rh, lsdat2$width, 0.01, lsdat2$abs)
+hist(lsdat2$Tl.gmin.wa)
+max(na.omit(lsdat2$Tl.gmin.wa))
+min(na.omit(lsdat2$Tl.gmin.wa))
+lsdat2[which(lsdat2$Tl.gmin.wa==min(na.omit(lsdat2$Tl.gmin.wa))),]
+
+hist(lsdat2$Tl.gmin)
+max(na.omit(lsdat2$Tl.gmin))
+min(na.omit(lsdat2$Tl.gmin))
+lsdat2[which(lsdat2$Tl.gmin==min(na.omit(lsdat2$Tl.gmin))),]
+
+
+lsdat2$Tdam=lsdat2$ctmax-lsdat2$Tl.gmin
+hist(lsdat2$Tdam)
+lsdat2$Tsafety=lsdat2$tcrit-lsdat2$Tl.gmin
+hist(lsdat2$Tsafety)
+lsdat2$DELTL=lsdat2$Tl.gmin-lsdat2$airtemp
+hist(lsdat2$DELTL)
+plot(lsdat2$yoc, lsdat2$DELTL)
+
+#"time"=lsdat2$minutes),
+
+
+max.temp=aggregate(lsdat2$Tl.gmin, list("year"=lsdat2$yoc,"latin"=lsdat2$latin), FUN=function(x)(quantile(na.omit(x), .975)))# first line calculate means for the same hour across every day of the year
+
+colnames(max.temp)[colnames(max.temp) == 'x'] <- 'max.temp'
+#max.temp2=aggregate(max.temp$max.temp, list("year"=max.temp$year,"latin"=max.temp$latin), max)# this line caculates the mean of all hours throughout the year
+#colnames(max.temp2)[colnames(max.temp2) == 'x'] <- 'max.temp'
+plot(max.temp$year, max.temp$max.temp)
+
+
+Tdam=aggregate(lsdat2$Tdam, list("year"=lsdat2$yoc, "latin"=lsdat2$latin), FUN=function(x)(quantile(na.omit(x), .025)))
+colnames(Tdam)[colnames(Tdam) == 'x'] <- 'Tdam'
+#Tdam2=aggregate(Tdam$Tdam, list("year"=Tdam$year,"latin"=Tdam$latin),  max)
+#colnames(Tdam2)[colnames(Tdam2) == 'x'] <- 'Tdam2'
+
+Tsafety=aggregate(lsdat2$Tsafety, list("year"=lsdat2$yoc, "latin"=lsdat2$latin), FUN=function(x)(quantile(na.omit(x), .025)))
+colnames(Tsafety)[colnames(Tsafety) == 'x'] <- 'Tsafety'
+#Tsafety2=aggregate(Tsafety$Tsafety, list("year"=Tsafety$year,"latin"=Tsafety$latin), max)
+#colnames(Tsafety2)[colnames(Tsafety2) == 'x'] <- 'Tsafety2'
+
+Max.air.temp=aggregate(lsdat2$airtemp, list("year"=lsdat2$yoc, "latin"=lsdat2$latin), FUN=function(x)(quantile(na.omit(x), .975)))
+colnames(Max.air.temp)[colnames(Max.air.temp) == 'x'] <- 'Max.air.temp'
+#Max.air.temp2=aggregate(Max.air.temp$Max.air.temp, list("year"=Max.air.temp$year,"latin"=Max.air.temp$latin), max)
+#colnames(Max.air.temp2)[colnames(Max.air.temp2) == 'x'] <- 'Max.air.temp2'
+
+mean.air.temp=aggregate(lsdat2$airtemp, list("year"=lsdat2$yoc, "latin"=lsdat2$latin), FUN=function(x)(mean(na.omit(x))))
+colnames(mean.air.temp)[colnames(mean.air.temp) == 'x'] <- 'mean.air.temp'
+
+str(lsdat2)
+#####does ctmax correlate with max leaf temp in this case? #NOt significant, but the slope is similar to that of leaf temps at FTBG
+ctmax=aggregate(lsdat2[,c(5)], list("latin"=lsdat2$latin), FUN=function(x)(mean(na.omit(x))))
+colnames(ctmax)[colnames(ctmax) == 'x'] <- 'ctmax'
+o.max.temp=aggregate(lsdat2$Tl.gmin, list("latin"=lsdat2$latin), FUN=function(x)(quantile(na.omit(x), .975)))# first line calculate means for the same hour across every day of the year
+colnames(o.max.temp)[colnames(o.max.temp) == 'x'] <- 'o.max.temp'
+
+ctmax.ltemp=merge(o.max.temp, ctmax, by=c("latin"))
+ctmax.ltemp=ctmax.ltemp[-c(2:4,8,13),]
+plot(ctmax.ltemp$o.max.temp, ctmax.ltemp$ctmax, bty="l", pch=19, cex=1.5)
+abline(lm(ctmax.ltemp$ctmax~ctmax.ltemp$o.max.temp), lwd=2)
+summary(lm(ctmax.ltemp$ctmax~ctmax.ltemp$o.max.temp))
+
+
+#max.temp
+#Tdam
+#Tsafety
+
+ltdat1=merge(max.temp, Tdam, by=c("year", "latin"))
+colnames(ltdat1)[4]<-"Tdam"
+ltdat2=merge(ltdat1, Tsafety, by=c("year", "latin"))
+ltdat3=merge(ltdat2, Max.air.temp, by=c("year", "latin"))
+ltdat4=merge(ltdat3, mean.air.temp, by=c("year", "latin"))
+ltdat4$year=as.numeric(as.character(ltdat4$year))
+
+
+
+#################################################################################################
+#################################################################################################
+indat<-read.csv("/Users/timothyperez/Dropbox/CH2/FINAL DATABASE/Individuals.csv", header=T)
+str(indat)
+uid=indat$id
+
+#to calculate mortality, i need the howmeas column from the 'sizetable' data. species with -999 are coded as dead. Howeve, if individuals ar alive a the 2016 census,
+#they are also coded as dead. Therefore, I could subset all of the species alive in the mdat4 df that have dbh data in 2016, then replace the -999 values
+#here as 2016 to distinguish the, as being alive in 2016 to distinh=guish them from other deaths -999
+
+
+indat[which(indat$deathyear==(-999)),]
+mort=list()
+for(i in 1:length(uid)){
+  df=indat[which(indat$id==uid[i]),]
+  dy=df[-which(df$deathyear>-999 | df$deathyear<9000),]
+  dy2=c()
+  if(length(dy[,1])==0){
+    dy2=df$deathyear
+  }else(dy2=dy)
+  
+  if(dy2=-999){
+    mort[[i]]=data.frame(id=rep(df$id, 1),
+                          species_code=rep(df$species_code, 1),
+                          yearalive=seq(from=df$firstcen, to=1, by=1))  
+  }else(
+  mort[[i]]= data.frame(id=rep(df$id, (dy2-df$firstcen)),
+                        species_code=rep(df$species_code, dy2-df$firstcen),
+                        yearalive=seq(from=df$firstcen, to=dy2-1, by=1)))
+  }
+
+
+unique(indat$firstcen)
+unique(indat$deathyear)
+which(indat$first)
+
+fdi=mdat2[which( (mdat2$id %in% indat[which(indat$deathyear==-999),]$id)==T ),]#this subsets all of the individuals in the diameter data for which there are -999 death years in the individuals data
+str(fdi)
+fdi[which(fdi$diameter==-999),]$sizeyear
+
+y2k16[which(y2k16$diameter>9001 | y2k16$diameter< (-999) ),]$id %in%  indat[which(indat$deathyear==2016),]$id 
+y2k16=mdat2[which(mdat2$sizeyear==2016),]
+y2k16[which(y2k16$diameter>9001 | y2k16$diameter< (-999) ),]$id
+y2k16[which(y2k16$diameter==-999),]
+
+hist(y2k16$diameter)
+
+#################################################################################################
+
+library(scales)
+#growth data for TREES
+size<-read.csv("/Users/timothyperez/Dropbox/CH2/FINAL DATABASE/Size.csv", header=T)
+str(size)
+micro<-read.csv("/Users/timothyperez/Dropbox/CH2/FINAL DATABASE/Microsite.csv", header=T)
+str(micro)
+indat<-read.csv("/Users/timothyperez/Dropbox/CH2/FINAL DATABASE/Individuals.csv", header=T)
+str(indat)
+indat2=indat[,c(1,2)]
+mdat=merge(size, micro, by.x=c("id", "sizeyear"), by.y=c("id", "micrositeyear"))
+
+mdat2=merge(mdat, indat2, by.x=c("id"), by.y=c("id"))
+mdat3=subset(mdat2, mdat2$diameter>=100 & mdat2$crownpos>=3) 
+mdat4=mdat3[-which(mdat3$diameter==-999 | mdat3$diameter>8999),]
+mdat4=mdat4[-which(mdat4$species_code==1 | mdat4$species_code==4),]
+
+#################################################################################################
+#################################################################################################
+#################################################################################################
+str(mdat4)
+unique(mdat4$id)
+uy=unique(mdat4$sizeyear)
+#uy=uy[-c(33,34)]
+gdf=list()
+for(i in 1:length(uy)){
+  df1=subset(mdat4, mdat4$sizeyear==uy[i])
+  df2=subset(mdat4, mdat4$sizeyear==uy[i+1])
+  
+  colnames(df1)[colnames(df1)=="diameter"] <- "d1"
+  df1.2=df1[,c(1,2,6,18)]
+  
+  colnames(df2)[colnames(df2)=="diameter"] <- "d2"
+  df2[which(df2$POMchange.=="TRUE"),]$d2=df2[which(df2$POMchange.=="TRUE"),]$diaoldPOM #find POM changes, change diamter to diam. at old POM 
+  df2.2=df2[,c(1,2,6,18)]
+  dgdat=merge(df1.2, df2.2, by=("id"))
+  
+  gdf[[i]]=data.frame(year=rep(uy[i], length(dgdat$d1)),
+                      species_code=dgdat$species_code.x,
+                      diam=dgdat$d2/10,
+                      diam.change=(dgdat$d2/10)-(dgdat$d1/10),
+                      growth=log((dgdat$d2/10)/(dgdat$d1/10)) )
+  
+}
+tgro=do.call("rbind", gdf)
+name=data.frame(species_code=as.numeric(c(1:10)), "sp"=as.character(c("Cecropia obtusifolia","Simarouba amara","Balizia elegans","Cecropia insignis","Minquartia guianensis","Lecythis ampla","Hieronyma alchorneoides","Hymenolobium mesoamericanum","Dipteryx panamensis","Pentaclethra macroloba")))
+tgro=merge(tgro, name, by.x=c("species_code"), by.y=c("species_code"), all=T)
+
+str(tgro)
+#Num=length(na.omit(x))
+tgro2=aggregate(tgro[,5], list("latin"=tgro$sp, "year"=tgro$year), FUN=function(x)(c(mg=mean(na.omit(x)),sdg=sd(na.omit(x))) ))
+tgro3=tgro2
+usp=sort(unique(tgro3$latin))
+par(mfrow=c(3,3), mai=c(.5,.5,.2,.2), mgp=c(1.5,.5,0))
+decel.log=list()
+for(i in 1:length(usp)){
+  df=subset(tgro3, tgro3$latin==usp[i])
+  plot(df$year, df$x[,1], main=paste(unique(df$latin)), col="black", pch=19, 
+       xlim=c(1983, 2017), bty="l",
+       xlab="Year", ylab="Growth")
+  #plot(df$year, df$x[,1], main=paste(unique(df$sp)),  pch=19,
+  #xlab="Year", ylab="Growth", bty="l")
+  #xlim=c(1984, 2016), ylim=c(0,0.06),
+  lines(df[order(df$year),]$year, df[order(df$year),]$x[,1], col=alpha("black", 0.5))
+  pval=summary(lm(df$x[,1]~df$year))$coefficients[2,4]
+  l=c()
+  if (pval<0.05) {l=1} else {l=2 }
+  abline(lm(df$x[,1]~df$year), lty=l, lwd=2)
+  
+  decel.log[[i]]=data.frame(latin=unique(df$latin),
+                        rval=summary(lm(df$x[,1]~df$year))$adj.r.squared,
+                        pval=pval,
+                        slope=summary(lm(df$x[,1]~df$year))$coefficients[2,1],
+                        slope.se=summary(lm(df$x[,1]~df$year))$coefficients[2,2])
+}
+decel.log2=do.call("rbind", decel.log)
+str(decel.log2)
+
+
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+#looking at size change v.s diameter size
+samplesizes=aggregate(mdat4$species_code, list("year"=mdat4$sizeyear, "spcode"=mdat4$species_code), length)
+samplesizes=samplesizes[order(samplesizes$year),]
+min(samplesizes$x)
+mean(samplesizes$x)
+
+dgd=list()
+uy=unique(mdat4$sizeyear)
+for(i in 1:length(uy)){
+  df1=subset(mdat4, mdat4$sizeyear==uy[i])
+  df2=subset(mdat4, mdat4$sizeyear==uy[i+1])
+  
+  colnames(df1)[colnames(df1)=="diameter"] <- "d1"
+  df1.2=df1[,c(1,2,6,18)]
+  
+  colnames(df2)[colnames(df2)=="diameter"] <- "d2"
+  df2[which(df2$POMchange.=="TRUE"),]$d2=df2[which(df2$POMchange.=="TRUE"),]$diaoldPOM #find POM changes, change diamter to diam. at old POM 
+  df2.2=df2[,c(1,2,6,18)]
+  dgdat=merge(df1.2, df2.2, by=("id"))
+  
+  dgd[[i]]=data.frame(year=rep(uy[i], length(dgdat$d1)),
+                      id=dgdat$id,
+                      species_code=dgdat$species_code.x,
+                      diam=dgdat$d1/10,
+                      diam.change=(dgdat$d2/10)-(dgdat$d1/10),
+                      ba1=pi*(dgdat$d1/2)^2,
+                      bach=(pi*(dgdat$d2/2)^2)-(pi*(dgdat$d1/2)^2),
+                      diam=dgdat$d2/10,
+                      diam.change=(dgdat$d2/10)-(dgdat$d1/10),
+                      
+                      growth=log((dgdat$d2/10)/(dgdat$d1/10)) 
+                      
+                      )
+  
+  
+  
+}
+dgd2=do.call("rbind", dgd)
+#aggregate(dgd2$year, list(dgd2$sp), unique)
+#aggregate(dgd2$species_code, list(dgd2$sp), unique)
+
+name=data.frame(species_code=as.numeric(c(1:10)), "sp"=as.character(c("Cecropia obtusifolia","Simarouba amara","Balizia elegans","Cecropia insignis","Minquartia guianensis","Lecythis ampla","Hieronyma alchorneoides","Hymenolobium mesoamericanum","Dipteryx panamensis","Pentaclethra macroloba")))
+dgd2=merge(dgd2, name, by.x=c("species_code"), by.y=c("species_code"), all=T)
+dgd2=dgd2[-which(is.na(dgd2$diam)==T),]
+
+decel.index=list()
+decel.index.full=list()
+par(mfrow=c(8,2), mar=c(2,2,1,1))
+spc=unique(dgd2$species_code)
+for(i in 1:length(spc)){
+  df=dgd2[which(dgd2$species_code==spc[i]),]
+    lci=quantile(na.omit(df$diam.change), 0.025)
+    uci=quantile(na.omit(df$diam.change), 0.975)
+    df2=df[which(df$diam.change<uci & df$diam.change>lci),]
+  
+    
+    plot(df2$ba1, df2$bach, col=alpha("black", 0.1))
+  #plot(df2$diam, df2$diam.change, col=alpha("black", 0.1))
+  sspl=smooth.spline(df2$bach~df2$ba1, df=10)
+  lines(sspl)
+  df2$index=df2$bach/ fitted(sspl)
+  df2$index=residuals(sspl)
+  df2[which(df2$index==-Inf),]=NA
+  grind=aggregate(df2[,12], list("latin"=df2$sp, "year"=df2$year), FUN=function(x)(c(mg=mean(na.omit(x)),sdg=sd(na.omit(x))) ))
+  plot(grind$year, grind$x[,1], main=unique(grind$latin))
+  lines(grind[order(grind$year),]$year, grind[order(grind$year),]$x[,1], col=alpha("black", 0.5))
+  
+  pval=summary(lm(grind$x[,1]~grind$year))$coefficients[2,4]
+  l=c()
+  if (pval<0.05) {l=1} else {l=2 }
+  abline(lm(grind$x[,1]~grind$year), lty=l, lwd=2)
+  
+  decel.index[[i]]=data.frame(latin=unique(grind$latin),
+                        rval=summary(lm(grind$x[,1]~grind$year))$adj.r.squared,
+                        pval=pval,
+                        slope=summary(lm(grind$x[,1]~grind$year))$coefficients[2,1],
+                        slope.se=summary(lm(grind$x[,1]~grind$year))$coefficients[2,2])
+  
+  decel.index.full[[i]]=data.frame(latin=df2$sp,
+                              #ssresids=residuals(sspl),
+                              ssresids=df2$diam.change/ fitted(sspl),
+                              year=df2$year,
+                              id=df2$id)
+} 
+decel.index2=do.call("rbind", decel.index)
+dif2=do.call("rbind", decel.index.full)
+
+##################################################################################################################
+#for(i in 1:length(spc)){
+  #df=dgd2[which(dgd2$species_code==spc[i]),]
+  #lci=quantile(na.omit(df$diam.change), 0.025)
+  #uci=quantile(na.omit(df$diam.change), 0.975)
+  #df2=df[which(df$diam.change<uci & df$diam.change>lci),]
+  #mn=aggregate(df2$diam, list("latin"=df2$sp, "year"=df2$year), FUN=function(x)(c(mg=mean(na.omit(x)),sdg=sd(na.omit(x))) ))
+  
+#  plot(mn$year, mn$x[,1], col=alpha("black", 0.1))
+ # lines(mn$year, mn$x[,1], col=alpha("black", 0.5))
+  
+  #pval=summary(lm(mn$x[,1]~mn$year))$coefficients[2,4]
+  #l=c()
+  #if (pval<0.05) {l=1} else {l=2 }
+  #abline(lm(mn$x[,1]~mn$year), lty=l, lwd=2)
+#} 
+##################################################################################################################
+##################################################################################################################
+decel.adj.resids=list()
+alg=list()
+par(mfcol=c(3,3))
+spc=unique(dgd2$species_code)
+for(i in 1:length(spc)){
+  df=dgd2[which(dgd2$species_code==spc[i]),]
+  df2=df
+  lci=quantile(na.omit(df$diam.change), 0.025)
+  uci=quantile(na.omit(df$diam.change), 0.975)
+  df2=df[which(df$diam.change<uci & df$diam.change>lci),]
+  # plot(df2$diam, df2$diam.change)
+  sspl=smooth.spline(df2$diam.change~df2$diam)
+  df2$resids=residuals(sspl)
+  
+  gdf=list()
+    gdf3=list()
+  uy=sort(unique(df2$year))
+  for(j in 1:length(uy)){
+    df11=subset(df2, df2$year==uy[j])
+    df22=subset(df2, df2$year==uy[j+1])
+
+    colnames(df11)[colnames(df11)=="diam"] <- "d1"
+    
+    colnames(df22)[colnames(df22)=="diam"] <- "d2"
+    dgddat=merge(df11, df22, by=c("id","species_code", "sp"))
+    dfp=list()
+     if(length(dgddat$id)>1){
+      dfp=data.frame(year=rep(uy[j+1], 1),
+                        latin=unique(dgddat$sp),
+                        species_code=unique(dgddat$species_code),
+                        growth.mn=mean(log( ( (dgddat$d2+dgddat$resids.y))  /  ( (dgddat$d1+dgddat$resids.x)) ) ),
+                        growth.sd=sd(log( ( (dgddat$d2+dgddat$resids.y))  /  ( (dgddat$d1+dgddat$resids.x)) ) ) )
+      
+    }else( dfp=data.frame(year=NA,latin=NA,species_code=NA,growth.mn=NA,growth.sd=NA) )
+   
+     dfp2=list()
+    if(length(dgddat$id)>1){
+      dfp2=data.frame(year=rep(uy[j+1], length(dgddat[,1])),
+                      latin=dgddat$sp,
+                      species_code=dgddat$species_code,
+                      growth=log( ( (dgddat$d2+dgddat$resids.y) / (dgddat$d1+dgddat$resids.x) )))
+    }else(           dfp2=data.frame(year=NA, latin=NA, species_code=NA, growth=NA) )
+    
+    gdf[[j]]= dfp
+    gdf3[[j]]= dfp2
+    
+  }
+  gdf2=do.call("rbind", gdf)
+  prealg=do.call("rbind", gdf3)
+  alg[[i]]=prealg
+  
+  plot(gdf2$year, gdf2$growth.mn, main=unique(gdf2$latin))
+  lines(gdf2[order(gdf2$year),]$year, gdf2[order(gdf2$year),]$growth.mn, col=alpha("black", 0.5))
+  
+  pval=summary(lm(gdf2$growth.mn~gdf2$year))$coefficients[2,4]
+  l=c()
+  if (pval<0.05) {l=1} else {l=2 }
+  abline(lm(gdf2$growth.mn~gdf2$year), lty=l, lwd=2)
+  
+  decel.adj.resids[[i]]=data.frame(latin=unique(gdf2$latin),
+                              rval=summary(lm(gdf2$growth.mn~gdf2$year))$adj.r.squared,
+                              pval=pval,
+                              slope=summary(lm(gdf2$growth.mn~gdf2$year))$coefficients[2,1],
+                              slope.se=summary(lm(gdf2$growth.mn~gdf2$year))$coefficients[2,2])
+  
+} 
+decel.adj.resids2=do.call("rbind", decel.adj.resids)
+alg2=do.call("rbind", alg)
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+aggregate(tgro$year, list(tgro$sp), min)
+aggregate(tgro$year, list(tgro$sp), max)
+
+ctmax.decell=merge(ctmax, decel.log2, by=c("latin"))
+
+ctmax.deceli=merge(ctmax, decel.index2, by=c("latin"))
+#tcrit=aggregate(htdatM$tcrit, list("latin"=htdatM$latin), mean)
+#tcrit.deceli=merge(tcrit, decel.index2, by=c("latin"))
+plot(tcrit.deceli$x, tcrit.deceli$slope)
+
+ctmax.decelr=merge(ctmax, decel.adj.resids2, by=c("latin"))
+
+#setwd("/Users/timothyperez/Desktop/NSF Postdoc")
+
+dev.new()
+tiff(filename="Decleration.v.CTmax.tiff", width=200, height = 100, units="mm", res=200)
+par(mfcol=c(1,3), mar=c(4,5,2,1), mgp=c(2.5, .25, 0))
+
+plot(ctmax.decell$ctmax, ctmax.decell$slope, bty="l", pch=19, xlab = expression("T"[50]~degree~("C")), xlim=c(49,53),ylim=c(-6*10^-4,0.0001),
+     ylab=expression("Deceleration "))
+#log(dbh"[t2] ~"/dbh"[t1]~")
+arrows(ctmax.decell$ctmax, ctmax.decell$slope,y1=ctmax.decell$slope+ctmax.decell$slope.se, angle=90, length=.05)
+arrows(ctmax.decell$ctmax, ctmax.decell$slope,y1=ctmax.decell$slope-ctmax.decell$slope.se, angle=90, length=.05)
+text(50.25, -5*10^-4, expression("p<0.05, R"^2~"=0.48"))
+summary(lm(ctmax.decell$slope~ctmax.decell$ctmax) )
+abline(lm(ctmax.decell$slope~ctmax.decell$ctmax), lty=1, lwd=1 )
+
+plot(ctmax.decelr[-c(2,3),]$ctmax, ctmax.decelr[-c(2,3),]$slope, bty="l", pch=19, xlab = expression("T"[50]~degree~("C")), xlim=c(49,53),ylim=c(-6*10^-4,0.0001),
+     ylab=expression("Deceleration "))
+#log(dbh"[t2] ~"/dbh"[t1]~")
+arrows(ctmax.decelr[-c(2,3),]$ctmax, ctmax.decelr[-c(2:3),]$slope,y1=ctmax.decelr[-c(2:3),]$slope+ctmax.decelr[-c(2:3),]$slope.se, angle=90, length=.05)
+arrows(ctmax.decelr[-c(2:3),]$ctmax, ctmax.decelr[-c(2:3),]$slope,y1=ctmax.decelr[-c(2:3),]$slope-ctmax.decelr[-c(2:3),]$slope.se, angle=90, length=.05)
+text(50.25, -5*10^-4, expression("p=0.07, R"^2~"=0.34"))
+summary(lm(ctmax.decelr[-c(2,3),]$slope~ctmax.decelr[-c(2,3),]$ctmax) )
+abline(lm(ctmax.decelr[-c(2:3),]$slope~ctmax.decelr[-c(2:3),]$ctmax), lty=2, lwd=1)
+
+
+plot(ctmax.deceli$ctmax, ctmax.deceli$slope, bty="l", pch=19, xlab = expression("T"[50]~degree~("C")), xlim=c(49,53), ylim=c(-0.02,0.005),
+     ylab=expression("Deceleration "))
+#log(dbh"[t2] ~"/dbh"[t1]~")
+arrows(ctmax.deceli$ctmax, ctmax.deceli$slope,y1=ctmax.deceli$slope+ctmax.deceli$slope.se, angle=90, length=.05)
+arrows(ctmax.deceli$ctmax, ctmax.deceli$slope,y1=ctmax.deceli$slope-ctmax.deceli$slope.se, angle=90, length=.05)
+summary(lm(ctmax.deceli$slope~ctmax.deceli$ctmax) )
+#text(50.25, -5*10^-4, expression("p<0.05, R"^2~"=0.48"))
+abline(lm(ctmax.deceli$slope~ctmax.deceli$ctmax), lty=2, lwd=1 )
+dev.off()
+
+library(ggplot2)
+decel2=decel2[order(-decel2$slope),]
+par(mar = c(4, 2, 1, 1))
+plotTop <- max(decel2$slope) + max(decel2$slope)
+barCenters <- barplot(height = decel2$slope,
+                      names.arg = decel2$latin, xlim = c(-0.0008, 0.0001), horiz = T)
+
+# Specify the groupings. We use srt = 45 for a
+# 45 degree string rotation
+text(x = barCenters, y = par("usr")[3] - 1, srt = 45,
+     adj = 3, labels = decel2$latin, xpd = TRUE)
+segments(barCenters, decel2$slope - decel2$slope.se * 2, barCenters,
+         decel2$slope + decel2$slope.se * 2, lwd = 1.5)
+arrows(barCenters, decel2$slope - decel2$slope.se * 2, barCenters,
+       decel2$slope + decel2$slope.se * 2, lwd = 1.5, angle = 90,
+       code = 3, length = 0.05)
+
+
+#################################################################################################
+#################################################################################################
+#merge alg2 and leaf temperature data 2(ltdat2)
+alg3=aggregate(alg2[,4], list("year"=alg2$year, "latin"=alg2$latin), FUN=function(x)(c(mg=mean(na.omit(x)) ,sdg=sd(na.omit(x))) ))
+str(ltdat4)
+str(alg3)
+
+#tgdat2=tgdat[-which(tgdat$year==2016),]# | tgdat$year==2007),]
+#str(tgdat2)
+str(ltdat4)
+meanz=aggregate(ltdat4[,c(3:7)], list( "year"=ltdat4$year, "latin"=ltdat4$latin), FUN=function(x)(c(mg=mean(na.omit(x)) ,sdg=sd(na.omit(x))) ))#annual means for data
+tgdat=merge(meanz, alg3, by=c("year", "latin"))
+meanz2=data.frame(year=tgdat$year, latin=tgdat$latin, leaftemp=tgdat$max.temp[,1], Tdam=tgdat$Tdam[,1], Tsafety=tgdat$Tsafety[,1], Max.air.temp=tgdat$Max.air.temp[,1], growth=tgdat$x[,1])#dataframe unnesting columns from aggregate function
+str(meanz2)
+
+#calculte the annual community of growth rate
+acm=aggregate(meanz2[,3:7], list("year"=meanz2$year), FUN=function(x)(c(mg=mean(na.omit(x)),sdg=sd(na.omit(x))) ))
+
+plot(acm$year, acm$growth[,1], bty="l")
+abline(lm(acm$growth[,1]~acm$year))
+summary(lm(acm$growth[,1]~acm$year))
+
+plot(acm$leaftemp[,1], acm$growth[,1], bty="l")
+abline(lm(acm$growth[,1]~acm$leaftemp[,1]))
+summary(lm(acm$growth[,1]~acm$leaftemp[,1]))
+
+plot(acm$Tdam[,1], acm$growth[,1], bty="l")
+abline(lm(acm$growth[,1]~acm$Tdam[,1]))
+summary(lm(acm$growth[,1]~acm$Tdam[,1]))
+
+plot(acm$Tsafety[,1], acm$growth[,1])
+abline(lm(acm$growth[,1]~acm$Tsafety[,1]))
+summary(lm(acm$growth[,1]~acm$Tsafety[,1]))
+
+plot(acm$Max.air.temp[,1], acm$growth[,1])
+abline(lm(acm$growth[,1]~acm$Max.air.temp[,1]))
+summary(lm(acm$growth[,1]~acm$Max.air.temp[,1]))
+
+
+
+
+#same plot as above, but exluding dat from 2006, which might be a little wacky
+setwd("/Users/timothyperez/Desktop/NSF Postdoc")
+dev.new()
+tiff(filename="Mean.growth.v.Max.Leaf.Temp.tiff", width=140, height = 100, units="mm", res=200)
+par(par(mfcol=c(1,1), mar=c(4,4,2,1), mgp=c(2.5, .5, 0)))
+plot(meanz[-6,]$leaftemp, meanz[-6,]$growth, col=alpha("black", 0.5), pch=19, bty="l", xlab=expression("Mean max annual leaf temperature"~degree~"C"),  ylab="Mean annual commnity growth",
+     ylim=c(0.005, 0.025), xlim=c(33, 38), cex=1.5)
+arrows(meanz[-6,]$leaftemp, meanz[-6,]$growth, y1=meanz[-6,]$growth-meanz[-6,]$growth.sd, length=.1, angle=90, col=alpha("black",0.25))
+arrows(meanz[-6,]$leaftemp, meanz[-6,]$growth, y1=meanz[-6,]$growth+meanz[-6,]$growth.sd, length=.1, angle=90, col=alpha("black",0.25))
+arrows(meanz[-6,]$leaftemp, meanz[-6,]$growth, x1=meanz[-6,]$leaftemp+meanz[-6,]$leaftemp.sd, length=.1, angle=90, col=alpha("black",0.25))
+arrows(meanz[-6,]$leaftemp, meanz[-6,]$growth, x1=meanz[-6,]$leaftemp-meanz[-6,]$leaftemp.sd, length=.1, angle=90, col=alpha("black",0.25))
+summary(lm(meanz[-6,]$growth~meanz[-6,]$leaftemp))
+cor.test(meanz[-6,]$leaftemp, meanz[-6,]$growth)
+abline(lm(meanz[-6,]$growth~meanz[-6,]$leaftemp),col="black", lty=1, lwd=2)
+text(34, 0.005, expression("p<0.01, R"^2~"=0.48"), pos=4)
+dev.off()
+
+
+
+fitz=lm(meanz$growth~meanz$leaftemp+meanz$Tdam+meanz$Max.air.temp)
+reduced.model=stepAIC(fitz, direction="both")
+summary(lm(meanz$growth~meanz$leaftemp+meanz$Tdam2))
+cor.test(meanz$leaftemp,meanz$growth)
+cor.test(meanz$Max.air.temp2,meanz$growth)
+
+
+#plot(meanz$x[,1], meanz$Tdam2[,1])
+#plot(meanz$x[,1], meanz$Tsafety2[,1])
+#plot(meanz$x[,1], meanz$Max.air.temp2[,1])
+##########################################################################################
+##########################################################################################
+#Calculate the correlation of rowth for each year using each species in each plot
+
+par(mfrow=c(2,2), mai=c(.5,.5,.2,.2), mgp=c(1.5,.5,0))
+#tgdat=tgdat[-which(tgdat$year==2006),]
+plot(NULL, NULL,bty="l", xlab="Max. leaf temperature", ylab="Growth", ylim=c(0, .04),
+     xlim=c(32, 40), cex=1.5)
+ul=unique(tgdat$latin)
+library(RColorBrewer)
+library(scales)
+colz=brewer.pal(n = 8, name = "Dark2")
+shpz=c(0,1,2,15,16,18,4,8)
+for(i in 1:length(ul)){
+  clip(0, 40, 0, .035)
+  df=subset(tgdat, tgdat$latin==ul[i])
+  points(df$max.temp[,1], df$x[,1], pch=shpz[i], col=alpha(colz[i], 0.3))
+  mod=lm(df$x[,1]~df$max.temp[,1])
+  ms=summary(mod)
+  lt=c()
+  if(ms$coefficients[2,4]<=0.05){
+    lt=1
+  }else(lt=2)
+  clip(x1=min(na.omit(df$max.temp[,1])), x2=max(na.omit(df$max.temp[,1])), y1=00, y2=0.04)
+  abline(mod, lty=lt, lwd=1, col=colz[i])
+}
+
+
+plot(NULL, NULL,bty="l", xlab=expression('T' [50] ~  'safety margin'), ylab="Growth", ylim=c(.0001, .035),xlim=c(11, 19), cex=1.5)
+ul=unique(tgdat$latin)
+library(RColorBrewer)
+colz=brewer.pal(n = 8, name = "Dark2")
+shpz=c(0,1,2,15,16,18,4,8)
+for(i in 1:length(ul)){
+  clip(11, 20, .0001, .035)
+  df=subset(tgdat, tgdat$latin==ul[i])
+  points( df$Tdam[,1] , df$x[,1], pch=shpz[i], col=alpha(colz[i], 0.3))
+  mod=lm(df$x[,1]~df$Tdam[,1])
+  ms=summary(mod)
+  lt=c()
+  if(ms$coefficients[2,4]<=0.05){
+    lt=1
+  }else(lt=2)
+  clip(x1=min(na.omit(df$Tdam[,1])), x2=max(na.omit(df$Tdam[,1])), y1=0.0001, y2=0.035)
+  abline(mod, lty=lt, lwd=1, col=colz[i])
+}
+
+plot(NULL, NULL,bty="l", xlab=expression('T' [crit] ~  'safety margin'), ylab="Growth", ylim=c(.0001, .035),
+     xlim=c(1, 15), cex=1.5)
+ul=unique(tgdat$latin)
+library(RColorBrewer)
+colz=brewer.pal(n = 8, name = "Dark2")
+shpz=c(0,1,2,15,16,18,4,8)
+for(i in 1:length(ul)){
+  clip(0, 20, .0001, .035)
+  df=subset(tgdat, tgdat$latin==ul[i])
+  points(df$Tsafety[,1], df$x[,1], pch=shpz[i], col=alpha(colz[i], 0.3))
+  mod=lm(df$x[,1]~df$Tsafety[,1])
+  ms=summary(mod)
+  lt=c()
+  if(ms$coefficients[2,4]<=0.05){
+    lt=1
+  }else(lt=2)
+  clip(x1=min(na.omit(df$Tsafety[,1])), x2=max(na.omit(df$Tsafety[,1])), y1=0.0001, y2=0.035)
+  abline(mod, lty=lt, lwd=1, col=colz[i])
+}
+
+
+plot(NULL, NULL,bty="l", xlab="Max. air temp", ylab="Growth", ylim=c(.0001, .035),
+     xlim=c(33, 35.5), cex=1.5)
+ul=unique(tgdat$latin)
+library(RColorBrewer)
+colz=brewer.pal(n = 8, name = "Dark2")
+shpz=c(0,1,2,15,16,18,4,8)
+for(i in 1:length(ul)){
+  clip(0, 40, .0001, .035)
+  df=subset(tgdat, tgdat$latin==ul[i])
+  points(df$Max.air.temp[,1], df$x[,1], pch=shpz[i], col=alpha(colz[i], 0.3))
+  mod=lm(df$x[,1]~df$Max.air.temp[,1])
+  ms=summary(mod)
+  lt=c()
+  if(ms$coefficients[2,4]<=0.05){
+    lt=1
+  }else(lt=2)
+  clip(x1=min(na.omit(df$Max.air.temp[,1])), x2=max(na.omit(df$Max.air.temp[,1])), y1=0.0001, y2=0.035)
+  abline(mod, lty=lt, lwd=1, col=colz[i])
+}
+
+
+############################################################################################################
+############################################################################################################
+############################################################################################################
+str(dif2)
+dif3=aggregate(dif2[,2], list("year"=dif2$year, "latin"=dif2$latin), FUN=function(x)(c(mg=mean(na.omit(x)) ,sdg=sd(na.omit(x))) ))
+str(meanz)
+aglt=merge(dif3, meanz, by=c("year", "latin"))
+
+plot(NULL, NULL,bty="l", xlab="Max. leaf temperature", ylab="Growth", ylim=c(0.25, 1.75),
+     xlim=c(32, 40), cex=1.5)
+ul=unique(aglt$latin)
+library(RColorBrewer)
+library(scales)
+colz=brewer.pal(n = 8, name = "Dark2")
+shpz=c(0,1,2,15,16,18,4,8)
+for(i in 1:length(ul)){
+  clip(0, 40, -10, 10)
+  df=subset(aglt, aglt$latin==ul[i])
+  points(df$max.temp[,1], df$x[,1], pch=shpz[i], col=alpha(colz[i], 0.3))
+  mod=lm(df$x[,1]~df$max.temp[,1])
+  ms=summary(mod)
+  lt=c()
+  if(ms$coefficients[2,4]<=0.05){
+    lt=1
+  }else(lt=2)
+  clip(x1=min(na.omit(df$max.temp[,1])), x2=max(na.omit(df$max.temp[,1])), y1=-1, y2=1)
+  abline(mod, lty=lt, lwd=1, col=colz[i])
+}
+
+
+plot(NULL, NULL,bty="l", xlab=expression('T' [50] ~  'safety margin'), ylab="Growth", ylim=c(0.25, 1.75) ,xlim=c(11, 19), cex=1.5)
+ul=unique(aglt$latin)
+library(RColorBrewer)
+colz=brewer.pal(n = 8, name = "Dark2")
+shpz=c(0,1,2,15,16,18,4,8)
+for(i in 1:length(ul)){
+  clip(11, 20, -1, 1)
+  df=subset(aglt, aglt$latin==ul[i])
+  points( df$Tdam[,1] , df$x[,1], pch=shpz[i], col=alpha(colz[i], 0.3))
+  mod=lm(df$x[,1]~df$Tdam[,1])
+  ms=summary(mod)
+  lt=c()
+  if(ms$coefficients[2,4]<=0.05){
+    lt=1
+  }else(lt=2)
+  clip(x1=min(na.omit(df$Tdam[,1])), x2=max(na.omit(df$Tdam[,1])), y1=-1, y2=1)
+  abline(mod, lty=lt, lwd=1, col=colz[i])
+}
+
+plot(NULL, NULL,bty="l", xlab=expression('T' [crit] ~  'safety margin'), ylab="Growth", ylim=c(0.25, 1.75),
+     xlim=c(0, 16), cex=1.5)
+ul=unique(aglt$latin)
+library(RColorBrewer)
+colz=brewer.pal(n = 8, name = "Dark2")
+shpz=c(0,1,2,15,16,18,4,8)
+for(i in 1:length(ul)){
+  clip(0, 20, -.25, .2)
+  df=subset(aglt, aglt$latin==ul[i])
+  points(df$Tsafety[,1], df$x[,1], pch=shpz[i], col=alpha(colz[i], 0.3))
+  mod=lm(df$x[,1]~df$Tsafety[,1])
+  ms=summary(mod)
+  lt=c()
+  if(ms$coefficients[2,4]<=0.05){
+    lt=1
+  }else(lt=2)
+  clip(x1=min(na.omit(df$Tsafety[,1])), x2=max(na.omit(df$Tsafety[,1])), y1=-5, y2=5)
+  abline(mod, lty=lt, lwd=1, col=colz[i])
+}
+
+
+plot(NULL, NULL,bty="l", xlab="Max. air temp", ylab="Growth", ylim=c(0.25, 1.75),
+     xlim=c(33, 35.5), cex=1.5)
+ul=unique(aglt$latin)
+library(RColorBrewer)
+colz=brewer.pal(n = 8, name = "Dark2")
+shpz=c(0,1,2,15,16,18,4,8)
+for(i in 1:length(ul)){
+  clip(0, 40, -.25, .2)
+  df=subset(aglt, aglt$latin==ul[i])
+  points(df$Max.air.temp[,1], df$x[,1], pch=shpz[i], col=alpha(colz[i], 0.3))
+  mod=lm(df$x[,1]~df$Max.air.temp[,1])
+  ms=summary(mod)
+  lt=c()
+  if(ms$coefficients[2,4]<=0.05){
+    lt=1
+  }else(lt=2)
+  clip(x1=min(na.omit(df$Max.air.temp[,1])), x2=max(na.omit(df$Max.air.temp[,1])), y1=-1, y2=1)
+  abline(mod, lty=lt, lwd=1, col=colz[i])
+}
+
+meanz3=data.frame(year=aglt$year, latin=aglt$latin, leaftemp=aglt$max.temp[,1], Tdam=aglt$Tdam[,1], Tsafety=aglt$Tsafety[,1], Max.air.temp=aglt$Max.air.temp[,1], growth=aglt$x[,1])#dataframe unnesting columns from aggregate function
+str(meanz3)
+#calculte the annual community of growth rate
+acm2=aggregate(meanz3[,3:7], list("year"=meanz3$year), FUN=function(x)(c(mg=mean(na.omit(x)),sdg=sd(na.omit(x))) ))
+
+par(mfcol=c(2,3))
+plot(acm2$year, acm2$growth[,1], bty="l", ylab="Mean tree growth index", xlab="Year", xlim=c(1997, 2016), ylim=c(0.80, 1.2))
+abline(lm(acm2$growth[,1]~acm2$year))
+summary(lm(acm2$growth[,1]~acm2$year))
+cor.test(acm2$year, acm2$growth[,1])
+
+plot(acm2$leaftemp[,1], acm2$growth[,1], bty="l",ylab="Mean tree growth index", xlab="Leaf temperature ˚C", xlim=c(33, 37), ylim=c(0.80, 1.2))
+abline(lm(acm2$growth[,1]~acm2$leaftemp[,1]))
+summary(lm(acm2$growth[,1]~acm2$leaftemp[,1]))
+cor.test(acm2$leaftemp[,1], acm2$growth[,1])
+
+plot(acm2$Tdam[,1], acm2$growth[,1], bty="l", ylab="Mean tree growth index", xlab=expression('T' [50] ~  'safety margin'), xlim=c(14, 18), ylim=c(0.80, 1.2))
+abline(lm(acm2$growth[,1]~acm2$Tdam[,1]))
+summary(lm(acm2$growth[,1]~acm2$Tdam[,1]))
+
+plot(acm2$Tsafety[,1], acm2$growth[,1], bty="l", ylab="Mean tree growth index", xlab=expression('T' [crit] ~  'safety margin'), xlim=c(6.5, 10.5), ylim=c(0.80, 1.2))
+abline(lm(acm2$growth[,1]~acm2$Tsafety[,1]))
+summary(lm(acm2$growth[,1]~acm2$Tsafety[,1]))
+
+plot(acm2$Max.air.temp[,1], acm2$growth[,1], bty="l", ylab="Mean tree growth index", xlab="Max. air temp", xlim=c(32, 36), ylim=c(0.80, 1.2))
+abline(lm(acm2$growth[,1]~acm2$Max.air.temp[,1]))
+summary(lm(acm2$growth[,1]~acm2$Max.air.temp[,1]))
+cor.test(acm2$Max.air.temp[,1], acm2$growth[,1])
+
+plot(acm2$Max.air.temp[,1], acm2$leaftemp[,1], bty="l", ylab="Mean tree growth index", xlab="Year", xlim=c(32, 36), ylim=c(33, 37))
+abline(lm(acm2$leaftemp[,1]~acm2$Max.air.temp[,1]))
+summary(lm(acm2$leaftemp[,1]~acm2$Max.air.temp[,1]))
+cor.test(acm2$Max.air.temp[,1], acm2$leaftemp[,1])
+
+
+############################################################################################################
+############################################################################################################
+############################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+lmdata1=list()
+lmdata2=list()
+lmdata3=list()
+lmdata3.1=list()
+
+
+  #plot(df[-6,]$max.temp, df[-6,]$x[,1], bty="l", pch=19, ylab="",xlab="", main=paste(ul[i]), cex=1.5)  
+ #mdsum=summary(lm(df[-6,]$x[,1]~df[-6,]$max.temp))
+#  linetype=ifelse(mdsum$coefficients[2,4]<=0.05, 1, 2)
+#  abline(lm(df[-6,]$x[,1]~df[-6,]$max.temp), lty=linetype)
+#  lmdata1[[i]]=data.frame(data=paste(ul[i], "max.temp"),
+#    pval=mdsum$coefficients[2,4],
+#  rsqrd=mdsum$adj.r.squared[[1]])
+
+  fit=lm(df[-6,]$x[,1]~df[-6,]$max.temp+df[-6,]$Tdam2+ df[-6,]$Max.air.temp2)
+  library(MASS)
+  reduced.model=step(fit, direction="both")
+  print(ul[i])
+  reduced.model$anova
+  print(reduced.model)
+  
+  #points(df[-6,]$Tdam2, df[-6,]$x[,1], pch=19, bty="l", xlab="", col=unique(ul[i]), cex=1.5)
+  #mdsum=summary(lm(df[-6,]$x[,1]~df[-6,]$Tdam2))
+  #linetype=ifelse(mdsum$coefficients[2,4]<=0.05, 1, 2)
+  #abline(lm(df[-6,]$x[,1]~df[-6,]$Tdam2), lty=linetype)
+  #lmdata2[[i]]=data.frame(data=paste(ul[i], "Tdam2"),
+                          #pval=mdsum$coefficients[2,4],
+                          #rsqrd=mdsum$adj.r.squared[[1]])
+  
+#  plot(df[-6,]$Tsafety2, df[-6,]$x[,1], pch=19, bty="l", xlab="Thermal saftey margin", main=paste(ul[i], "Tsafety"))
+#  mdsum=summary(lm(df[-6,]$x[,1]~df[-6,]$Tsafety2))
+#  linetype=ifelse(mdsum$coefficients[2,4]<=0.05, 1, 2)
+#  abline(lm(df[-6,]$x[,1]~df[-6,]$Tsafety2), lty=linetype)
+#  lmdata3[[i]]=data.frame(data=paste(ul[i], "max.temp"),
+#                          pval=mdsum$coefficients[2,4],
+#                          rsqrd=mdsum$adj.r.squared[[1]])
+  
+  plot(df[-6,]$max.temp, df[-6,]$x[,1], pch=11+as.numeric(unique(ul[i])), col= "black")
+         #ylab="Max. leaf temperature", xlab="Year", main=paste(ul[i], "air.v.leaf"))
+  mdsum=summary(lm(df[-6,]$x[,1]~df[-6,]$max.temp))
+  linetype=ifelse(mdsum$coefficients[2,4]<=0.05, 1, 2)
+  abline(lm(df[-6,]$x[,1]~df[-6,]$max.temp), lty=linetype)
+  lmdata3.1[[i]]=data.frame(data=paste(ul[i], "max.temp"),
+                          pval=mdsum$coefficients[2,4],
+                          rsqrd=mdsum$adj.r.squared[[1]])
+  #plot(df[-6,]$year, df[-6,]$max.temp, pch=19, ylab="Max. leaf temperature", xlab="Year", main=paste(ul[i], "Max leaf temp"))#max air temp and max leaf temperature are not correlated
+  
+  #plot(df[-6,]$Max.air.temp2, df[-6,]$max.temp,pch=19, bty="l", ylab="max.temp", xlab="Max air temp", main=paste(ul[i], "Maxair.v.max.temp"))# maximum air temperature does increase annuals
+  #mdsum=summary(lm(df[-6,]$max.temp~df[-6,]$Max.air.temp2))
+  #linetype=ifelse(mdsum$coefficients[2,4]<=0.05, 1, 2)
+  #abline(lm(df[-6,]$max.temp~df[-6,]$Max.air.temp2), lty=linetype)
+  #lmdata3.1[[i]]=data.frame(data=paste(ul[i], "max.temp"),
+  #                          pval=mdsum$coefficients[2,4],
+  #                          rsqrd=mdsum$adj.r.squared[[1]])
+  }
+datax1=do.call("rbind",lmdata1)
+datax2=do.call("rbind",lmdata2)
+datax3=do.call("rbind",lmdata3)
+datax3.1=do.call("rbind",lmdata3.1)
+
+
+##########################################################################################
+##########################################################################################
+plot(tgdat2$max.temp, tgdat2$x[,1], pch=19, main= "max.temp")
+abline(lm(tgdat2$x[,1]~tgdat2$max.temp), lwd=3)
+summary(lm(tgdat2$x[,1]~tgdat2$max.temp))
+
+plot(tgdat2$Tdam, tgdat2$x[,1], pch=19, main= "Tdam")
+plot(tgdat2$Tsafety, tgdat2$x[,1], pch=19, main= "Tsafety")
+
+
+
+##########################################################################################
+##########################################################################################
+#Calculate the correlation of rowth for each year using each species in each plot
+lmdata4=list()
+lmdata5=list()
+lmdata6=list()
+par(mfcol=c(3,3), mai=c(.5,.5,.2,.2), mgp=c(1.5,.5,0))
+uy=unique(tgdat2$year)
+for(i in 1:length(uy)){
+  df=subset(tgdat2, tgdat2$year==uy[i])
+#  plot(df$max.temp, df$x[,1], pch=19, ylab="Annual Growth",xlab="Maximum leaf temperture", 
+#       bty="l", main=paste(uy[i], "max.temp"))  
+#  mdsum=summary(lm(df$x[,1]~df$max.temp))
+#  linetype=ifelse(mdsum$coefficients[2,4]<=0.05, 1, 2)
+#  abline(lm(df$x[,1]~df$max.temp), lty=linetype)
+#  lmdata4[[i]]=data.frame(data=paste(ul[i], "max.temp"),
+#                          pval=mdsum$coefficients[2,4],
+#                          rsqrd=mdsum$adj.r.squared[[1]])
+  
+  plot(df$Tdam2, df$x[,1], pch=19, xlab="Thermal damage margin", main=paste(uy[i]))
+  mdsum=summary(lm(df$x[,1]~df$Tdam2))
+  linetype=ifelse(mdsum$coefficients[2,4]<=0.05, 1, 2)
+  abline(lm(df$x[,1]~df$Tdam2), lty=linetype)
+  lmdata5[[i]]=data.frame(data=paste(ul[i], "max.temp"),
+                          pval=mdsum$coefficients[2,4],
+                          rsqrd=mdsum$adj.r.squared[[1]])
+  
+#  plot(df$Tsafety2, df$x[,1], pch=19, xlab="Thermal saftey margin", main=paste(uy[i], "Tsafety"))
+#  mdsum=summary(lm(df$x[,1]~df$Tsafety2))
+#  linetype=ifelse(mdsum$coefficients[2,4]<=0.05, 1, 2)
+#  abline(lm(df$x[,1]~df$Tsafety2), lty=linetype)
+#  lmdata6[[i]]=data.frame(data=paste(ul[i], "max.temp"),
+#                          pval=mdsum$coefficients[2,4],
+#                          rsqrd=mdsum$adj.r.squared[[1]])
+  
+  #plot(df$year, df$Max.air.temp2, pch=19, ylab="Max. leaf temperature", xlab="Year", main=paste(ul[i], "max.air temp"))
+  #plot(df$year, df$max.temp, pch=19, ylab="Max. leaf temperature", xlab="Year", main=paste(ul[i], "Tsafety"))
+}
+datax4=do.call("rbind",lmdata4)
+datax5=do.call("rbind",lmdata5)
+datax6=do.call("rbind",lmdata6)
+
+
+
+
+
+###################################################################################################
+###################################################################################################
+#Old Env. data script
+
+#Cleaning environmental data to i) standardize time inteeral ii) and removal and month-day-times from all year when a given year has mssing data
+#create a data frame for finding empty/missing times in environmnetal data
+year.match=data.frame("year"=seq(1998,2017, by=1))
+month.match= data.frame("month"=(seq(1:12)))
+day.match=data.frame("day"=c(rep(1, 31), rep(2, 28), rep(3,31), rep(4,30), rep(5,31), rep(6,30), rep(7,31), rep(8,31), rep(9,30), rep(10,31), rep(11,20), rep(12,31)))
+hour.match=data.frame("hour"=seq(0,2300, by=100))
+match.df=merge(year.match, merge(month.match, merge(day.match, hour.match)))
+match.df[1:100,]
+
+half.hours.removed=envdat[-which(!(envdat$hour %in% hour.match$hour)==T),] #find which rows in the envdat dont match the match df, and remove them
+half.hours.removed[which(half.hours.removed$hour==1330),]#make sure half hour times are removed
+half.hours.removed[1:100,]
+
+#find the times that are present in the match, but not present in the other
+match.df$ymdh=paste(match.df$year, match.df$month, match.df$day, match.df$hour) #a column combining all of the unique "time" data
+half.hours.removed$ymdh=paste(half.hours.removed$year, half.hours.removed$month, half.hours.removed$day, half.hours.removed$hour) #a column combining all of the unique "time" data for the env. data
+missing.times=half.hours.removed[!(half.hours.removed$ymdh %in% match.df$ymdh),]
+str(missing.times)
+uyear=unique(missing.times$year)
+lx=list()
+for(i in 1:length(uyear)){
+  df1=subset(missing.times, missing.times$year==uyear[i])
+  lx[[i]]=df1[,1:4]
+}
+dflx=do.call("rbind", lx)
+str(dflx)
+mdh.to.remove=unique(paste(dflx$month, dflx$day, dflx$hour))
+half.hours.removed$mdh=paste(half.hours.removed$month, half.hours.removed$day, half.hours.removed$hour)
+envdat2=half.hours.removed[!(half.hours.removed$mdh %in% mdh.to.remove),]
+
+
+
+#remove strange, out-lying values for the environmental variables
+hist(htod4$wm2)
+#envdat2=envdat2[-which(envdat2$wm2<0),]
+#hist(envdat2$wm2)
+
+hist(htod4$airtemp)
+#envdat2=envdat2[-which(envdat2$airtemp>40|envdat2$airtemp<0),]
+#hist(envdat2$airtemp)
+
+hist(htod4$ws)
+
+hist(envdat2$rh)
+#envdat2=envdat2[-which(envdat2$rh<0),]
+#envdat2=envdat2[-which(envdat2$rh>100),]
+#hist(envdat2$rh)
+
+#Here, we take all months greater than and equal to 4, and all months less than or equal to 3 of the 
+#following year is considered the entire growing year. And we take all data with an irradiance of 400Wm2
+table(envdat2$year)
+envdat2=envdat2[-which(is.na(envdat2$year)==T),]
+envdat3=list()
+uy=unique(envdat2$year)
+for(i in 1:length(uy)){
+  dfy1=subset(envdat2, envdat2$year==uy[i])
+  dfy2=subset(envdat2, envdat2$year==uy[i+1])
+  dfy1.2=dfy1[which(dfy1$month>=4 & dfy1$wm2>300),]
+  dfy2.2=dfy1[which(dfy1$month<=4 & dfy1$wm2>300),]
+  dfc=rbind(dfy1.2,dfy2.2)
+  dfc$yoc=paste(uy[i])
+  envdat3[[i]]=dfc
+}
+envdat4=do.call("rbind", envdat3)
+envdat4[which(envdat4$ws==0),]$ws=0.001#any wind that is zero gets changed to 0.001
+#envdat4=envdat4[-which(envdat4$airtemp<=-40),]#remove values where temp in -40.39, and rh is -316
+str(envdat4)
+
+#setwd("C:/Users/tmp94/Dropbox/CH2/Data/LS.env.data/")
+#write.csv(envdat4, file="LS.Daytime.Envdat.2.18.18.csv")
+  
